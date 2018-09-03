@@ -192,4 +192,10 @@ router.use(
   express.static(path.join(__dirname, "/../public/docs"))
 );
 
+//********** Actuators ******************/
+router.post(
+  "/switch/turn_on",
+  ActuatorController.switchOn
+);
+
 module.exports = router;
