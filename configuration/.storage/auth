@@ -1,0 +1,37 @@
+{
+    "data": {
+        "credentials": [
+            {
+                "auth_provider_id": null,
+                "auth_provider_type": "homeassistant",
+                "data": {
+                    "username": "user"
+                },
+                "id": "98c3a883a61649a7bd58589bafcfc292",
+                "user_id": "0465c68e1cc44cb9bd47f61329be9aa0"
+            }
+        ],
+        "refresh_tokens": [
+            {
+                "access_token_expiration": 1800.0,
+                "client_id": "http://192.168.88.19:8123/",
+                "created_at": "2018-08-27T13:29:50.497276+00:00",
+                "id": "fd5ea54fe8a540f1b4f5b98f27fe08ae",
+                "jwt_key": "cb9cd5f5066dba50dcda1e6611967992f4b33b837b0bb3a8593d90889dd701d93a56403d965c28a34ac395bfa22b3e77e68e671ce3084da9cecd0931393d05d1",
+                "token": "517e0fa8120e7eaeca85cf10f37cf37112b9210a3b9eb28e5c09690d47237871fbf520a3844a4a99e73cf7ce793fdfee171efdf1a64c614f38cd6269cfcb6a96",
+                "user_id": "0465c68e1cc44cb9bd47f61329be9aa0"
+            }
+        ],
+        "users": [
+            {
+                "id": "0465c68e1cc44cb9bd47f61329be9aa0",
+                "is_active": true,
+                "is_owner": true,
+                "name": "user",
+                "system_generated": false
+            }
+        ]
+    },
+    "key": "auth",
+    "version": 1
+}
