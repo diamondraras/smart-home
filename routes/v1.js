@@ -6,6 +6,8 @@ const PostController = require("../controllers/PostController");
 const ProfilController = require("../controllers/ProfilController");
 
 const HomeController = require("../controllers/HomeController");
+const ActuatorController = require("./../controllers/ActuatorController");
+const AccountController = require("./../controllers/AccountController");
 
 const passport = require("passport");
 
@@ -196,6 +198,12 @@ router.use(
 router.post(
   "/switch/turn_on",
   ActuatorController.switchOn
+);
+
+//********** Accounts *******************/
+router.post(
+  "/account/sync",
+  AccountController.sync
 );
 
 module.exports = router;

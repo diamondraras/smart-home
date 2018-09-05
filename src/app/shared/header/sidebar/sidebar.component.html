@@ -1,0 +1,53 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+    <li class="nav-item nav-profile">
+      <a href="#" class="nav-link">
+        <div class="nav-profile-image">
+          <img src="assets/images/faces/face1.jpg" alt="profile">
+          <span class="login-status online"></span> <!--change to offline or busy as needed-->              
+        </div>
+        <div class="nav-profile-text d-flex flex-column">
+          <span class="font-weight-bold mb-2">Diams Danzé</span>
+          <span class="text-secondary text-small">Tompon-trano</span>
+        </div>
+        <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+      </a>
+    </li>
+    <li class="nav-item" (click)="onUpdateMaisonToActive()" [ngClass]="{'active': active === ''}">
+      <a class="nav-link" routerLink="/">
+        <span class="menu-title">Maison</span>
+        <i class="mdi mdi-home menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" (click)="onUpdateHistoriqueToActive()" [ngClass]="{'active': active === 'historique'}">
+      <a class="nav-link" routerLink="/history" aria-expanded="false" aria-controls="ui-basic">
+        <span class="menu-title">Historique</span>                            
+        <i class="mdi mdi-timetable menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" (click)="onUpdateAccountToActive()" [ngClass]="{'active': active === 'account'}">
+      <a class="nav-link" routerLink="/account" aria-expanded="false" aria-controls="ui-basic">
+        <span class="menu-title">Compte</span>                            
+        <i class="mdi mdi-timetable menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item sidebar-actions">
+      <span class="nav-link">
+        <div class="border-bottom">
+          <h6 class="font-weight-normal mb-3">Utilisateurs</h6>                
+        </div>
+        <button class="btn btn-block btn-lg btn-gradient-primary mt-4">+ Ajouter</button>
+        <div class="mt-4">
+          <div class="border-bottom">
+            <p class="text-secondary">Utilisateurs enregistrés</p>                  
+          </div>
+          <ul class="gradient-bullet-list mt-4">
+            <li>Diams Danzé</li>
+            <li>Voanjo</li>
+            <li>Tsong</li>
+          </ul>
+        </div>
+      </span>
+    </li>
+  </ul>
+</nav>

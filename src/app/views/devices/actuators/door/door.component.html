@@ -1,0 +1,24 @@
+<div class="template-demo d-flex justify-content-around flex-nowrap mt-5">
+  <button type="button"
+    (click)="doorIsOpen = !doorIsOpen"                    
+    [ngClass]="{'active': doorIsOpen}"
+    class="btn-door">
+    <i class="mdi mdi-lock-open-outline"
+      *ngIf="doorIsOpen; else doorLockClass">
+    </i>
+    <ng-template #doorLockClass>
+      <i class="mdi mdi-lock-outline"></i>
+    </ng-template>
+  </button>
+</div>
+<div class="template-demo d-flex justify-content-around flex-nowrap pt-3">     
+  <span style="font-family: Raleway-SemiBold; color: #0aacdc;" class="door-state" 
+      *ngIf="doorIsOpen; else doorIsNotOpen">
+    OUVERTE
+  </span>
+  <ng-template #doorIsNotOpen>
+    <span style="font-family: Raleway-SemiBold; color: #0aacdc;" class="door-state">
+      FERMEE
+    </span>
+</ng-template>
+</div>

@@ -7,6 +7,7 @@ const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const path = require("path");
 
 const v1 = require('./routes/v1');
 
@@ -37,12 +38,13 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.use('/v1', v1);
+app.use('/api', v1);
 
-app.use('/', function(req, res) {
-    res.statusCode = 200; //send correct status code
-    res.json({ status: "success", message: "Play Services API", data: {} })
-});
+//********* Angular Frontend ************/
+app.use(
+    "/",
+    express.static(path.join(__dirname, "./dist/smartminds"))
+  );
 
 // catch 404
 app.use(function(req, res, next) {
