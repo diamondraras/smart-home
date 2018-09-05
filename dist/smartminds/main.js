@@ -6651,7 +6651,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/nyandrianina/Bureau/stuff/mean/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/nyandrianina/Bureau/stuff/smartminds/src/main.ts */"./src/main.ts");
 
 
 /***/ })

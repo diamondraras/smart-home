@@ -4,10 +4,10 @@
 .angulardoc.json
 uploads/*
 
-config/*
+api/config/*
 
-tests/testing_config/deps
-tests/testing_config/home-assistant.log
+api/tests/testing_config/deps
+api/tests/testing_config/home-assistant.log
 
 # Hide sublime text stuff
 *.sublime-project
@@ -78,29 +78,29 @@ htmlcov/
 *.orig
 
 # venv stuff
-pyvenv.cfg
-pip-selfcheck.json
-venv
-.venv
-Pipfile*
-share/*
+api/pyvenv.cfg
+api/pip-selfcheck.json
+api/venv
+api/.venv
+api/Pipfile*
+api/share/*
 
 # vimmy stuff
-*.swp
-*.swo
+api/*.swp
+api/*.swo
 
-ctags.tmp
+api/ctags.tmp
 
 # vagrant stuff
-virtualization/vagrant/setup_done
-virtualization/vagrant/.vagrant
-virtualization/vagrant/config
+api/virtualization/vagrant/setup_done
+api/virtualization/vagrant/.vagrant
+api/virtualization/vagrant/config
 
 # Visual Studio Code
 .vscode
 
 # Built docs
-docs/build
+api/docs/build
 
 # Windows Explorer
 desktop.ini

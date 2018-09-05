@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
+        "dev": "concurrently \"source api/bin/activate && hass --config ./configuration/ \"  \"ng build \" \" nodemon ./bin/www \" ",
         "start": "ng build && nodemon ./bin/www",
         "test": "nodemon --exec 'mocha --recursive'"
     },
@@ -18,13 +19,12 @@
         "@angular/pwa": "^0.7.5",
         "@angular/router": "^6.1.0",
         "@angular/service-worker": "^6.1.0",
-        "core-js": "^2.5.4",
-        "rxjs": "^6.0.0",
-        "zone.js": "~0.8.26",
         "bcrypt": "^3.0.0",
         "bcrypt-promise": "^2.0.0",
         "body-parser": "^1.18.3",
+        "concurrently": "^4.0.1",
         "cookie-parser": "^1.4.3",
+        "core-js": "^2.5.4",
         "debug": "^3.1.0",
         "deep-diff": "^1.0.2",
         "dotenv": "^6.0.0",
@@ -40,9 +40,11 @@
         "passport-jwt": "^4.0.0",
         "path": "^0.12.7",
         "request": "^2.88.0",
+        "rxjs": "^6.0.0",
         "serve-favicon": "^2.5.0",
         "validator": "^10.7.0",
-        "websocket": "^1.0.26"
+        "websocket": "^1.0.26",
+        "zone.js": "~0.8.26"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "~0.7.0",

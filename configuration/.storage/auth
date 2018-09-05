@@ -9,6 +9,15 @@
                 },
                 "id": "98c3a883a61649a7bd58589bafcfc292",
                 "user_id": "0465c68e1cc44cb9bd47f61329be9aa0"
+            },
+            {
+                "auth_provider_id": null,
+                "auth_provider_type": "legacy_api_password",
+                "data": {
+                    "username": "homeassistant"
+                },
+                "id": "333fec4ac3fb455e9aabe151d35bc31e",
+                "user_id": "3df71f05d4f740258d5f4b68dd0d29d2"
             }
         ],
         "refresh_tokens": [
@@ -20,6 +29,24 @@
                 "jwt_key": "cb9cd5f5066dba50dcda1e6611967992f4b33b837b0bb3a8593d90889dd701d93a56403d965c28a34ac395bfa22b3e77e68e671ce3084da9cecd0931393d05d1",
                 "token": "517e0fa8120e7eaeca85cf10f37cf37112b9210a3b9eb28e5c09690d47237871fbf520a3844a4a99e73cf7ce793fdfee171efdf1a64c614f38cd6269cfcb6a96",
                 "user_id": "0465c68e1cc44cb9bd47f61329be9aa0"
+            },
+            {
+                "access_token_expiration": 1800.0,
+                "client_id": "http://127.0.0.1:8123/",
+                "created_at": "2018-09-05T11:14:45.338424+00:00",
+                "id": "fe2a820a1ab64e80936edb528ee50689",
+                "jwt_key": "8696371ddaca4cbf52834a2373d0fc93bfd8fb3bb03f9d34399f8392c52bb14439bb9f56940721e69830cadb98430d262a1fb8e7e6051d61bd3ac2936b7e5136",
+                "token": "206fcbd97de90048de30eb5cb12df79e3fc013a91fd4fef241738727d85663f552c624d458682812ba1a6cf94c1ba995ee9e56933cb0fdaf13a59204f3c80400",
+                "user_id": "3df71f05d4f740258d5f4b68dd0d29d2"
+            },
+            {
+                "access_token_expiration": 1800.0,
+                "client_id": "http://127.0.0.1:8123/",
+                "created_at": "2018-09-05T11:21:45.998075+00:00",
+                "id": "6834af33e05e49b088bca76748a87679",
+                "jwt_key": "3951935579e1a8de6dc76bdc4fb4660ed0bbfaba3c89bc2d2e227347e2cdbb1bafd7ea5c1ff1635c21e9c89b1578dca8ee02d2d3346d3c3a6146a9aea5f5ac9f",
+                "token": "da313f000c2c0df355b585c0d04a7d31f06ea6005ed564224c089c1f49d20de6d201ddf7d64f4cce2a50ffb5cc182d3599b66bc9730398179cac3b0d019bbce1",
+                "user_id": "3df71f05d4f740258d5f4b68dd0d29d2"
             }
         ],
         "users": [
@@ -28,6 +55,13 @@
                 "is_active": true,
                 "is_owner": true,
                 "name": "user",
+                "system_generated": false
+            },
+            {
+                "id": "3df71f05d4f740258d5f4b68dd0d29d2",
+                "is_active": true,
+                "is_owner": false,
+                "name": "homeassistant",
                 "system_generated": false
             }
         ]
