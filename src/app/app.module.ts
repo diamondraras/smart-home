@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +18,10 @@ import { LightsComponent } from './views/devices/actuators/lights/lights.compone
 import { DoorComponent } from './views/devices/actuators/door/door.component';
 import { AlarmComponent } from './views/devices/actuators/alarm/alarm.component';
 import { SyncComponent } from './views/account/sync/sync.component';
+import { RoomService } from './shared/service/room.service';
+import { RoomsComponent } from './views/rooms/rooms.component';
+import { RoomComponent } from './views/rooms/room/room.component';
+import { ComponentService } from './shared/service/component.service';
 
 
 @NgModule({
@@ -36,12 +41,18 @@ import { SyncComponent } from './views/account/sync/sync.component';
     AlarmComponent,
     AccountComponent,
     SyncComponent,
+    RoomsComponent,
+    RoomComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    ComponentService,
+    RoomService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
