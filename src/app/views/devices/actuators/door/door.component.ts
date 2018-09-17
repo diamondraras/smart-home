@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./door.component.css']
 })
 export class DoorComponent implements OnInit {
+  isOpen: boolean;
 
   constructor() { }
 
   ngOnInit() {
+    this.isOpen = false;
   }
 
 }

@@ -26,6 +26,11 @@ export class SidebarComponent implements OnInit{
     console.log(this.active);
   }
 
+  onUpdateRoomToActive() {
+    this.active = 'room';
+    console.log(this.active);
+  }
+
   constructor(private roomSerice: RoomService) {}
 
   ngOnInit() {

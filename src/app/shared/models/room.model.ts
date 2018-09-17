@@ -1,7 +1,7 @@
-import { Component } from './component.model';
+import { Device } from './device.model';
 
 export interface Room {
     id: number;
     name: string;
-    components: Component[];
+    devices: Device[];
 }

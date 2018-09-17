@@ -14,14 +14,14 @@ import { WeatherComponent } from './views/devices/sensors/weather/weather.compon
 import { ActuatorsComponent } from './views/devices/actuators/actuators.component';
 import { DevicesComponent } from './views/devices/devices.component';
 import { HistoryComponent } from './views/history/history.component';
-import { LightsComponent } from './views/devices/actuators/lights/lights.component';
+import { LightComponent } from './views/devices/actuators/light/light.component';
 import { DoorComponent } from './views/devices/actuators/door/door.component';
 import { AlarmComponent } from './views/devices/actuators/alarm/alarm.component';
 import { SyncComponent } from './views/account/sync/sync.component';
 import { RoomService } from './shared/service/room.service';
 import { RoomsComponent } from './views/rooms/rooms.component';
 import { RoomComponent } from './views/rooms/room/room.component';
-import { ComponentService } from './shared/service/component.service';
+import { DeviceService } from './shared/service/device.service';
 
 
 @NgModule({
@@ -36,7 +36,7 @@ import { ComponentService } from './shared/service/component.service';
     ActuatorsComponent,
     DevicesComponent,
     HistoryComponent,
-    LightsComponent,
+    LightComponent,
     DoorComponent,
     AlarmComponent,
     AccountComponent,
@@ -50,7 +50,7 @@ import { ComponentService } from './shared/service/component.service';
     HttpClientModule
   ],
   providers: [
-    ComponentService,
+    DeviceService,
     RoomService
   ],
   bootstrap: [AppComponent]
