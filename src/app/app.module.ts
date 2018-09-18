@@ -13,6 +13,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { LoginComponent } from './views/login/login.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { RegisterComponent } from './views/register/register.component';
+import { AuthModule } from './auth/auth.module';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { RegisterComponent } from './views/register/register.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
