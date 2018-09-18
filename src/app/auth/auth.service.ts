@@ -2,12 +2,17 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromRoot from './../app.reducer';
 import * as AUTH from './auth.actions';
+import { take } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
   redirectUrl: string ;
 
-  constructor(private store: Store<fromRoot.State>) { }
+  constructor(
+    private store: Store<fromRoot.State>,
+    private router: Router
+    ) { }
 
   setRedirectUrl(url: string): void {
     this.redirectUrl = url;
@@ -23,5 +28,16 @@ export class AuthService {
 
   logout() {
     this.store.dispatch(new AUTH.SetUnauthenticated());
+  }
+
+  initAuthListener() {
+    this.store.select(fromRoot.getIsAuth)
+    .subscribe((state) => {
+      if (state) {
+        this.router.navigate(['dashboard']);
+      } else {
+        this.router.navigate(['login']);
+      }
+    });
   }
 }

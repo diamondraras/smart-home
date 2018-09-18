@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from './app.reducer';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,7 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit{
   constructor(
     private renderer: Renderer2,
-    private store: Store<fromRoot.State>,
-    private router: Router
+    private authService: AuthService
     ) {}
 
   isFavorite = false;
@@ -30,14 +30,6 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.store.select(fromRoot.getIsAuth)
-                    .pipe(take(1))
-                    .subscribe((state) => {
-                      if (state) {
-                        this.router.navigate(['/dashboard']);
-                      } else {
-                        this.router.navigate(['login']);
-                      }
-                    });
+    this.authService.initAuthListener();
   }
 }
