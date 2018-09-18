@@ -1,7 +1,7 @@
 <div class="container-scroller">
   <app-nav></app-nav>
   <div class="container-fluid page-body-wrapper">
-      <app-sidebar></app-sidebar>
+      <app-sidebar [rooms$]="rooms$"></app-sidebar>
       <div class="main-panel">
           <router-outlet></router-outlet>
           <app-footer></app-footer>

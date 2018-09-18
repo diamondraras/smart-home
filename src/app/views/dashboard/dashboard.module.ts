@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { StoreModule } from '@ngrx/store';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
-import { RoomService } from '../../shared/service/room.service';
+import { dashboardReducer } from './dashboard.reducer';
+
 import { DeviceService } from '../../shared/service/device.service';
 
 import { AccountComponent } from './account/account.component';
@@ -19,11 +21,11 @@ import { SyncComponent } from './account/sync/sync.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { RoomComponent } from './rooms/room/room.component';
 
-
 @NgModule({
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    StoreModule.forFeature('dashboard', dashboardReducer)
   ],
   declarations: [
     AccountComponent,
@@ -40,7 +42,6 @@ import { RoomComponent } from './rooms/room/room.component';
     RoomComponent
   ],
   providers: [
-    RoomService,
     DeviceService
   ]
 })

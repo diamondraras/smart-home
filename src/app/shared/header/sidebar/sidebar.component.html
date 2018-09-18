@@ -40,7 +40,7 @@
       </a>
       <ul class="nav collapse" id="room">
         <li class="nav-item">
-          <a *ngFor="let room of rooms" class="nav-link" [routerLink]="['./room', room.id]" aria-expanded="false" aria-controls="ui-basic">
+          <a *ngFor="let room of rooms$ | async" class="nav-link" [routerLink]="['./room', room.id]" aria-expanded="false" aria-controls="ui-basic">
             <span class="menu-title">{{ room.name }}</span>
           </a>
         </li>

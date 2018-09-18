@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { RoomService } from '../../service/room.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
+
 import { Room } from '../../models/room.model';
 
 @Component({
@@ -7,8 +8,8 @@ import { Room } from '../../models/room.model';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit{
-  rooms: Room[];
+export class SidebarComponent implements OnInit {
+  @Input() rooms$: Observable<Room[]>;
   active = '';
 
   onUpdateMaisonToActive() {
@@ -31,9 +32,8 @@ export class SidebarComponent implements OnInit{
     console.log(this.active);
   }
 
-  constructor(private roomSerice: RoomService) {}
+  constructor() {}
 
   ngOnInit() {
-    this.rooms = this.roomSerice.getRooms();
   }
 }
