@@ -14,6 +14,9 @@ import { LoginComponent } from './views/login/login.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { RegisterComponent } from './views/register/register.component';
 import { AuthModule } from './auth/auth.module';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducers } from './app.reducer';
 
 
 @NgModule({
@@ -31,7 +34,9 @@ import { AuthModule } from './auth/auth.module';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    AuthModule
+    AuthModule,
+    StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument()
   ],
   providers: [],
   bootstrap: [AppComponent]
