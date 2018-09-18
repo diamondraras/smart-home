@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DeviceService } from '../../../shared/service/device.service';
+import { DeviceService } from '../../../../shared/service/device.service';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Room } from '../../../shared/models/room.model';
-import { RoomService } from '../../../shared/service/room.service';
+import { Room } from '../../../../shared/models/room.model';
+import { RoomService } from '../../../../shared/service/room.service';
 
 @Component({
   selector: 'app-room',

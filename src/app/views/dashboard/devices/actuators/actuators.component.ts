@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Device } from '../../../shared/models/device.model';
+import { Device } from '../../../../shared/models/device.model';
 
 @Component({
   selector: 'app-actuators',
