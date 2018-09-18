@@ -30,6 +30,7 @@ export class AuthService {
     this.store.dispatch(new AUTH.SetUnauthenticated());
   }
 
+  // Subscribe to auth state to implements redirection based on
   initAuthListener() {
     this.store.select(fromRoot.getIsAuth)
     .subscribe((state) => {
