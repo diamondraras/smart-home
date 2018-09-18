@@ -15,19 +15,19 @@
       </a>
     </li>
     <li class="nav-item" (click)="onUpdateMaisonToActive()" [ngClass]="{'active': active === ''}">
-      <a class="nav-link" routerLink="/">
+      <a class="nav-link" routerLink="./">
         <span class="menu-title">Maison</span>
         <i class="mdi mdi-home menu-icon"></i>
       </a>
     </li>
     <li class="nav-item" (click)="onUpdateHistoriqueToActive()" [ngClass]="{'active': active === 'historique'}">
-      <a class="nav-link" routerLink="/history" aria-expanded="false" aria-controls="ui-basic">
+      <a class="nav-link" routerLink="./history" aria-expanded="false" aria-controls="ui-basic">
         <span class="menu-title">Historique</span>
         <i class="mdi mdi-timetable menu-icon"></i>
       </a>
     </li>
     <li class="nav-item" (click)="onUpdateAccountToActive()" [ngClass]="{'active': active === 'account'}">
-      <a class="nav-link" routerLink="/account" aria-expanded="false" aria-controls="ui-basic">
+      <a class="nav-link" routerLink="./account" aria-expanded="false" aria-controls="ui-basic">
         <span class="menu-title">Compte</span>
         <i class="mdi mdi-timetable menu-icon"></i>
       </a>
@@ -40,7 +40,7 @@
       </a>
       <ul class="nav collapse" id="room">
         <li class="nav-item">
-          <a *ngFor="let room of rooms" class="nav-link" [routerLink]="['/room', room.id]" aria-expanded="false" aria-controls="ui-basic">
+          <a *ngFor="let room of rooms" class="nav-link" [routerLink]="['./room', room.id]" aria-expanded="false" aria-controls="ui-basic">
             <span class="menu-title">{{ room.name }}</span>
           </a>
         </li>
