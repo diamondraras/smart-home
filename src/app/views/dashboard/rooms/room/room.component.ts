@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { DeviceService } from '../../../../shared/service/device.service';
-import { ActivatedRoute, Params } from '@angular/router';
 import { Room } from '../../../../shared/models/room.model';
-import { RoomService } from '../../../../shared/service/room.service';
+
 import * as fromDashboard from '../../dashboard.reducer';
+
+import { DeviceService } from '../../../../shared/service/device.service';
 
 @Component({
   selector: 'app-room',
