@@ -9,7 +9,7 @@ import { UserService } from '../user/user.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService: AuthService, private userService: UserService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -20,8 +20,4 @@ export class LoginComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
-  getUser(){
-    this.userService.getUser();
-  }
-
 }

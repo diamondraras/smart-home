@@ -19,7 +19,6 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from './app.reducer';
 import { AuthService } from './auth/auth.service';
-import { UserService } from './views/user/user.service';
 
 export function jwtOptionsFactory(authService) {
   return {
@@ -57,7 +56,7 @@ export function jwtOptionsFactory(authService) {
       }
     })
   ],
-  providers: [UserService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
