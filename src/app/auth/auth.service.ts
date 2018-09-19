@@ -41,4 +41,9 @@ export class AuthService {
       }
     });
   }
+
+  // Get the token
+  getAsyncToken() {
+    return 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNWJhMDEyMzlhNzc5ZDQ0N2Q2NDE2YzMwIiwiaWF0IjoxNTM3MzQ2NTc5LCJleHAiOjE1MzczNTY1Nzl9.sXttOD8mo3wTKprvOvafnJUvVbAmiX1d8hpj19jcii8';
+  }
 }
