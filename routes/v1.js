@@ -67,6 +67,13 @@ router.delete(
   UserController.remove
 );
 
+//Session Manager
+router.get(
+  "/users/session/destroy",
+  passport.authenticate("jwt", { session: false }),
+  UserController.removeRefreshToken
+)
+
 //Profil Routing
 router.get(
   "/users/profil",
