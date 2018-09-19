@@ -26,6 +26,7 @@ module.exports = {
       ref  : 'origin/dev',
       repo : 'https://github.com/smart-minds/smart-home.git',
       path : '/home/pi/SmartMinds',
+      'pre-deploy': 'export PATH=$PATH:/home/pi/.nvm/versions/node/v8.12.0/bin/',
       'post-deploy' : 'npm install && pm2 startOrRestart ecosystem.config.js'
     }
   }
