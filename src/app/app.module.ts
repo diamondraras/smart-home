@@ -20,6 +20,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from './app.reducer';
 import { AuthService } from './auth/auth.service';
 
+import { fakeBackendProvider } from './_helpers/fake-backend';
+
 export function jwtOptionsFactory(authService) {
   return {
     tokenGetter: () => {
@@ -56,7 +58,7 @@ export function jwtOptionsFactory(authService) {
       }
     })
   ],
-  providers: [],
+  providers: [fakeBackendProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

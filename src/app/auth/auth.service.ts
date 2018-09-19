@@ -4,6 +4,12 @@ import * as fromRoot from './../app.reducer';
 import * as AUTH from './auth.actions';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { AuthData } from './auth-data.model';
+
+interface LoginData {
+  token: string;
+}
 
 @Injectable()
 export class AuthService {
@@ -11,7 +17,8 @@ export class AuthService {
 
   constructor(
     private store: Store<fromRoot.State>,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
     ) { }
 
   setRedirectUrl(url: string): void {
@@ -22,8 +29,16 @@ export class AuthService {
     return 'login';
   }
 
-  login() { // Params not needed for now
-    this.store.dispatch(new AUTH.SetAuthenticated()); // Just set the global auth state to logged in for the moment
+  login(authData: AuthData) {
+    let token: string;
+    this.http.post(
+      'http://localhost:3000/api/users/login',
+      authData
+      ).subscribe( (data: LoginData) => {
+        token = data.token.replace('Bearer ', '');
+        this.store.dispatch(new AUTH.SetAuthenticated(token));
+      });
+    //  // Just set the global auth state to logged in for the moment
   }
 
   logout() {
