@@ -9,14 +9,4 @@ import { Device } from '../../../../shared/models/device.model';
 export class ActuatorsComponent {
   @Input() type: string;
   @Input() devices: Device[];
-
-  lightIsActive = false;
-  sofaIsActive = false;
-  kitchenIsActive = true;
-  spotlightIsActive = false;
-
-  doorIsOpen = false;
-
-  alarmIsOn = true;
-
 }

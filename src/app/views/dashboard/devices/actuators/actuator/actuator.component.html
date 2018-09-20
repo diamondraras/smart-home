@@ -1,0 +1,54 @@
+<ng-container [ngSwitch]="type">
+  <div *ngSwitchCase="'light'">
+    <div class="d-flex justify-content-around flex-nowrap mt-5">
+      <button type="button" (click)="changeLightState()" [ngClass]="{'active': state == 'on'}" class="btn-sensor btn-sensor-light">
+        <i class="mdi mdi-lightbulb"></i>
+      </button>
+    </div>
+    <p class="d-flex justify-content-around flex-nowrap pt-3">
+      <span style="font-family: Raleway-SemiBold" class="door-state">
+        Light {{ id }}
+      </span>
+    </p>
+  </div>
+
+  <div *ngSwitchCase="'door'">
+    <div class="d-flex justify-content-around flex-nowrap mt-5">
+      <button type="button" (click)="changeDoorState()" [ngClass]="{'active': state == 'open'}" class="btn-door">
+        <i class="mdi mdi-lock-open-outline" *ngIf="state == 'open'; else doorLockClass">
+        </i>
+        <ng-template #doorLockClass>
+          <i class="mdi mdi-lock-outline"></i>
+        </ng-template>
+      </button>
+    </div>
+    <div class="d-flex justify-content-around flex-nowrap pt-3">
+      <span style="font-family: Raleway-SemiBold; color: #0aacdc;" class="door-state" *ngIf="state == 'open'; else doorIsNotOpen">
+        {{ state | titlecase}}
+      </span>
+      <ng-template #doorIsNotOpen>
+        <span style="font-family: Raleway-SemiBold; color: #0aacdc;" class="door-state">
+        {{ state | titlecase}}
+        </span>
+      </ng-template>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'alarm'">
+    <div class="template-demo d-flex justify-content-around flex-nowrap mt-5">
+      <button type="button" (click)="changeAlarmState()" [ngClass]="{'active': state == 'on'}" class="btn-alarm btn-alarm-active">
+        <i class="mdi mdi-bell" *ngIf="state == 'on'; else alarmOffClass"></i>
+        <ng-template #alarmOffClass>
+          <i class="mdi mdi-bell-off"></i>
+        </ng-template>
+      </button>
+    </div>
+    <div class="template-demo d-flex justify-content-around flex-nowrap pt-3">
+      <span *ngIf="state == 'on'; else alarmIsOff" style="font-family: Raleway-SemiBold; color: #ff90a3;" class="alarm-state">{{ state | titlecase}}</span>
+      <ng-template #alarmIsOff>
+        <span style="font-family: Raleway-SemiBold; color: #ff90a3;" class="alarm-state">{{ state | titlecase}}</span>
+      </ng-template>
+    </div>
+  </div>
+
+</ng-container>

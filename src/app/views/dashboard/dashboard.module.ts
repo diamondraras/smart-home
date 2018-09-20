@@ -20,6 +20,7 @@ import { AlarmComponent } from './devices/actuators/alarm/alarm.component';
 import { SyncComponent } from './account/sync/sync.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { RoomComponent } from './rooms/room/room.component';
+import { ActuatorComponent } from './devices/actuators/actuator/actuator.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { RoomComponent } from './rooms/room/room.component';
     AlarmComponent,
     SyncComponent,
     RoomsComponent,
-    RoomComponent
+    RoomComponent,
+    ActuatorComponent
   ],
   providers: [
     DeviceService
