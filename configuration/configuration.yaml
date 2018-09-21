@@ -67,10 +67,11 @@ sun:
 # Switch
 switch:
   - platform: rest
-    resource: http://192.168.10.21/gpio
+    resource: http://192.168.10.21/gpio/4
     is_on_template: '{{ value_json.state }}'
+    name: builtin_led
     headers:
-      Content-Type: application/json
+      Content-Type: application/x-www-form-urlencoded
 
 
 
