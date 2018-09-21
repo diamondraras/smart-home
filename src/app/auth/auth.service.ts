@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromRoot from './../app.reducer';
-import * as AUTH from './auth.actions';
+import * as fromAuth from './auth.actions';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -35,27 +35,13 @@ export class AuthService {
     return 'login';
   }
 
-  // login(authData: AuthData) {
-  //   let token: string;
-  //   this.http.post('http://localhost:3000/api/users/login', authData)
-  //             .subscribe( (data: LoginData) => {
-  //               token = data.token.replace('Bearer ', '');
-  //               localStorage.setItem('token', token);
-  //               localStorage.setItem('isAuth', 'true');
-  //               this.router.navigate(['dashboard']);
-  //             });
-  //   //  // Just set the global auth state to logged in for the moment
-  // }
-
   login(email: string, password: string): Observable<any> {
     const url = `${this.BASE_URL}/users/login`;
     return this.http.post(url, {email, password});
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('isAuth');
-    this.router.navigate(['login']);
+    this.store.dispatch(new fromAuth.Logout());
   }
 
   isAuthenticated(): boolean {
@@ -71,9 +57,4 @@ export class AuthService {
     }
     return false;
   }
-
-  // Subscribe to auth state to implements redirection based on
-  initAuthListener() {
-  }
-
 }

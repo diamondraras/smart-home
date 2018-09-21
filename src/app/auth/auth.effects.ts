@@ -35,6 +35,15 @@ export class AuthEffects {
                     );
                 })
             );
+    @Effect()
+    Logout: Observable<any> = this.actions
+    .pipe(
+        ofType(fromAuth.LOGOUT),
+        tap(() => {
+            localStorage.removeItem('token');
+            this.router.navigate(['login']);
+        })
+    )
 
     @Effect({ dispatch: false })
     LoginSuccess: Observable<any>  = this.actions.pipe(

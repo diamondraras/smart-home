@@ -8,7 +8,9 @@ import { AuthService } from '../../../auth/auth.service';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService
+    ) { }
 
   ngOnInit() {
   }
