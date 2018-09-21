@@ -17,9 +17,9 @@ homeassistant:
 introduction:
 
 # Enables the frontend
-# frontend:
+frontend:
 
-api:
+# api:
 
 http:
   api_password: 1234
@@ -59,8 +59,20 @@ map:
 sun:
 
 # Weather prediction
-sensor:
-  - platform: yr
+# sensor:
+#   - platform: yr
+#   - platform: rest
+#     resource: http://192.168.10.21/gpio/state
+
+# Switch
+switch:
+  - platform: rest
+    resource: http://192.168.10.21/gpio
+    is_on_template: '{{ value_json.state }}'
+    headers:
+      Content-Type: application/json
+
+
 
 # Text to speech
 tts:
