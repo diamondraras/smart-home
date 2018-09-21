@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError, switchMap } from 'rxjs/operators';
 
 import * as DashboardActions from './dashboard.actions';
+import { Weather } from './devices/sensors/weather/weather.model';
+import { SensorResponse } from './devices/sensors/sensors.model';
 
 @Injectable()
 export class DashboardEffects {
@@ -28,6 +30,34 @@ export class DashboardEffects {
             );
         })
     );
+
+    @Effect()
+    loadWeather$ = this.actions$
+        .ofType(DashboardActions.LOAD_WEATHER)
+        .pipe(
+            map((action: DashboardActions.LoadWeather) => action.payload),
+            switchMap(payload => {
+                const entity_id = payload;
+                const httpOptions = {
+                    headers: new HttpHeaders({
+                      'Content-Type':  'application/json',
+                      'x-ha-access': '1234'
+                    })
+                  };
+                return this.http.get('http://localhost:8123/api/states/' + entity_id, httpOptions)
+                        .pipe(
+                            map((res: SensorResponse) => {
+                                return new DashboardActions.LoadWeatherSuccess({
+                                    entity_id: entity_id,
+                                    temperature: res.state
+                                })
+                            }),
+                            catchError((err) => {
+                                return of(new DashboardActions.LoadWeatherFailure(err));
+                            })
+                        )
+            })
+        )
 
     constructor(
         private actions$: Actions,
