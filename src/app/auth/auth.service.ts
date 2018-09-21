@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthData } from './auth-data.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
 
 /* TODO: Implement token expiration verification
 */
@@ -17,6 +18,7 @@ interface LoginData {
 @Injectable()
 export class AuthService {
   redirectUrl: string ;
+  BASE_URL = 'http://localhost:3000/api';
 
   constructor(
     private store: Store<fromRoot.State>,
@@ -33,16 +35,21 @@ export class AuthService {
     return 'login';
   }
 
-  login(authData: AuthData) {
-    let token: string;
-    this.http.post('http://localhost:3000/api/users/login', authData)
-              .subscribe( (data: LoginData) => {
-                token = data.token.replace('Bearer ', '');
-                localStorage.setItem('token', token);
-                localStorage.setItem('isAuth', 'true');
-                this.router.navigate(['dashboard']);
-              });
-    //  // Just set the global auth state to logged in for the moment
+  // login(authData: AuthData) {
+  //   let token: string;
+  //   this.http.post('http://localhost:3000/api/users/login', authData)
+  //             .subscribe( (data: LoginData) => {
+  //               token = data.token.replace('Bearer ', '');
+  //               localStorage.setItem('token', token);
+  //               localStorage.setItem('isAuth', 'true');
+  //               this.router.navigate(['dashboard']);
+  //             });
+  //   //  // Just set the global auth state to logged in for the moment
+  // }
+
+  login(email: string, password: string): Observable<any> {
+    const url = `${this.BASE_URL}/users/login`;
+    return this.http.post(url, {email, password});
   }
 
   logout() {
@@ -59,7 +66,7 @@ export class AuthService {
     //     return true;
     // }
     // return false;
-    if (state === 'true') {
+    if (token) {
       return true;
     }
     return false;
