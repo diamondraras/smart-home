@@ -1,5 +1,6 @@
 const User = require('../models').User;
 const authService = require('./../services/AuthService');
+const sessionService = require('./../services/SessionService');
 
 const getSingle = async function(req, res) {
     let data;
@@ -104,7 +105,24 @@ const login = async function(req, res) {
 
     [err, user] = await to(authService.authUser(req.body));
     if (err) return ReE(res, err, 422);
-
-    return ReS(res, { token: user.getJWT(), user: user.toWeb() });
+    
+    var refreshToken;
+    if(req.body.permanent === true){
+        [err, refreshToken] = await to(sessionService.createRefreshToken(user));
+    }
+    
+    return ReS(res, { token: user.getJWT(), refreshToken: refreshToken,  user: user.toWeb() });
 }
 module.exports.login = login;
+
+const removeRefreshToken = async function(req, res) {
+    let user, err, result;
+    user = req.user;
+
+    [err, result] = await to (sessionService.removeRefreshToken(user))
+    if(result){
+        return ReS(res, { msg: 'Session destroyed' });
+    }
+    return ReE(res, {msg: 'Session not found'});
+}
+module.exports.removeRefreshToken = removeRefreshToken;

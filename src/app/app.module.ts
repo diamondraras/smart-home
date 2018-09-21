@@ -1,8 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { FormsModule } from '@angular/forms';
+import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,7 +22,14 @@ import { RegisterComponent } from './views/register/register.component';
 import { AuthModule } from './auth/auth.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from './app.reducer';
+import { AuthService } from './auth/auth.service';
+import { AuthEffects } from './auth/auth.effects';
 
+import { fakeBackendProvider } from './_helpers/fake-backend';
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
@@ -35,12 +46,20 @@ import { reducers } from './app.reducer';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     AuthModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument()
+    StoreDevtoolsModule.instrument(),
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:3000/api']
+      }
+    }),
+    EffectsModule.forRoot([AuthEffects])
   ],
-  providers: [],
+  providers: [fakeBackendProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
