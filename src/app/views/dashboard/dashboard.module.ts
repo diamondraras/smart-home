@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
@@ -21,12 +22,14 @@ import { SyncComponent } from './account/sync/sync.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { RoomComponent } from './rooms/room/room.component';
 import { ActuatorComponent } from './devices/actuators/actuator/actuator.component';
+import { DashboardEffects } from './dashboard.effects';
 
 @NgModule({
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    StoreModule.forFeature('dashboard', dashboardReducer)
+    StoreModule.forFeature('dashboard', dashboardReducer),
+    EffectsModule.forFeature([ DashboardEffects ])
   ],
   declarations: [
     AccountComponent,
