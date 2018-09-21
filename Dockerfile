@@ -1,17 +1,14 @@
-FROM keymetrics/pm2:latest-strecth
+FROM node:8.12-stretch
 
-# Bundle APP files
-RUN mkdir -p /src/app
+RUN npm i -g @angular/cli nodemon
 
-WORKDIR /src/app
+ADD package.json /tmp/package.json
+RUN cd /tmp && npm install
+RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app
 
-COPY package.json /src/app/package.json
+WORKDIR /opt/app
+ADD . /opt/app
 
-RUN npm install
+EXPOSE 3000
 
-COPY . /src/app
-# Show current folder structure in logs
-
-RUN ls -al -R
-
-CMD [ "pm2-runtime", "start", "pm2.json" ]
+CMD ["npm", "start"]
