@@ -9,6 +9,8 @@ import { Device } from '../../shared/models/device.model';
 
 export interface DashboardState {
   rooms: Room[];
+  mainDoor: Device;
+  alarm: Device;
 }
 
 export interface State extends fromRoot.State {
@@ -31,7 +33,7 @@ const initialState: DashboardState = {
       devices: [
         { id: 1, type: 'light', state: 'off' },
         { id: 2, type: 'light', state: 'off' },
-        { id: 3, type: 'door', state: 'open' },
+        { id: 3, type: 'door', state: 'open' }
       ]
     },
     {
@@ -48,13 +50,18 @@ const initialState: DashboardState = {
       devices: [
         { id: 1, type: 'light', state: 'off' },
         { id: 2, type: 'door', state: 'open' },
-        { id: 3, type: 'alarm', state: 'off' },
+        { id: 3, type: 'alarm', state: 'off' }
       ]
     }
-  ]
+  ],
+  mainDoor: { id: 0, type: 'door', state: 'open' },
+  alarm: { id: 0, type: 'alarm', state: 'off' }
 };
 
-export function dashboardReducer(state = initialState, action: dashboard.Actions) {
+export function dashboardReducer(
+  state = initialState,
+  action: dashboard.Actions
+) {
   switch (action.type) {
     case dashboard.ADD_ROOM:
       return {
@@ -68,25 +75,71 @@ export function dashboardReducer(state = initialState, action: dashboard.Actions
           if (room.id == action.payload.roomId) {
             return {
               ...room,
-              devices: room.devices.map(device => device.id == action.payload.device.id ? action.payload.device : device)
+              devices: room.devices.map(
+                device =>
+                  device.id == action.payload.device.id
+                    ? action.payload.device
+                    : device
+              )
             };
-          } else { return room; }
+          } else {
+            return room;
+          }
         })
+      };
+    case dashboard.UPDATE_ALARM_STATE:
+      return {
+        ...state,
+        alarm: {
+          ...state.alarm,
+          state: action.payload.state
+        }
+      };
+    case dashboard.UPDATE_MAIN_DOOR_STATE:
+      return {
+        ...state,
+        mainDoor: {
+          ...state.mainDoor,
+          state: action.payload.state
+        }
       };
     default:
       return state;
   }
 }
 
-export const getDashboardState = createFeatureSelector<DashboardState>('dashboard');
+export const getDashboardState = createFeatureSelector<DashboardState>(
+  'dashboard'
+);
 
-export const getRooms = createSelector(getDashboardState, (state: DashboardState) => state.rooms);
+export const getRooms = createSelector(
+  getDashboardState,
+  (state: DashboardState) => state.rooms
+);
 
-export const getRoomById = (id: number) => createSelector(getRooms, (rooms: Room[]) => {
-  // tslint:disable-next-line:triple-equal
-  return rooms
-    .map(room => Object.assign({
-      deviceTypeList: Object.keys(_.groupBy(room.devices, (device) => device.type))
-    }, room))
-    .find(room => room.id == id);
-});
+export const getRoomById = (id: number) =>
+  createSelector(getRooms, (rooms: Room[]) => {
+    // tslint:disable-next-line:triple-equal
+    return rooms
+      .map(room =>
+        Object.assign(
+          {
+            deviceTypeList: Object.keys(
+              _.groupBy(room.devices, device => device.type)
+            )
+          },
+          room
+        )
+      )
+      .find(room => room.id == id);
+  });
+
+export const getAlarm = createSelector(
+  getDashboardState,
+  (state: DashboardState) => state.alarm
+);
+
+export const getMainDoor = createSelector(
+  getDashboardState,
+  (state: DashboardState) => state.mainDoor
+);

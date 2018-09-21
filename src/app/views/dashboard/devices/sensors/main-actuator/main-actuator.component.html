@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-md-6 p-1">
+      <div class="card" [ngStyle]="{'height': '100%'}">
+        <div class="card-body">
+          <h4 class="card-title">{{ type }}</h4>
+          <div class="d-sm-flex justify-content-around flex-wrap">
+            <app-door 
+            [id]="(mainDoor$ | async).id" 
+            [type]="(mainDoor$ | async).type" 
+            [state]="(mainDoor$ | async).state"></app-door>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 p-1">
+      <div class="card" [ngStyle]="{'height': '100%'}">
+        <div class="card-body">
+          <h4 class="card-title">{{ type }}</h4>
+          <div class="d-sm-flex justify-content-around flex-wrap">
+            <app-alarm             
+            [id]="(alarm$ | async).id" 
+            [type]="(alarm$ | async).type" 
+            [state]="(alarm$ | async).state"></app-alarm>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

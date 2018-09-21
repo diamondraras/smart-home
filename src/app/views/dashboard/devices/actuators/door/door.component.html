@@ -1,24 +1,19 @@
 <div class="d-flex justify-content-around flex-nowrap mt-5">
-  <button type="button"
-    (click)="isOpen = !isOpen"                    
-    [ngClass]="{'active': isOpen}"
-    class="btn-door">
-    <i class="mdi mdi-lock-open-outline"
-      *ngIf="isOpen; else doorLockClass">
-    </i>
-    <ng-template #doorLockClass>
-      <i class="mdi mdi-lock-outline"></i>
-    </ng-template>
-  </button>
-</div>
-<div class="d-flex justify-content-around flex-nowrap pt-3">     
-  <span style="font-family: Raleway-SemiBold; color: #0aacdc;" class="door-state" 
-      *ngIf="isOpen; else doorIsNotOpen">
-    OUVERTE
-  </span>
-  <ng-template #doorIsNotOpen>
-    <span style="font-family: Raleway-SemiBold; color: #0aacdc;" class="door-state">
-      FERMEE
+    <button type="button" (click)="toggleDevice()" [ngClass]="{'active': state == 'open'}" class="btn-door">
+      <i class="mdi mdi-lock-open-outline" *ngIf="state == 'open'; else doorLockClass">
+      </i>
+      <ng-template #doorLockClass>
+        <i class="mdi mdi-lock-outline"></i>
+      </ng-template>
+    </button>
+  </div>
+  <div class="d-flex justify-content-around flex-nowrap pt-3">
+    <span style="font-family: Raleway-SemiBold; color: #0aacdc;" class="door-state" *ngIf="state == 'open'; else doorIsNotOpen">
+      {{ state | titlecase}}
     </span>
-</ng-template>
-</div>
+    <ng-template #doorIsNotOpen>
+      <span style="font-family: Raleway-SemiBold; color: #0aacdc;" class="door-state">
+      {{ state | titlecase}}
+      </span>
+    </ng-template>
+  </div>

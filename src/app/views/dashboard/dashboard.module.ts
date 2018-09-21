@@ -23,6 +23,7 @@ import { RoomsComponent } from './rooms/rooms.component';
 import { RoomComponent } from './rooms/room/room.component';
 import { ActuatorComponent } from './devices/actuators/actuator/actuator.component';
 import { DashboardEffects } from './dashboard.effects';
+import { MainActuatorComponent } from './devices/sensors/main-actuator/main-actuator.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { DashboardEffects } from './dashboard.effects';
     SyncComponent,
     RoomsComponent,
     RoomComponent,
-    ActuatorComponent
+    ActuatorComponent,
+    MainActuatorComponent
   ],
   providers: [
     DeviceService

@@ -1,17 +1,14 @@
 <div class="template-demo d-flex justify-content-around flex-nowrap mt-5">
-  <button type="button" 
-    (click)="alarmIsOn = !alarmIsOn"
-    [ngClass]="{'active': alarmIsOn}"
-    class="btn-alarm btn-alarm-active">
-    <i class="mdi mdi-bell" *ngIf="alarmIsOn; else alarmOffClass"></i>
-    <ng-template #alarmOffClass>
-      <i class="mdi mdi-bell-off"></i>
+    <button type="button" (click)="toggleDevice()" [ngClass]="{'active': state == 'on'}" class="btn-alarm btn-alarm-active">
+      <i class="mdi mdi-bell" *ngIf="state == 'on'; else alarmOffClass"></i>
+      <ng-template #alarmOffClass>
+        <i class="mdi mdi-bell-off"></i>
+      </ng-template>
+    </button>
+  </div>
+  <div class="template-demo d-flex justify-content-around flex-nowrap pt-3">
+    <span *ngIf="state == 'on'; else alarmIsOff" style="font-family: Raleway-SemiBold; color: #ff90a3;" class="alarm-state">{{ state | titlecase}}</span>
+    <ng-template #alarmIsOff>
+      <span style="font-family: Raleway-SemiBold; color: #ff90a3;" class="alarm-state">{{ state | titlecase}}</span>
     </ng-template>
-  </button>
-</div>
-<div class="template-demo d-flex justify-content-around flex-nowrap pt-3">     
-  <span *ngIf="alarmIsOn; else alarmIsOff" style="font-family: Raleway-SemiBold; color: #ff90a3;" class="alarm-state">ACTIVEE</span>
-  <ng-template #alarmIsOff>
-    <span style="font-family: Raleway-SemiBold; color: #ff90a3;" class="alarm-state">DESACTIVEE</span>
-  </ng-template>
-</div>
+  </div>
