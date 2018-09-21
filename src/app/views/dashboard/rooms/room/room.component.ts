@@ -16,8 +16,6 @@ import { DeviceService } from '../../../../shared/service/device.service';
 })
 export class RoomComponent implements OnInit {
   room$: Observable<Room>;
-  room: Room;
-  roomDeviceTypeList: string[];
 
   constructor(
     private deviceService: DeviceService,
@@ -25,16 +23,13 @@ export class RoomComponent implements OnInit {
     private store: Store<fromDashboard.State>) { }
 
   ngOnInit() {
-    this.route.params.subscribe((params: Params) => {
+    this.route.params
+    .subscribe(params => {
       this.room$ = this.store.select(fromDashboard.getRoomById(params['id']));
-      this.room$.subscribe(room => {
-        this.room = room;
-        this.roomDeviceTypeList = Object.keys(this.deviceService.groupDevicesByType(room.devices));
-      });
     });
   }
 
-  loadDeviceOfType(type: string) {
-    return this.deviceService.getDevicesOfType(this.room.devices, type);
+  loadDeviceOfType(room: Room, type: string) {
+    return this.deviceService.getDevicesOfType(room.devices, type);
   }
 }

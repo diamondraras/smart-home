@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -14,7 +16,6 @@ import { LoginComponent } from './views/login/login.component';
 import { DashboardComponent } from './views/dashboard/dashboard.component';
 import { RegisterComponent } from './views/register/register.component';
 import { AuthModule } from './auth/auth.module';
-import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from './app.reducer';
 
@@ -36,6 +37,7 @@ import { reducers } from './app.reducer';
     HttpClientModule,
     AuthModule,
     StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument()
   ],
   providers: [],

@@ -30,11 +30,7 @@
   <div class="card-body">
     <h4 class="card-title">{{ type }}</h4>
     <div class="d-sm-flex justify-content-around flex-wrap">
-      <ng-container [ngSwitch]="type" *ngFor="let device of devices">
-        <app-light *ngSwitchCase="'light'"></app-light>
-        <app-door class="p-2" *ngSwitchCase="'door'"></app-door>
-        <app-alarm class="p-2" *ngSwitchCase="'alarm'"></app-alarm>
-      </ng-container>
+      <app-actuator *ngFor="let device of devices" [id]="device.id" [type]="device.type" [state]="device.state"></app-actuator>
     </div>
   </div>
 </div>
