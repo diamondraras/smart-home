@@ -13,13 +13,16 @@ import { Device } from '../../shared/models/device.model';
 
 @Injectable()
 export class DashboardEffects {
-  url = 'http://localhost:3000/api';
+  url = 'http://localhost:8123/api/services/switch/toggle';
+  bodyRequest = {
+    'entity_id': 'switch.builtin_led'
+  };
 
   @Effect()
   toggleDevice$ = this.actions$.ofType(DashboardActions.TOGGLE_DEVICE).pipe(
     map((action: DashboardActions.ToggleDevice) => action.payload),
     switchMap(payload => {
-      return this.http.get(this.url).pipe(
+      return this.http.post(this.url, this.bodyRequest).pipe(
         map(res => {
           return new DashboardActions.UpdateDeviceState({
             roomId: payload.roomId,
@@ -39,7 +42,7 @@ export class DashboardEffects {
     .pipe(
       map((action: DashboardActions.ToggleAlarm) => action.payload),
       switchMap((payload: Device) => {
-        return this.http.get(this.url).pipe(
+        return this.http.post(this.url, this.bodyRequest).pipe(
           map(res => {
             return new DashboardActions.UpdateAlarm(payload);
           }),
@@ -56,7 +59,7 @@ export class DashboardEffects {
     .pipe(
       map((action: DashboardActions.ToggleMainDoor) => action.payload),
       switchMap((payload: Device) => {
-        return this.http.get(this.url).pipe(
+        return this.http.post(this.url, this.bodyRequest).pipe(
           map(res => {
             return new DashboardActions.UpdateMainDoor(payload);
           }),
