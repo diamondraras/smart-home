@@ -14,29 +14,29 @@
         <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
       </a>
     </li>
-    <li class="nav-item" (click)="onUpdateMaisonToActive()" [ngClass]="{'active': active === ''}">
+    <li class="nav-item" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
       <a class="nav-link" routerLink="./">
         <span class="menu-title">Maison</span>
-        <i class="mdi mdi-home menu-icon"></i>
+        <i class="mdi mdi-home-modern menu-icon"></i>
       </a>
     </li>
-    <li class="nav-item" (click)="onUpdateHistoriqueToActive()" [ngClass]="{'active': active === 'historique'}">
+    <li class="nav-item" [routerLinkActive]="'active'">
       <a class="nav-link" routerLink="./history" aria-expanded="false" aria-controls="ui-basic">
         <span class="menu-title">Historique</span>
-        <i class="mdi mdi-timetable menu-icon"></i>
+        <i class="mdi mdi-history menu-icon"></i>
       </a>
     </li>
-    <li class="nav-item" (click)="onUpdateAccountToActive()" [ngClass]="{'active': active === 'account'}">
+    <li class="nav-item" [routerLinkActive]="'active'">
       <a class="nav-link" routerLink="./account" aria-expanded="false" aria-controls="ui-basic">
         <span class="menu-title">Compte</span>
-        <i class="mdi mdi-timetable menu-icon"></i>
+        <i class=" mdi mdi-account menu-icon"></i>
       </a>
     </li>
-    <li class="nav-item" (click)="onUpdateRoomToActive()" [ngClass]="{'active': active === 'room'}">
+    <li class="nav-item" [routerLinkActive]="'active'">
       <a class="nav-link" data-toggle="collapse" href="#room" role="button"
         aria-expanded="false" aria-controls="room">
         <span class="menu-title">Rooms</span>
-        <i class="mdi mdi-timetable menu-icon"></i>
+        <i class=" mdi mdi-houzz menu-icon"></i>
       </a>
       <ul class="nav collapse" id="room">
         <li class="nav-item">

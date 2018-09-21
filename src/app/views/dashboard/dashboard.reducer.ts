@@ -70,10 +70,9 @@ export function dashboardReducer(state = initialState, action: dashboard.Actions
               ...room,
               devices: room.devices.map(device => device.id == action.payload.device.id ? action.payload.device : device)
             };
-          }
-          else return room;
+          } else { return room; }
         })
-      }
+      };
     default:
       return state;
   }
