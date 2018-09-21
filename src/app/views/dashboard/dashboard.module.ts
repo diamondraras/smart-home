@@ -23,8 +23,6 @@ import { RoomsComponent } from './rooms/rooms.component';
 import { RoomComponent } from './rooms/room/room.component';
 import { ActuatorComponent } from './devices/actuators/actuator/actuator.component';
 import { DashboardEffects } from './dashboard.effects';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AddHeaderInterceptor } from '../../_helpers/token-injector';
 
 @NgModule({
   imports: [
@@ -49,12 +47,7 @@ import { AddHeaderInterceptor } from '../../_helpers/token-injector';
     ActuatorComponent
   ],
   providers: [
-    DeviceService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AddHeaderInterceptor,
-      multi: true,
-    }
+    DeviceService
   ]
 })
 export class DashboardModule { }

@@ -38,13 +38,7 @@ export class DashboardEffects {
             map((action: DashboardActions.LoadWeather) => action.payload),
             switchMap(payload => {
                 const entity_id = payload;
-                const httpOptions = {
-                    headers: new HttpHeaders({
-                      'Content-Type':  'application/json',
-                      'x-ha-access': '1234'
-                    })
-                  };
-                return this.http.get('http://localhost:8123/api/states/' + entity_id, httpOptions)
+                return this.http.get('http://localhost:8123/api/states/' + entity_id)
                         .pipe(
                             map((res: SensorResponse) => {
                                 return new DashboardActions.LoadWeatherSuccess({

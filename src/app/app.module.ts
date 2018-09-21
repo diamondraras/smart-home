@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -26,6 +26,7 @@ import { AuthService } from './auth/auth.service';
 import { AuthEffects } from './auth/auth.effects';
 
 import { fakeBackendProvider } from './_helpers/fake-backend';
+import { AddHeaderInterceptor } from './_helpers/token-injector';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -59,7 +60,14 @@ export function tokenGetter() {
     }),
     EffectsModule.forRoot([AuthEffects])
   ],
-  providers: [fakeBackendProvider],
+  providers: [
+    fakeBackendProvider,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AddHeaderInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
