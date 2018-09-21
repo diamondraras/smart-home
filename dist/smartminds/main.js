@@ -5389,21 +5389,33 @@ Zone.__load_patch('PromiseRejectionEvent', function (global, Zone) {
   !*** ./src/$$_lazy_route_resource lazy namespace object ***!
   \**********************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-function webpackEmptyAsyncContext(req) {
-	// Here Promise.resolve().then() is used instead of new Promise() to prevent
-	// uncaught exception popping up in devtools
-	return Promise.resolve().then(function() {
-		var e = new Error("Cannot find module '" + req + "'");
-		e.code = 'MODULE_NOT_FOUND';
-		throw e;
+var map = {
+	"../app/views/dashboard/dashboard.module": [
+		"./src/app/views/dashboard/dashboard.module.ts",
+		"app-views-dashboard-dashboard-module"
+	]
+};
+function webpackAsyncContext(req) {
+	var ids = map[req];
+	if(!ids) {
+		return Promise.resolve().then(function() {
+			var e = new Error("Cannot find module '" + req + "'");
+			e.code = 'MODULE_NOT_FOUND';
+			throw e;
+		});
+	}
+	return __webpack_require__.e(ids[1]).then(function() {
+		var module = __webpack_require__(ids[0]);
+		return module;
 	});
 }
-webpackEmptyAsyncContext.keys = function() { return []; };
-webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
-module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
+webpackAsyncContext.keys = function webpackAsyncContextKeys() {
+	return Object.keys(map);
+};
+webpackAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
+module.exports = webpackAsyncContext;
 
 /***/ }),
 
@@ -5419,9 +5431,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppRoutingModule", function() { return AppRoutingModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _views_account_account_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/account/account.component */ "./src/app/views/account/account.component.ts");
-/* harmony import */ var _views_devices_devices_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/devices/devices.component */ "./src/app/views/devices/devices.component.ts");
-/* harmony import */ var _views_history_history_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/history/history.component */ "./src/app/views/history/history.component.ts");
+/* harmony import */ var _views_login_login_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./views/login/login.component */ "./src/app/views/login/login.component.ts");
+/* harmony import */ var _views_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/dashboard/dashboard.component */ "./src/app/views/dashboard/dashboard.component.ts");
+/* harmony import */ var _views_register_register_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/register/register.component */ "./src/app/views/register/register.component.ts");
+/* harmony import */ var _auth_auth_guard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./auth/auth.guard */ "./src/app/auth/auth.guard.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5433,10 +5446,32 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var routes = [
-    { path: '', component: _views_devices_devices_component__WEBPACK_IMPORTED_MODULE_3__["DevicesComponent"] },
-    { path: 'history', component: _views_history_history_component__WEBPACK_IMPORTED_MODULE_4__["HistoryComponent"] },
-    { path: 'account', component: _views_account_account_component__WEBPACK_IMPORTED_MODULE_2__["AccountComponent"] }
+    {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+    },
+    {
+        path: 'dashboard',
+        component: _views_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_3__["DashboardComponent"],
+        children: [
+            {
+                path: '',
+                canLoad: [_auth_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+                loadChildren: '../app/views/dashboard/dashboard.module#DashboardModule'
+            }
+        ]
+    },
+    {
+        path: 'login',
+        component: _views_login_login_component__WEBPACK_IMPORTED_MODULE_2__["LoginComponent"]
+    },
+    {
+        path: 'register',
+        component: _views_register_register_component__WEBPACK_IMPORTED_MODULE_4__["RegisterComponent"]
+    }
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -5474,7 +5509,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-scroller\">\n  <app-nav></app-nav>\n  <div class=\"container-fluid page-body-wrapper\">\n      <app-sidebar></app-sidebar>\n      <div class=\"main-panel\">\n          <router-outlet></router-outlet>\n          <app-footer></app-footer>\n      </div>\n  </div>\n</div>"
+module.exports = "<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -5489,6 +5524,7 @@ module.exports = "<div class=\"container-scroller\">\n  <app-nav></app-nav>\n  <
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _auth_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth/auth.service */ "./src/app/auth/auth.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5499,9 +5535,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var AppComponent = /** @class */ (function () {
-    function AppComponent(renderer) {
+    function AppComponent(renderer, authService) {
         this.renderer = renderer;
+        this.authService = authService;
         this.isFavorite = false;
         this.showBoring = false;
         this.courseGoals = [
@@ -5514,13 +5552,17 @@ var AppComponent = /** @class */ (function () {
         // element.style.display = 'block';
         this.renderer.setStyle(element, 'display', 'block');
     };
+    AppComponent.prototype.ngOnInit = function () {
+        this.authService.initAuthListener();
+    };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")]
         }),
-        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"]])
+        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer2"],
+            _auth_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -5541,29 +5583,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _views_account_account_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./views/account/account.component */ "./src/app/views/account/account.component.ts");
-/* harmony import */ var _shared_header_header_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./shared/header/header.component */ "./src/app/shared/header/header.component.ts");
-/* harmony import */ var _shared_header_sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./shared/header/sidebar/sidebar.component */ "./src/app/shared/header/sidebar/sidebar.component.ts");
-/* harmony import */ var _shared_header_nav_nav_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./shared/header/nav/nav.component */ "./src/app/shared/header/nav/nav.component.ts");
-/* harmony import */ var _shared_footer_footer_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./shared/footer/footer.component */ "./src/app/shared/footer/footer.component.ts");
-/* harmony import */ var _views_devices_sensors_sensors_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./views/devices/sensors/sensors.component */ "./src/app/views/devices/sensors/sensors.component.ts");
-/* harmony import */ var _views_devices_sensors_weather_weather_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./views/devices/sensors/weather/weather.component */ "./src/app/views/devices/sensors/weather/weather.component.ts");
-/* harmony import */ var _views_devices_actuators_actuators_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./views/devices/actuators/actuators.component */ "./src/app/views/devices/actuators/actuators.component.ts");
-/* harmony import */ var _views_devices_devices_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./views/devices/devices.component */ "./src/app/views/devices/devices.component.ts");
-/* harmony import */ var _views_history_history_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./views/history/history.component */ "./src/app/views/history/history.component.ts");
-/* harmony import */ var _views_devices_actuators_lights_lights_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./views/devices/actuators/lights/lights.component */ "./src/app/views/devices/actuators/lights/lights.component.ts");
-/* harmony import */ var _views_devices_actuators_door_door_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./views/devices/actuators/door/door.component */ "./src/app/views/devices/actuators/door/door.component.ts");
-/* harmony import */ var _views_devices_actuators_alarm_alarm_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./views/devices/actuators/alarm/alarm.component */ "./src/app/views/devices/actuators/alarm/alarm.component.ts");
-/* harmony import */ var _views_account_sync_sync_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./views/account/sync/sync.component */ "./src/app/views/account/sync/sync.component.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
+/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/effects */ "./node_modules/@ngrx/effects/fesm5/effects.js");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _shared_header_header_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./shared/header/header.component */ "./src/app/shared/header/header.component.ts");
+/* harmony import */ var _shared_header_sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./shared/header/sidebar/sidebar.component */ "./src/app/shared/header/sidebar/sidebar.component.ts");
+/* harmony import */ var _shared_header_nav_nav_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./shared/header/nav/nav.component */ "./src/app/shared/header/nav/nav.component.ts");
+/* harmony import */ var _shared_footer_footer_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./shared/footer/footer.component */ "./src/app/shared/footer/footer.component.ts");
+/* harmony import */ var _views_login_login_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./views/login/login.component */ "./src/app/views/login/login.component.ts");
+/* harmony import */ var _views_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./views/dashboard/dashboard.component */ "./src/app/views/dashboard/dashboard.component.ts");
+/* harmony import */ var _views_register_register_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./views/register/register.component */ "./src/app/views/register/register.component.ts");
+/* harmony import */ var _auth_auth_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./auth/auth.module */ "./src/app/auth/auth.module.ts");
+/* harmony import */ var _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ngrx/store-devtools */ "./node_modules/@ngrx/store-devtools/fesm5/store-devtools.js");
+/* harmony import */ var _app_reducer__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./app.reducer */ "./src/app/app.reducer.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
 
 
 
@@ -5587,31 +5627,296 @@ var AppModule = /** @class */ (function () {
     AppModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"],
-                _shared_header_header_component__WEBPACK_IMPORTED_MODULE_5__["HeaderComponent"],
-                _shared_header_sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_6__["SidebarComponent"],
-                _shared_header_nav_nav_component__WEBPACK_IMPORTED_MODULE_7__["NavComponent"],
-                _shared_footer_footer_component__WEBPACK_IMPORTED_MODULE_8__["FooterComponent"],
-                _views_devices_sensors_sensors_component__WEBPACK_IMPORTED_MODULE_9__["SensorsComponent"],
-                _views_devices_sensors_weather_weather_component__WEBPACK_IMPORTED_MODULE_10__["WeatherComponent"],
-                _views_devices_actuators_actuators_component__WEBPACK_IMPORTED_MODULE_11__["ActuatorsComponent"],
-                _views_devices_devices_component__WEBPACK_IMPORTED_MODULE_12__["DevicesComponent"],
-                _views_history_history_component__WEBPACK_IMPORTED_MODULE_13__["HistoryComponent"],
-                _views_devices_actuators_lights_lights_component__WEBPACK_IMPORTED_MODULE_14__["LightsComponent"],
-                _views_devices_actuators_door_door_component__WEBPACK_IMPORTED_MODULE_15__["DoorComponent"],
-                _views_devices_actuators_alarm_alarm_component__WEBPACK_IMPORTED_MODULE_16__["AlarmComponent"],
-                _views_account_account_component__WEBPACK_IMPORTED_MODULE_4__["AccountComponent"],
-                _views_account_sync_sync_component__WEBPACK_IMPORTED_MODULE_17__["SyncComponent"],
+                _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"],
+                _shared_header_header_component__WEBPACK_IMPORTED_MODULE_7__["HeaderComponent"],
+                _shared_header_sidebar_sidebar_component__WEBPACK_IMPORTED_MODULE_8__["SidebarComponent"],
+                _shared_header_nav_nav_component__WEBPACK_IMPORTED_MODULE_9__["NavComponent"],
+                _shared_footer_footer_component__WEBPACK_IMPORTED_MODULE_10__["FooterComponent"],
+                _views_login_login_component__WEBPACK_IMPORTED_MODULE_11__["LoginComponent"],
+                _views_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_12__["DashboardComponent"],
+                _views_register_register_component__WEBPACK_IMPORTED_MODULE_13__["RegisterComponent"],
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
-                _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"]
+                _app_routing_module__WEBPACK_IMPORTED_MODULE_6__["AppRoutingModule"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
+                _auth_auth_module__WEBPACK_IMPORTED_MODULE_14__["AuthModule"],
+                _ngrx_store__WEBPACK_IMPORTED_MODULE_3__["StoreModule"].forRoot(_app_reducer__WEBPACK_IMPORTED_MODULE_16__["reducers"]),
+                _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__["EffectsModule"].forRoot([]),
+                _ngrx_store_devtools__WEBPACK_IMPORTED_MODULE_15__["StoreDevtoolsModule"].instrument()
             ],
             providers: [],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]]
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/app.reducer.ts":
+/*!********************************!*\
+  !*** ./src/app/app.reducer.ts ***!
+  \********************************/
+/*! exports provided: reducers, getAuthState, getIsAuth */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "reducers", function() { return reducers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAuthState", function() { return getAuthState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getIsAuth", function() { return getIsAuth; });
+/* harmony import */ var _auth_auth_reducer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth/auth.reducer */ "./src/app/auth/auth.reducer.ts");
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
+
+
+var reducers = {
+    auth: _auth_auth_reducer__WEBPACK_IMPORTED_MODULE_0__["authReducer"]
+};
+var getAuthState = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createFeatureSelector"])('auth');
+var getIsAuth = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(getAuthState, _auth_auth_reducer__WEBPACK_IMPORTED_MODULE_0__["getIsAuth"]);
+
+
+/***/ }),
+
+/***/ "./src/app/auth/auth.actions.ts":
+/*!**************************************!*\
+  !*** ./src/app/auth/auth.actions.ts ***!
+  \**************************************/
+/*! exports provided: SET_AUTHENTICATED, SET_UNAUTHENTICATED, SetAuthenticated, SetUnauthenticated */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_AUTHENTICATED", function() { return SET_AUTHENTICATED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_UNAUTHENTICATED", function() { return SET_UNAUTHENTICATED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SetAuthenticated", function() { return SetAuthenticated; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SetUnauthenticated", function() { return SetUnauthenticated; });
+var SET_AUTHENTICATED = '[Auth] SET_AUTHENTICATED';
+var SET_UNAUTHENTICATED = '[Auth] SET_UNAUTHENTICATED';
+var SetAuthenticated = /** @class */ (function () {
+    function SetAuthenticated() {
+        this.type = SET_AUTHENTICATED;
+    }
+    return SetAuthenticated;
+}());
+
+var SetUnauthenticated = /** @class */ (function () {
+    function SetUnauthenticated() {
+        this.type = SET_UNAUTHENTICATED;
+    }
+    return SetUnauthenticated;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/auth/auth.guard.ts":
+/*!************************************!*\
+  !*** ./src/app/auth/auth.guard.ts ***!
+  \************************************/
+/*! exports provided: AuthGuard */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function() { return AuthGuard; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auth.service */ "./src/app/auth/auth.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _app_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../app.reducer */ "./src/app/app.reducer.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var AuthGuard = /** @class */ (function () {
+    function AuthGuard(authService, router, store) {
+        this.authService = authService;
+        this.router = router;
+        this.store = store;
+    }
+    AuthGuard.prototype.canLoad = function (route) {
+        return this.store.select(_app_reducer__WEBPACK_IMPORTED_MODULE_5__["getIsAuth"])
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["take"])(1));
+    };
+    AuthGuard.prototype.canActivate = function () {
+        return this.store.select(_app_reducer__WEBPACK_IMPORTED_MODULE_5__["getIsAuth"])
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["take"])(1));
+    };
+    AuthGuard = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"], _ngrx_store__WEBPACK_IMPORTED_MODULE_3__["Store"]])
+    ], AuthGuard);
+    return AuthGuard;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/auth/auth.module.ts":
+/*!*************************************!*\
+  !*** ./src/app/auth/auth.module.ts ***!
+  \*************************************/
+/*! exports provided: AuthModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthModule", function() { return AuthModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth.service */ "./src/app/auth/auth.service.ts");
+/* harmony import */ var _auth_guard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth.guard */ "./src/app/auth/auth.guard.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+var AuthModule = /** @class */ (function () {
+    function AuthModule() {
+    }
+    AuthModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]
+            ],
+            declarations: [],
+            providers: [
+                _auth_service__WEBPACK_IMPORTED_MODULE_2__["AuthService"],
+                _auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]
+            ]
+        })
+    ], AuthModule);
+    return AuthModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/auth/auth.reducer.ts":
+/*!**************************************!*\
+  !*** ./src/app/auth/auth.reducer.ts ***!
+  \**************************************/
+/*! exports provided: authReducer, getIsAuth */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "authReducer", function() { return authReducer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getIsAuth", function() { return getIsAuth; });
+/* harmony import */ var _auth_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth.actions */ "./src/app/auth/auth.actions.ts");
+
+var initialState = {
+    isAuthenticated: false
+};
+function authReducer(state, action) {
+    if (state === void 0) { state = initialState; }
+    switch (action.type) {
+        case _auth_actions__WEBPACK_IMPORTED_MODULE_0__["SET_AUTHENTICATED"]:
+            return {
+                isAuthenticated: true
+            };
+        case _auth_actions__WEBPACK_IMPORTED_MODULE_0__["SET_UNAUTHENTICATED"]:
+            return {
+                isAuthenticated: false
+            };
+        default:
+            return state;
+    }
+}
+var getIsAuth = function (state) { return state.isAuthenticated; };
+
+
+/***/ }),
+
+/***/ "./src/app/auth/auth.service.ts":
+/*!**************************************!*\
+  !*** ./src/app/auth/auth.service.ts ***!
+  \**************************************/
+/*! exports provided: AuthService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthService", function() { return AuthService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
+/* harmony import */ var _app_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../app.reducer */ "./src/app/app.reducer.ts");
+/* harmony import */ var _auth_actions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth.actions */ "./src/app/auth/auth.actions.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var AuthService = /** @class */ (function () {
+    function AuthService(store, router) {
+        this.store = store;
+        this.router = router;
+    }
+    AuthService.prototype.setRedirectUrl = function (url) {
+        this.redirectUrl = url;
+    };
+    AuthService.prototype.getLoginUrl = function () {
+        return 'login';
+    };
+    AuthService.prototype.login = function () {
+        this.store.dispatch(new _auth_actions__WEBPACK_IMPORTED_MODULE_3__["SetAuthenticated"]()); // Just set the global auth state to logged in for the moment
+    };
+    AuthService.prototype.logout = function () {
+        this.store.dispatch(new _auth_actions__WEBPACK_IMPORTED_MODULE_3__["SetUnauthenticated"]());
+    };
+    // Subscribe to auth state to implements redirection based on
+    AuthService.prototype.initAuthListener = function () {
+        var _this = this;
+        this.store.select(_app_reducer__WEBPACK_IMPORTED_MODULE_2__["getIsAuth"])
+            .subscribe(function (state) {
+            if (state) {
+                _this.router.navigate(['dashboard']);
+            }
+            else {
+                _this.router.navigate(['login']);
+            }
+        });
+    };
+    AuthService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["Store"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
+    ], AuthService);
+    return AuthService;
 }());
 
 
@@ -5762,7 +6067,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row\">\n  <div class=\"text-center navbar-brand-wrapper d-flex align-items-center justify-content-center\">\n    <a class=\"navbar-brand brand-logo\" routerLink=\"/maison\"><img src=\"assets/images/logo.svg\" alt=\"logo\"/></a>\n    <a class=\"navbar-brand brand-logo-mini\" routerLink=\"/maison\"><img src=\"assets/images/logo-mini.png\" alt=\"logo\"/></a>\n  </div>\n  <div class=\"navbar-menu-wrapper d-flex align-items-stretch\">\n\n    <ul class=\"navbar-nav navbar-nav-right\">\n      <li class=\"nav-item nav-profile dropdown\">\n        <a class=\"nav-link dropdown-toggle\" id=\"profileDropdown\" href=\"#\" data-toggle=\"dropdown\" aria-expanded=\"false\">\n          <div class=\"nav-profile-img\">\n            <img src=\"assets/images/faces/face1.jpg\" alt=\"image\">\n            <span class=\"availability-status online\"></span>             \n          </div>\n          <div class=\"nav-profile-text\">\n            <p class=\"mb-1 text-white\">Diams Danzé</p>\n          </div>\n        </a>\n        <div class=\"dropdown-menu navbar-dropdown\" aria-labelledby=\"profileDropdown\">\n          <a class=\"dropdown-item\" href=\"#\">\n            <i class=\"mdi mdi-account mr-2 text-success\"></i>\n            Votre profil\n          </a>\n          <div class=\"dropdown-divider\"></div>\n          <a class=\"dropdown-item\" href=\"#\">\n            <i class=\"mdi mdi-logout mr-2 text-primary\"></i>\n            Se déconnecter\n          </a>\n        </div>\n      </li>\n      <li class=\"nav-item d-none d-lg-block full-screen-link text-white\">\n        <a class=\"nav-link\">\n          <i class=\"mdi mdi-fullscreen\" id=\"fullscreen-button\"></i>\n        </a>\n      </li>\n      <li class=\"nav-item dropdown\">\n        <a class=\"nav-link count-indicator dropdown-toggle\" id=\"notificationDropdown\" href=\"#\" data-toggle=\"dropdown\">\n          <i class=\"mdi mdi-bell-outline text-white\"></i>\n          <span class=\"count-symbol bg-danger\"></span>\n        </a>\n        <div class=\"dropdown-menu dropdown-menu-right navbar-dropdown preview-list\" aria-labelledby=\"notificationDropdown\">\n          <h6 class=\"p-3 mb-0\">Notifications</h6>\n          <div class=\"dropdown-divider\"></div>\n          <a class=\"dropdown-item preview-item\">\n            <div class=\"preview-thumbnail\">\n              <div class=\"preview-icon bg-success\">\n                <i class=\"mdi mdi-calendar\"></i>\n              </div>\n            </div>\n            <div class=\"preview-item-content d-flex align-items-start flex-column justify-content-center\">\n              <h6 class=\"preview-subject font-weight-normal mb-1\">09:30 - Aujourd'hui</h6>\n              <p class=\"text-gray ellipsis mb-0\">\n                Maman sort de la maison.\n              </p>\n            </div>\n          </a>\n          <div class=\"dropdown-divider\"></div>\n          <a class=\"dropdown-item preview-item\">\n            <div class=\"preview-thumbnail\">\n              <div class=\"preview-icon bg-warning\">\n                <i class=\"mdi mdi-calendar\"></i>\n              </div>\n            </div>\n            <div class=\"preview-item-content d-flex align-items-start flex-column justify-content-center\">\n              <h6 class=\"preview-subject font-weight-normal mb-1\">10:53 - Aujourd'hui</h6>\n              <p class=\"text-gray ellipsis mb-0\">\n                Papa est arrivé\n              </p>\n            </div>\n          </a>\n          <div class=\"dropdown-divider\"></div>\n          <a class=\"dropdown-item preview-item\">\n            <div class=\"preview-thumbnail\">\n              <div class=\"preview-icon bg-info\">\n                <i class=\"mdi mdi-calendar\"></i>\n              </div>\n            </div>\n            <div class=\"preview-item-content d-flex align-items-start flex-column justify-content-center\">\n              <h6 class=\"preview-subject font-weight-normal mb-1\">16:24 - Aujourd'hui</h6>\n              <p class=\"text-gray ellipsis mb-0\">\n                Tonton est arrivé\n              </p>\n            </div>\n          </a>\n          <div class=\"dropdown-divider\"></div>\n          <h6 class=\"p-3 mb-0 text-center\" routerLink=\"/historique\">Voir l'historique</h6>\n        </div>\n      </li>\n      <li class=\"nav-item nav-logout d-none d-lg-block\">\n        <a class=\"nav-link\" href=\"#\">\n          <i class=\"mdi mdi-power text-white\"></i>\n        </a>\n      </li>\n    </ul>\n    <button class=\"navbar-toggler navbar-toggler-right d-lg-none align-self-center\" type=\"button\" data-toggle=\"offcanvas\">\n      <span class=\"mdi mdi-menu\"></span>\n    </button>\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row\">\n  <div class=\"text-center navbar-brand-wrapper d-flex align-items-center justify-content-center\">\n    <a class=\"navbar-brand brand-logo\" routerLink=\"/maison\"><img src=\"assets/images/logo.svg\" alt=\"logo\"/></a>\n    <a class=\"navbar-brand brand-logo-mini\" routerLink=\"/maison\"><img src=\"assets/images/logo-mini.png\" alt=\"logo\"/></a>\n  </div>\n  <div class=\"navbar-menu-wrapper d-flex align-items-stretch\">\n\n    <ul class=\"navbar-nav navbar-nav-right\">\n      <li class=\"nav-item nav-profile dropdown\">\n        <a class=\"nav-link dropdown-toggle\" id=\"profileDropdown\" href=\"#\" data-toggle=\"dropdown\" aria-expanded=\"false\">\n          <div class=\"nav-profile-img\">\n            <img src=\"assets/images/faces/face1.jpg\" alt=\"image\">\n            <span class=\"availability-status online\"></span>             \n          </div>\n          <div class=\"nav-profile-text\">\n            <p class=\"mb-1 text-white\">Diams Danzé</p>\n          </div>\n        </a>\n        <div class=\"dropdown-menu navbar-dropdown\" aria-labelledby=\"profileDropdown\">\n          <a class=\"dropdown-item\" href=\"#\">\n            <i class=\"mdi mdi-account mr-2 text-success\"></i>\n            Votre profil\n          </a>\n          <div class=\"dropdown-divider\"></div>\n          <a class=\"dropdown-item\" (click)=\"logout()\">\n            <i class=\"mdi mdi-logout mr-2 text-primary\"></i>\n            Se déconnecter\n          </a>\n        </div>\n      </li>\n      <li class=\"nav-item d-none d-lg-block full-screen-link text-white\">\n        <a class=\"nav-link\">\n          <i class=\"mdi mdi-fullscreen\" id=\"fullscreen-button\"></i>\n        </a>\n      </li>\n      <li class=\"nav-item dropdown\">\n        <a class=\"nav-link count-indicator dropdown-toggle\" id=\"notificationDropdown\" href=\"#\" data-toggle=\"dropdown\">\n          <i class=\"mdi mdi-bell-outline text-white\"></i>\n          <span class=\"count-symbol bg-danger\"></span>\n        </a>\n        <div class=\"dropdown-menu dropdown-menu-right navbar-dropdown preview-list\" aria-labelledby=\"notificationDropdown\">\n          <h6 class=\"p-3 mb-0\">Notifications</h6>\n          <div class=\"dropdown-divider\"></div>\n          <a class=\"dropdown-item preview-item\">\n            <div class=\"preview-thumbnail\">\n              <div class=\"preview-icon bg-success\">\n                <i class=\"mdi mdi-calendar\"></i>\n              </div>\n            </div>\n            <div class=\"preview-item-content d-flex align-items-start flex-column justify-content-center\">\n              <h6 class=\"preview-subject font-weight-normal mb-1\">09:30 - Aujourd'hui</h6>\n              <p class=\"text-gray ellipsis mb-0\">\n                Maman sort de la maison.\n              </p>\n            </div>\n          </a>\n          <div class=\"dropdown-divider\"></div>\n          <a class=\"dropdown-item preview-item\">\n            <div class=\"preview-thumbnail\">\n              <div class=\"preview-icon bg-warning\">\n                <i class=\"mdi mdi-calendar\"></i>\n              </div>\n            </div>\n            <div class=\"preview-item-content d-flex align-items-start flex-column justify-content-center\">\n              <h6 class=\"preview-subject font-weight-normal mb-1\">10:53 - Aujourd'hui</h6>\n              <p class=\"text-gray ellipsis mb-0\">\n                Papa est arrivé\n              </p>\n            </div>\n          </a>\n          <div class=\"dropdown-divider\"></div>\n          <a class=\"dropdown-item preview-item\">\n            <div class=\"preview-thumbnail\">\n              <div class=\"preview-icon bg-info\">\n                <i class=\"mdi mdi-calendar\"></i>\n              </div>\n            </div>\n            <div class=\"preview-item-content d-flex align-items-start flex-column justify-content-center\">\n              <h6 class=\"preview-subject font-weight-normal mb-1\">16:24 - Aujourd'hui</h6>\n              <p class=\"text-gray ellipsis mb-0\">\n                Tonton est arrivé\n              </p>\n            </div>\n          </a>\n          <div class=\"dropdown-divider\"></div>\n          <h6 class=\"p-3 mb-0 text-center\" routerLink=\"/historique\">Voir l'historique</h6>\n        </div>\n      </li>\n      <li class=\"nav-item nav-logout d-none d-lg-block\">\n        <a class=\"nav-link\" href=\"#\">\n          <i class=\"mdi mdi-power text-white\"></i>\n        </a>\n      </li>\n    </ul>\n    <button class=\"navbar-toggler navbar-toggler-right d-lg-none align-self-center\" type=\"button\" data-toggle=\"offcanvas\">\n      <span class=\"mdi mdi-menu\"></span>\n    </button>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -5777,6 +6082,7 @@ module.exports = "<nav class=\"navbar default-layout-navbar col-lg-12 col-12 p-0
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavComponent", function() { return NavComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _auth_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../auth/auth.service */ "./src/app/auth/auth.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5787,10 +6093,15 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var NavComponent = /** @class */ (function () {
-    function NavComponent() {
+    function NavComponent(authService) {
+        this.authService = authService;
     }
     NavComponent.prototype.ngOnInit = function () {
+    };
+    NavComponent.prototype.logout = function () {
+        this.authService.logout();
     };
     NavComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -5798,7 +6109,7 @@ var NavComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./nav.component.html */ "./src/app/shared/header/nav/nav.component.html"),
             styles: [__webpack_require__(/*! ./nav.component.css */ "./src/app/shared/header/nav/nav.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_auth_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"]])
     ], NavComponent);
     return NavComponent;
 }());
@@ -5825,7 +6136,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"sidebar sidebar-offcanvas\" id=\"sidebar\">\n  <ul class=\"nav\">\n    <li class=\"nav-item nav-profile\">\n      <a href=\"#\" class=\"nav-link\">\n        <div class=\"nav-profile-image\">\n          <img src=\"assets/images/faces/face1.jpg\" alt=\"profile\">\n          <span class=\"login-status online\"></span> <!--change to offline or busy as needed-->              \n        </div>\n        <div class=\"nav-profile-text d-flex flex-column\">\n          <span class=\"font-weight-bold mb-2\">Diams Danzé</span>\n          <span class=\"text-secondary text-small\">Tompon-trano</span>\n        </div>\n        <i class=\"mdi mdi-bookmark-check text-success nav-profile-badge\"></i>\n      </a>\n    </li>\n    <li class=\"nav-item\" (click)=\"onUpdateMaisonToActive()\" [ngClass]=\"{'active': active === ''}\">\n      <a class=\"nav-link\" routerLink=\"/\">\n        <span class=\"menu-title\">Maison</span>\n        <i class=\"mdi mdi-home menu-icon\"></i>\n      </a>\n    </li>\n    <li class=\"nav-item\" (click)=\"onUpdateHistoriqueToActive()\" [ngClass]=\"{'active': active === 'historique'}\">\n      <a class=\"nav-link\" routerLink=\"/history\" aria-expanded=\"false\" aria-controls=\"ui-basic\">\n        <span class=\"menu-title\">Historique</span>                            \n        <i class=\"mdi mdi-timetable menu-icon\"></i>\n      </a>\n    </li>\n    <li class=\"nav-item\" (click)=\"onUpdateAccountToActive()\" [ngClass]=\"{'active': active === 'account'}\">\n      <a class=\"nav-link\" routerLink=\"/account\" aria-expanded=\"false\" aria-controls=\"ui-basic\">\n        <span class=\"menu-title\">Compte</span>                            \n        <i class=\"mdi mdi-timetable menu-icon\"></i>\n      </a>\n    </li>\n    <li class=\"nav-item sidebar-actions\">\n      <span class=\"nav-link\">\n        <div class=\"border-bottom\">\n          <h6 class=\"font-weight-normal mb-3\">Utilisateurs</h6>                \n        </div>\n        <button class=\"btn btn-block btn-lg btn-gradient-primary mt-4\">+ Ajouter</button>\n        <div class=\"mt-4\">\n          <div class=\"border-bottom\">\n            <p class=\"text-secondary\">Utilisateurs enregistrés</p>                  \n          </div>\n          <ul class=\"gradient-bullet-list mt-4\">\n            <li>Diams Danzé</li>\n            <li>Voanjo</li>\n            <li>Tsong</li>\n          </ul>\n        </div>\n      </span>\n    </li>\n  </ul>\n</nav>"
+module.exports = "<nav class=\"sidebar sidebar-offcanvas\" id=\"sidebar\">\n  <ul class=\"nav\">\n    <li class=\"nav-item nav-profile\">\n      <a href=\"#\" class=\"nav-link\">\n        <div class=\"nav-profile-image\">\n          <img src=\"assets/images/faces/face1.jpg\" alt=\"profile\">\n          <span class=\"login-status online\"></span>\n          <!--change to offline or busy as needed-->\n        </div>\n        <div class=\"nav-profile-text d-flex flex-column\">\n          <span class=\"font-weight-bold mb-2\">Diams Danzé</span>\n          <span class=\"text-secondary text-small\">Tompon-trano</span>\n        </div>\n        <i class=\"mdi mdi-bookmark-check text-success nav-profile-badge\"></i>\n      </a>\n    </li>\n    <li class=\"nav-item\" (click)=\"onUpdateMaisonToActive()\" [ngClass]=\"{'active': active === ''}\">\n      <a class=\"nav-link\" routerLink=\"./\">\n        <span class=\"menu-title\">Maison</span>\n        <i class=\"mdi mdi-home menu-icon\"></i>\n      </a>\n    </li>\n    <li class=\"nav-item\" (click)=\"onUpdateHistoriqueToActive()\" [ngClass]=\"{'active': active === 'historique'}\">\n      <a class=\"nav-link\" routerLink=\"./history\" aria-expanded=\"false\" aria-controls=\"ui-basic\">\n        <span class=\"menu-title\">Historique</span>\n        <i class=\"mdi mdi-timetable menu-icon\"></i>\n      </a>\n    </li>\n    <li class=\"nav-item\" (click)=\"onUpdateAccountToActive()\" [ngClass]=\"{'active': active === 'account'}\">\n      <a class=\"nav-link\" routerLink=\"./account\" aria-expanded=\"false\" aria-controls=\"ui-basic\">\n        <span class=\"menu-title\">Compte</span>\n        <i class=\"mdi mdi-timetable menu-icon\"></i>\n      </a>\n    </li>\n    <li class=\"nav-item\" (click)=\"onUpdateRoomToActive()\" [ngClass]=\"{'active': active === 'room'}\">\n      <a class=\"nav-link\" data-toggle=\"collapse\" href=\"#room\" role=\"button\"\n        aria-expanded=\"false\" aria-controls=\"room\">\n        <span class=\"menu-title\">Rooms</span>\n        <i class=\"mdi mdi-timetable menu-icon\"></i>\n      </a>\n      <ul class=\"nav collapse\" id=\"room\">\n        <li class=\"nav-item\">\n          <a *ngFor=\"let room of rooms$ | async\" class=\"nav-link\" [routerLink]=\"['./room', room.id]\" aria-expanded=\"false\" aria-controls=\"ui-basic\">\n            <span class=\"menu-title\">{{ room.name }}</span>\n          </a>\n        </li>\n      </ul>\n    </li>\n    <li class=\"nav-item sidebar-actions\">\n      <span class=\"nav-link\">\n        <div class=\"border-bottom\">\n          <h6 class=\"font-weight-normal mb-3\">Utilisateurs</h6>\n        </div>\n        <button class=\"btn btn-block btn-lg btn-gradient-primary mt-4\">+ Ajouter</button>\n        <div class=\"mt-4\">\n          <div class=\"border-bottom\">\n            <p class=\"text-secondary\">Utilisateurs enregistrés</p>\n          </div>\n          <ul class=\"gradient-bullet-list mt-4\">\n            <li>Diams Danzé</li>\n            <li>Voanjo</li>\n            <li>Tsong</li>\n          </ul>\n        </div>\n      </span>\n    </li>\n  </ul>\n</nav>"
 
 /***/ }),
 
@@ -5840,12 +6151,17 @@ module.exports = "<nav class=\"sidebar sidebar-offcanvas\" id=\"sidebar\">\n  <u
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SidebarComponent", function() { return SidebarComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
 
 var SidebarComponent = /** @class */ (function () {
     function SidebarComponent() {
@@ -5863,12 +6179,23 @@ var SidebarComponent = /** @class */ (function () {
         this.active = 'account';
         console.log(this.active);
     };
+    SidebarComponent.prototype.onUpdateRoomToActive = function () {
+        this.active = 'room';
+        console.log(this.active);
+    };
+    SidebarComponent.prototype.ngOnInit = function () {
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"])
+    ], SidebarComponent.prototype, "rooms$", void 0);
     SidebarComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-sidebar',
             template: __webpack_require__(/*! ./sidebar.component.html */ "./src/app/shared/header/sidebar/sidebar.component.html"),
             styles: [__webpack_require__(/*! ./sidebar.component.css */ "./src/app/shared/header/sidebar/sidebar.component.css")]
-        })
+        }),
+        __metadata("design:paramtypes", [])
     ], SidebarComponent);
     return SidebarComponent;
 }());
@@ -5877,10 +6204,66 @@ var SidebarComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/views/account/account.component.css":
-/*!*****************************************************!*\
-  !*** ./src/app/views/account/account.component.css ***!
-  \*****************************************************/
+/***/ "./src/app/views/dashboard/dashboard.actions.ts":
+/*!******************************************************!*\
+  !*** ./src/app/views/dashboard/dashboard.actions.ts ***!
+  \******************************************************/
+/*! exports provided: ADD_ROOM, UPDATE_DEVICE_STATE, TOGGLE_DEVICE, TOGGLE_DEVICE_FAILED, AddRoom, ToggleDevice, UpdateDeviceState, ToggleDeviceFailed */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ADD_ROOM", function() { return ADD_ROOM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_DEVICE_STATE", function() { return UPDATE_DEVICE_STATE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_DEVICE", function() { return TOGGLE_DEVICE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TOGGLE_DEVICE_FAILED", function() { return TOGGLE_DEVICE_FAILED; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddRoom", function() { return AddRoom; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ToggleDevice", function() { return ToggleDevice; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UpdateDeviceState", function() { return UpdateDeviceState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ToggleDeviceFailed", function() { return ToggleDeviceFailed; });
+var ADD_ROOM = '[DASHBOARD] Add Room';
+var UPDATE_DEVICE_STATE = '[DASHBOARD] Update Device State';
+var TOGGLE_DEVICE = '[DASHBOARD] Toggle Device';
+var TOGGLE_DEVICE_FAILED = '[DASHBOARD] Toggle Device Failed';
+var AddRoom = /** @class */ (function () {
+    function AddRoom(payload) {
+        this.payload = payload;
+        this.type = ADD_ROOM;
+    }
+    return AddRoom;
+}());
+
+var ToggleDevice = /** @class */ (function () {
+    function ToggleDevice(payload) {
+        this.payload = payload;
+        this.type = TOGGLE_DEVICE;
+    }
+    return ToggleDevice;
+}());
+
+var UpdateDeviceState = /** @class */ (function () {
+    function UpdateDeviceState(payload) {
+        this.payload = payload;
+        this.type = UPDATE_DEVICE_STATE;
+    }
+    return UpdateDeviceState;
+}());
+
+var ToggleDeviceFailed = /** @class */ (function () {
+    function ToggleDeviceFailed() {
+        this.type = TOGGLE_DEVICE_FAILED;
+    }
+    return ToggleDeviceFailed;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/views/dashboard/dashboard.component.css":
+/*!*********************************************************!*\
+  !*** ./src/app/views/dashboard/dashboard.component.css ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -5888,28 +6271,30 @@ module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/views/account/account.component.html":
-/*!******************************************************!*\
-  !*** ./src/app/views/account/account.component.html ***!
-  \******************************************************/
+/***/ "./src/app/views/dashboard/dashboard.component.html":
+/*!**********************************************************!*\
+  !*** ./src/app/views/dashboard/dashboard.component.html ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"content-wrapper\">\n  <!-- Header -->\n  <div class=\"page-header\">\n    <h3 class=\"page-title\">\n      <span class=\"page-title-icon bg-gradient-primary text-white mr-2\">\n        <i class=\"mdi mdi-home\"></i>                 \n      </span>\n      <span class=\"text-grayMat\">Votre compte</span>\n    </h3>\n  </div>\n  \n  <!-- Content -->\n  <app-sync></app-sync>\n</div>"
+module.exports = "<div class=\"container-scroller\">\n  <app-nav></app-nav>\n  <div class=\"container-fluid page-body-wrapper\">\n      <app-sidebar [rooms$]=\"rooms$\"></app-sidebar>\n      <div class=\"main-panel\">\n          <router-outlet></router-outlet>\n          <app-footer></app-footer>\n      </div>\n  </div>\n</div>"
 
 /***/ }),
 
-/***/ "./src/app/views/account/account.component.ts":
-/*!****************************************************!*\
-  !*** ./src/app/views/account/account.component.ts ***!
-  \****************************************************/
-/*! exports provided: AccountComponent */
+/***/ "./src/app/views/dashboard/dashboard.component.ts":
+/*!********************************************************!*\
+  !*** ./src/app/views/dashboard/dashboard.component.ts ***!
+  \********************************************************/
+/*! exports provided: DashboardComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AccountComponent", function() { return AccountComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashboardComponent", function() { return DashboardComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _dashboard_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dashboard.reducer */ "./src/app/views/dashboard/dashboard.reducer.ts");
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5920,29 +6305,202 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-var AccountComponent = /** @class */ (function () {
-    function AccountComponent() {
+
+
+var DashboardComponent = /** @class */ (function () {
+    function DashboardComponent(store) {
+        this.store = store;
     }
-    AccountComponent.prototype.ngOnInit = function () {
+    DashboardComponent.prototype.ngOnInit = function () {
+        this.rooms$ = this.store.select(_dashboard_reducer__WEBPACK_IMPORTED_MODULE_1__["getRooms"]);
     };
-    AccountComponent = __decorate([
+    DashboardComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-account',
-            template: __webpack_require__(/*! ./account.component.html */ "./src/app/views/account/account.component.html"),
-            styles: [__webpack_require__(/*! ./account.component.css */ "./src/app/views/account/account.component.css")]
+            selector: 'app-dashboard',
+            template: __webpack_require__(/*! ./dashboard.component.html */ "./src/app/views/dashboard/dashboard.component.html"),
+            styles: [__webpack_require__(/*! ./dashboard.component.css */ "./src/app/views/dashboard/dashboard.component.css")]
         }),
-        __metadata("design:paramtypes", [])
-    ], AccountComponent);
-    return AccountComponent;
+        __metadata("design:paramtypes", [_ngrx_store__WEBPACK_IMPORTED_MODULE_2__["Store"]])
+    ], DashboardComponent);
+    return DashboardComponent;
 }());
 
 
 
 /***/ }),
 
-/***/ "./src/app/views/account/sync/sync.component.css":
+/***/ "./src/app/views/dashboard/dashboard.reducer.ts":
+/*!******************************************************!*\
+  !*** ./src/app/views/dashboard/dashboard.reducer.ts ***!
+  \******************************************************/
+/*! exports provided: dashboardReducer, getDashboardState, getRooms, getRoomById */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dashboardReducer", function() { return dashboardReducer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDashboardState", function() { return getDashboardState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRooms", function() { return getRooms; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRoomById", function() { return getRoomById; });
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ngrx/store */ "./node_modules/@ngrx/store/fesm5/store.js");
+/* harmony import */ var underscore__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! underscore */ "./node_modules/underscore/underscore.js");
+/* harmony import */ var underscore__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(underscore__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _dashboard_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard.actions */ "./src/app/views/dashboard/dashboard.actions.ts");
+var __assign = (undefined && undefined.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+
+
+
+var initialState = {
+    rooms: [
+        {
+            id: 1,
+            name: 'Attic',
+            devices: [
+                { id: 1, type: 'light', state: 'off' },
+                { id: 2, type: 'door', state: 'open' }
+            ]
+        },
+        {
+            id: 2,
+            name: 'Living Room',
+            devices: [
+                { id: 1, type: 'light', state: 'off' },
+                { id: 2, type: 'light', state: 'off' },
+                { id: 3, type: 'door', state: 'open' },
+            ]
+        },
+        {
+            id: 3,
+            name: 'Toilet Room',
+            devices: [
+                { id: 1, type: 'light', state: 'off' },
+                { id: 2, type: 'door', state: 'open' }
+            ]
+        },
+        {
+            id: 4,
+            name: 'Hall',
+            devices: [
+                { id: 1, type: 'light', state: 'off' },
+                { id: 2, type: 'door', state: 'open' },
+                { id: 3, type: 'alarm', state: 'off' },
+            ]
+        }
+    ]
+};
+function dashboardReducer(state, action) {
+    if (state === void 0) { state = initialState; }
+    switch (action.type) {
+        case _dashboard_actions__WEBPACK_IMPORTED_MODULE_2__["ADD_ROOM"]:
+            return __assign({}, state, { rooms: state.rooms.concat([action.payload]) });
+        case _dashboard_actions__WEBPACK_IMPORTED_MODULE_2__["UPDATE_DEVICE_STATE"]:
+            return __assign({}, state, { rooms: state.rooms.map(function (room) {
+                    if (room.id == action.payload.roomId) {
+                        return __assign({}, room, { devices: room.devices.map(function (device) { return device.id == action.payload.device.id ? action.payload.device : device; }) });
+                    }
+                    else
+                        return room;
+                }) });
+        default:
+            return state;
+    }
+}
+var getDashboardState = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["createFeatureSelector"])('dashboard');
+var getRooms = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["createSelector"])(getDashboardState, function (state) { return state.rooms; });
+var getRoomById = function (id) { return Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["createSelector"])(getRooms, function (rooms) {
+    // tslint:disable-next-line:triple-equal
+    return rooms
+        .map(function (room) { return Object.assign({
+        deviceTypeList: Object.keys(underscore__WEBPACK_IMPORTED_MODULE_1__["_"].groupBy(room.devices, function (device) { return device.type; }))
+    }, room); })
+        .find(function (room) { return room.id == id; });
+}); };
+
+
+/***/ }),
+
+/***/ "./src/app/views/login/login.component.css":
+/*!*************************************************!*\
+  !*** ./src/app/views/login/login.component.css ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/views/login/login.component.html":
+/*!**************************************************!*\
+  !*** ./src/app/views/login/login.component.html ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container-scroller\">\n  <div class=\"container-fluid page-body-wrapper full-page-wrapper\">\n    <div class=\"content-wrapper d-flex align-items-center auth\">\n      <div class=\"row w-100\">\n        <div class=\"col-lg-4 mx-auto\">\n          <div class=\"auth-form-light text-left p-5\">\n            <div class=\"brand-logo\">\n              <img src=\"/src/assets/images/logo.svg\">\n            </div>\n            <h4>Hello! let's get started</h4>\n            <h6 class=\"font-weight-light\">Sign in to continue.</h6>\n            <form class=\"pt-3\">\n              <div class=\"form-group\">\n                <input type=\"email\" class=\"form-control form-control-lg\" id=\"exampleInputEmail1\" placeholder=\"Username\">\n              </div>\n              <div class=\"form-group\">\n                <input type=\"password\" class=\"form-control form-control-lg\" id=\"exampleInputPassword1\" placeholder=\"Password\">\n              </div>\n              <div class=\"mt-3\">\n                <a class=\"btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn\" (click)=\"login()\">SIGN\n                  IN</a>\n              </div>\n              <div class=\"my-2 d-flex justify-content-between align-items-center\">\n                <div class=\"form-check\">\n                  <label class=\"form-check-label text-muted\">\n                    <input type=\"checkbox\" class=\"form-check-input\">\n                    Keep me signed in\n                  </label>\n                </div>\n                <a href=\"#\" class=\"auth-link text-black\">Forgot password?</a>\n              </div>\n            </form>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/views/login/login.component.ts":
+/*!************************************************!*\
+  !*** ./src/app/views/login/login.component.ts ***!
+  \************************************************/
+/*! exports provided: LoginComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginComponent", function() { return LoginComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _auth_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../auth/auth.service */ "./src/app/auth/auth.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var LoginComponent = /** @class */ (function () {
+    function LoginComponent(authService) {
+        this.authService = authService;
+    }
+    LoginComponent.prototype.ngOnInit = function () {
+    };
+    LoginComponent.prototype.login = function () {
+        this.authService.login();
+    };
+    LoginComponent.prototype.logout = function () {
+        this.authService.logout();
+    };
+    LoginComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-login',
+            template: __webpack_require__(/*! ./login.component.html */ "./src/app/views/login/login.component.html"),
+            styles: [__webpack_require__(/*! ./login.component.css */ "./src/app/views/login/login.component.css")]
+        }),
+        __metadata("design:paramtypes", [_auth_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"]])
+    ], LoginComponent);
+    return LoginComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/views/register/register.component.css":
 /*!*******************************************************!*\
-  !*** ./src/app/views/account/sync/sync.component.css ***!
+  !*** ./src/app/views/register/register.component.css ***!
   \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -5951,27 +6509,27 @@ module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/views/account/sync/sync.component.html":
+/***/ "./src/app/views/register/register.component.html":
 /*!********************************************************!*\
-  !*** ./src/app/views/account/sync/sync.component.html ***!
+  !*** ./src/app/views/register/register.component.html ***!
   \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row \">\n      <div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card\">\n        <div class=\"card\">\n          <div class=\"card-body\">\n            <h4 class=\"card-title\">Synchronisation</h4>\n            <form>\n                <div class=\"form-group\">\n                  <label for=\"exampleInputEmail1\">Email address</label>\n                  <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter email\">\n                  <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\n                </div>\n                <div class=\"form-group\">\n                  <label for=\"exampleInputPassword1\">Password</label>\n                  <input type=\"password\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"Password\">\n                </div>\n                <div class=\"form-check\">\n                  <input type=\"checkbox\" class=\"form-check-input\" id=\"exampleCheck1\">\n                  <label class=\"form-check-label\" for=\"exampleCheck1\">Check me out</label>\n                </div>\n                <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n              </form>\n          </div>\n        </div>\n      </div>\n      <div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card\">\n        <div class=\"card\">\n          <div class=\"card-body\">\n            <h4 class=\"card-title\">Status</h4>\n            <div class=\"row\">\n              <div class=\"col-xl-12\">\n                <p>Status: Connected</p>\n                <p>Url: www.example.com</p>\n                <p>Last sync : 22 August 2018</p>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n</div>"
+module.exports = "<div class=\"container-scroller\">\n  <div class=\"container-fluid page-body-wrapper full-page-wrapper\">\n    <div class=\"content-wrapper d-flex align-items-center auth\">\n      <div class=\"row w-100\">\n        <div class=\"col-lg-4 mx-auto\">\n          <div class=\"auth-form-light text-left p-5\">\n            <div class=\"brand-logo\">\n              <img src=\"/src/assets/images/logo.svg\">\n            </div>\n            <h4>New here?</h4>\n            <h6 class=\"font-weight-light\">Signing up is easy. It only takes a few steps</h6>\n            <form class=\"pt-3\">\n              <div class=\"form-group\">\n                <input type=\"text\" class=\"form-control form-control-lg\" id=\"exampleInputUsername1\" placeholder=\"Username\">\n              </div>\n              <div class=\"form-group\">\n                <input type=\"email\" class=\"form-control form-control-lg\" id=\"exampleInputEmail1\" placeholder=\"Email\">\n              </div>\n              <div class=\"form-group\">\n                <select class=\"form-control form-control-lg\" id=\"exampleFormControlSelect2\">\n                  <option>Country</option>\n                  <option>United States of America</option>\n                  <option>United Kingdom</option>\n                  <option>India</option>\n                  <option>Germany</option>\n                  <option>Argentina</option>\n                </select>\n              </div>\n              <div class=\"form-group\">\n                <input type=\"password\" class=\"form-control form-control-lg\" id=\"exampleInputPassword1\" placeholder=\"Password\">\n              </div>\n              <div class=\"mb-4\">\n                <div class=\"form-check\">\n                  <label class=\"form-check-label text-muted\">\n                    <input type=\"checkbox\" class=\"form-check-input\">\n                    I agree to all Terms & Conditions\n                  </label>\n                </div>\n              </div>\n              <div class=\"mt-3\">\n                <a class=\"btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn\" href=\"../../index.html\">SIGN UP</a>\n              </div>\n            </form>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
-/***/ "./src/app/views/account/sync/sync.component.ts":
+/***/ "./src/app/views/register/register.component.ts":
 /*!******************************************************!*\
-  !*** ./src/app/views/account/sync/sync.component.ts ***!
+  !*** ./src/app/views/register/register.component.ts ***!
   \******************************************************/
-/*! exports provided: SyncComponent */
+/*! exports provided: RegisterComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SyncComponent", function() { return SyncComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RegisterComponent", function() { return RegisterComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5983,524 +6541,20 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-var SyncComponent = /** @class */ (function () {
-    function SyncComponent() {
+var RegisterComponent = /** @class */ (function () {
+    function RegisterComponent() {
     }
-    SyncComponent.prototype.ngOnInit = function () {
+    RegisterComponent.prototype.ngOnInit = function () {
     };
-    SyncComponent = __decorate([
+    RegisterComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-sync',
-            template: __webpack_require__(/*! ./sync.component.html */ "./src/app/views/account/sync/sync.component.html"),
-            styles: [__webpack_require__(/*! ./sync.component.css */ "./src/app/views/account/sync/sync.component.css")]
+            selector: 'app-register',
+            template: __webpack_require__(/*! ./register.component.html */ "./src/app/views/register/register.component.html"),
+            styles: [__webpack_require__(/*! ./register.component.css */ "./src/app/views/register/register.component.css")]
         }),
         __metadata("design:paramtypes", [])
-    ], SyncComponent);
-    return SyncComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/views/devices/actuators/actuators.component.css":
-/*!*****************************************************************!*\
-  !*** ./src/app/views/devices/actuators/actuators.component.css ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/views/devices/actuators/actuators.component.html":
-/*!******************************************************************!*\
-  !*** ./src/app/views/devices/actuators/actuators.component.html ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "        <!-- Commandes -->\n        <div class=\"page-header\">\n          <h3 class=\"page-title\">\n            <span class=\"page-title-icon bg-gradient-primary text-white mr-2\">\n              <i class=\"mdi mdi-remote\"></i>                 \n            </span>\n            <span class=\"text-grayMat\">Commandes</span>\n          </h3>\n        </div>\n\n        <div class=\"row\">\n          <div class=\"col-xl-4 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card\">\n            <div class=\"card\">\n              <div class=\"card-body\">\n                <h4 class=\"card-title\">Lumières</h4>\n                <app-lights></app-lights>\n              </div>\n            </div>\n          </div>\n          <div class=\"col-xl-4 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card\">\n            <div class=\"card\">\n              <div class=\"card-body\">\n                <h4 class=\"card-title\">Porte</h4>\n                <app-door></app-door>\n              </div>\n            </div>\n          </div>\n          <div class=\"col-xl-4 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card\">\n            <div class=\"card\">\n              <div class=\"card-body\">\n                <h4 class=\"card-title\">Alarme</h4>\n                <app-alarm></app-alarm>\n              </div>\n            </div>\n          </div>\n        </div>\n      <!-- Fin Commandes--> "
-
-/***/ }),
-
-/***/ "./src/app/views/devices/actuators/actuators.component.ts":
-/*!****************************************************************!*\
-  !*** ./src/app/views/devices/actuators/actuators.component.ts ***!
-  \****************************************************************/
-/*! exports provided: ActuatorsComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ActuatorsComponent", function() { return ActuatorsComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-var ActuatorsComponent = /** @class */ (function () {
-    function ActuatorsComponent() {
-        this.lightIsActive = false;
-        this.sofaIsActive = false;
-        this.kitchenIsActive = true;
-        this.spotlightIsActive = false;
-        this.doorIsOpen = false;
-        this.alarmIsOn = true;
-    }
-    ActuatorsComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-actuators',
-            template: __webpack_require__(/*! ./actuators.component.html */ "./src/app/views/devices/actuators/actuators.component.html"),
-            styles: [__webpack_require__(/*! ./actuators.component.css */ "./src/app/views/devices/actuators/actuators.component.css")]
-        })
-    ], ActuatorsComponent);
-    return ActuatorsComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/views/devices/actuators/alarm/alarm.component.css":
-/*!*******************************************************************!*\
-  !*** ./src/app/views/devices/actuators/alarm/alarm.component.css ***!
-  \*******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/views/devices/actuators/alarm/alarm.component.html":
-/*!********************************************************************!*\
-  !*** ./src/app/views/devices/actuators/alarm/alarm.component.html ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"template-demo d-flex justify-content-around flex-nowrap mt-5\">\n  <button type=\"button\" \n    (click)=\"alarmIsOn = !alarmIsOn\"\n    [ngClass]=\"{'active': alarmIsOn}\"\n    class=\"btn-alarm btn-alarm-active\">\n    <i class=\"mdi mdi-bell\" *ngIf=\"alarmIsOn; else alarmOffClass\"></i>\n    <ng-template #alarmOffClass>\n      <i class=\"mdi mdi-bell-off\"></i>\n    </ng-template>\n  </button>\n</div>\n<div class=\"template-demo d-flex justify-content-around flex-nowrap pt-3\">     \n  <span *ngIf=\"alarmIsOn; else alarmIsOff\" style=\"font-family: Raleway-SemiBold; color: #ff90a3;\" class=\"alarm-state\">ACTIVEE</span>\n  <ng-template #alarmIsOff>\n    <span style=\"font-family: Raleway-SemiBold; color: #ff90a3;\" class=\"alarm-state\">DESACTIVEE</span>\n  </ng-template>\n</div>"
-
-/***/ }),
-
-/***/ "./src/app/views/devices/actuators/alarm/alarm.component.ts":
-/*!******************************************************************!*\
-  !*** ./src/app/views/devices/actuators/alarm/alarm.component.ts ***!
-  \******************************************************************/
-/*! exports provided: AlarmComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AlarmComponent", function() { return AlarmComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var AlarmComponent = /** @class */ (function () {
-    function AlarmComponent() {
-    }
-    AlarmComponent.prototype.ngOnInit = function () {
-    };
-    AlarmComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-alarm',
-            template: __webpack_require__(/*! ./alarm.component.html */ "./src/app/views/devices/actuators/alarm/alarm.component.html"),
-            styles: [__webpack_require__(/*! ./alarm.component.css */ "./src/app/views/devices/actuators/alarm/alarm.component.css")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], AlarmComponent);
-    return AlarmComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/views/devices/actuators/door/door.component.css":
-/*!*****************************************************************!*\
-  !*** ./src/app/views/devices/actuators/door/door.component.css ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/views/devices/actuators/door/door.component.html":
-/*!******************************************************************!*\
-  !*** ./src/app/views/devices/actuators/door/door.component.html ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"template-demo d-flex justify-content-around flex-nowrap mt-5\">\n  <button type=\"button\"\n    (click)=\"doorIsOpen = !doorIsOpen\"                    \n    [ngClass]=\"{'active': doorIsOpen}\"\n    class=\"btn-door\">\n    <i class=\"mdi mdi-lock-open-outline\"\n      *ngIf=\"doorIsOpen; else doorLockClass\">\n    </i>\n    <ng-template #doorLockClass>\n      <i class=\"mdi mdi-lock-outline\"></i>\n    </ng-template>\n  </button>\n</div>\n<div class=\"template-demo d-flex justify-content-around flex-nowrap pt-3\">     \n  <span style=\"font-family: Raleway-SemiBold; color: #0aacdc;\" class=\"door-state\" \n      *ngIf=\"doorIsOpen; else doorIsNotOpen\">\n    OUVERTE\n  </span>\n  <ng-template #doorIsNotOpen>\n    <span style=\"font-family: Raleway-SemiBold; color: #0aacdc;\" class=\"door-state\">\n      FERMEE\n    </span>\n</ng-template>\n</div>"
-
-/***/ }),
-
-/***/ "./src/app/views/devices/actuators/door/door.component.ts":
-/*!****************************************************************!*\
-  !*** ./src/app/views/devices/actuators/door/door.component.ts ***!
-  \****************************************************************/
-/*! exports provided: DoorComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DoorComponent", function() { return DoorComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var DoorComponent = /** @class */ (function () {
-    function DoorComponent() {
-    }
-    DoorComponent.prototype.ngOnInit = function () {
-    };
-    DoorComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-door',
-            template: __webpack_require__(/*! ./door.component.html */ "./src/app/views/devices/actuators/door/door.component.html"),
-            styles: [__webpack_require__(/*! ./door.component.css */ "./src/app/views/devices/actuators/door/door.component.css")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], DoorComponent);
-    return DoorComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/views/devices/actuators/lights/lights.component.css":
-/*!*********************************************************************!*\
-  !*** ./src/app/views/devices/actuators/lights/lights.component.css ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/views/devices/actuators/lights/lights.component.html":
-/*!**********************************************************************!*\
-  !*** ./src/app/views/devices/actuators/lights/lights.component.html ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "                 <!-- Buttons ICI -->\n                 <div class=\"template-demo d-flex justify-content-around flex-nowrap mt-4\">\n                  <button type=\"button\" \n                    (click)=\"lightIsActive = !lightIsActive\"\n                    [ngClass]=\"{'active': lightIsActive}\" \n                    class=\"btn-sensor btn-sensor-light\">\n                    <i class=\"mdi mdi-lightbulb\"></i>                     \n                  </button>\n                    <!-- Special classes made for this type of button : btn-sensor -->\n                  <button type=\"button\" \n                    (click)=\"sofaIsActive = !sofaIsActive\"\n                    [ngClass]=\"{'active': sofaIsActive}\" \n                    class=\"btn-sensor btn-sensor-sofa\">\n                    <i class=\"mdi mdi-sofa\"></i>\n                  </button>\n                </div>\n                <div class=\"template-demo d-flex justify-content-around flex-nowrap mt-4\">\n                  <button type=\"button\" \n                    (click)=\"kitchenIsActive = !kitchenIsActive\"\n                    [ngClass]=\"{'active': kitchenIsActive}\"\n                    class=\"btn-sensor btn-sensor-kitchen\">\n                    <i class=\"mdi mdi-silverware-variant\"></i>\n                  </button>\n                  <button type=\"button\" \n                    (click)=\"spotlightIsActive = !spotlightIsActive\"\n                    [ngClass]=\"{'active': spotlightIsActive}\"\n                    class=\"btn-sensor btn-sensor-spotlight\">\n                    <i class=\"mdi mdi-spotlight-beam \"></i>                          \n                  </button>\n                </div>"
-
-/***/ }),
-
-/***/ "./src/app/views/devices/actuators/lights/lights.component.ts":
-/*!********************************************************************!*\
-  !*** ./src/app/views/devices/actuators/lights/lights.component.ts ***!
-  \********************************************************************/
-/*! exports provided: LightsComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LightsComponent", function() { return LightsComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var LightsComponent = /** @class */ (function () {
-    function LightsComponent() {
-    }
-    LightsComponent.prototype.ngOnInit = function () {
-    };
-    LightsComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-lights',
-            template: __webpack_require__(/*! ./lights.component.html */ "./src/app/views/devices/actuators/lights/lights.component.html"),
-            styles: [__webpack_require__(/*! ./lights.component.css */ "./src/app/views/devices/actuators/lights/lights.component.css")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], LightsComponent);
-    return LightsComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/views/devices/devices.component.css":
-/*!*****************************************************!*\
-  !*** ./src/app/views/devices/devices.component.css ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/views/devices/devices.component.html":
-/*!******************************************************!*\
-  !*** ./src/app/views/devices/devices.component.html ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"content-wrapper\">\n  <app-sensors></app-sensors>\n  <!-- Commandes -->\n  <app-actuators></app-actuators>\n  <!-- Fin Commandes-->        \n</div>\n"
-
-/***/ }),
-
-/***/ "./src/app/views/devices/devices.component.ts":
-/*!****************************************************!*\
-  !*** ./src/app/views/devices/devices.component.ts ***!
-  \****************************************************/
-/*! exports provided: DevicesComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DevicesComponent", function() { return DevicesComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-var DevicesComponent = /** @class */ (function () {
-    function DevicesComponent() {
-        this.lightIsActive = false;
-        this.sofaIsActive = false;
-        this.kitchenIsActive = true;
-        this.spotlightisActive = false;
-        this.doorIsOpen = false;
-        this.alarmIsOn = false;
-    }
-    DevicesComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-devices',
-            template: __webpack_require__(/*! ./devices.component.html */ "./src/app/views/devices/devices.component.html"),
-            styles: [__webpack_require__(/*! ./devices.component.css */ "./src/app/views/devices/devices.component.css")]
-        })
-    ], DevicesComponent);
-    return DevicesComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/views/devices/sensors/sensors.component.css":
-/*!*************************************************************!*\
-  !*** ./src/app/views/devices/sensors/sensors.component.css ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/views/devices/sensors/sensors.component.html":
-/*!**************************************************************!*\
-  !*** ./src/app/views/devices/sensors/sensors.component.html ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"page-header\">\n  <h3 class=\"page-title\">\n    <span class=\"page-title-icon bg-gradient-primary text-white mr-2\">\n      <i class=\"mdi mdi-home\"></i>                 \n    </span>\n    <span class=\"text-grayMat\">Capteurs</span>\n  </h3>\n  <nav aria-label=\"breadcrumb\">\n    <ul class=\"breadcrumb\">\n      <li class=\"breadcrumb-item active\" aria-current=\"page\">\n        <span class=\"mr-1\">Résumé</span>\n        <i class=\"mdi mdi-eye icon-sm text-primary align-middle\"></i>                  \n      </li>\n    </ul>\n  </nav>\n</div>\n<app-weather></app-weather>\n"
-
-/***/ }),
-
-/***/ "./src/app/views/devices/sensors/sensors.component.ts":
-/*!************************************************************!*\
-  !*** ./src/app/views/devices/sensors/sensors.component.ts ***!
-  \************************************************************/
-/*! exports provided: SensorsComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SensorsComponent", function() { return SensorsComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var SensorsComponent = /** @class */ (function () {
-    function SensorsComponent() {
-    }
-    SensorsComponent.prototype.ngOnInit = function () {
-    };
-    SensorsComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-sensors',
-            template: __webpack_require__(/*! ./sensors.component.html */ "./src/app/views/devices/sensors/sensors.component.html"),
-            styles: [__webpack_require__(/*! ./sensors.component.css */ "./src/app/views/devices/sensors/sensors.component.css")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], SensorsComponent);
-    return SensorsComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/views/devices/sensors/weather/weather.component.css":
-/*!*********************************************************************!*\
-  !*** ./src/app/views/devices/sensors/weather/weather.component.css ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/views/devices/sensors/weather/weather.component.html":
-/*!**********************************************************************!*\
-  !*** ./src/app/views/devices/sensors/weather/weather.component.html ***!
-  \**********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"row\">\n  <div class=\"col-lg-7 grid-margin stretch-card\">\n    <!--weather card-->\n    <div class=\"card card-weather fadeIn3\">\n      <div class=\"card-body\">\n        <div class=\"weather-date-location\">\n          <h3>Lundi</h3>\n          <p class=\"text-gray\">\n            <span class=\"weather-date\" style=\"font-family: Montserrat-Light\">16 Aout, 2018</span>\n            <span class=\"weather-location\">Antananarivo, MG</span>\n          </p>\n        </div>\n        <div class=\"weather-data d-flex\">\n          <div class=\"mr-auto\">\n            <h4 class=\"display-3\">21\n              <span class=\"symbol\">&deg;</span>C</h4>\n            <p>\n              Partiellement nuagueux\n            </p>\n          </div>\n        </div>\n      </div>\n      <div class=\"card-body p-0\">\n        <div class=\"d-flex weakly-weather justify-content-between flex-nowrap\">\n          <!--  d-flex justify-content-between flex-nowrap-->\n          <div class=\"weakly-weather-item\">\n            <p class=\"mb-0\">\n              Dim\n            </p>\n            <i class=\"mdi mdi-weather-cloudy\"></i>\n            <p class=\"mb-0\">\n              30°\n            </p>\n          </div>\n          <div class=\"weakly-weather-item\">\n            <p class=\"mb-1\">\n              Lun\n            </p>\n            <i class=\"mdi mdi-weather-hail\"></i>\n            <p class=\"mb-0\">\n              31°\n            </p>\n          </div>\n          <div class=\"weakly-weather-item\">\n            <p class=\"mb-1\">\n              Mar\n            </p>\n            <i class=\"mdi mdi-weather-partlycloudy\"></i>\n            <p class=\"mb-0\">\n              28°\n            </p>\n          </div>\n          <div class=\"weakly-weather-item\">\n            <p class=\"mb-1\">\n              Mer\n            </p>\n            <i class=\"mdi mdi-weather-pouring\"></i>\n            <p class=\"mb-0\">\n              30°\n            </p>\n          </div>\n          <div class=\"weakly-weather-item only-gt992\">\n            <p class=\"mb-1\">\n              Jeu\n            </p>\n            <i class=\"mdi mdi-weather-pouring\"></i>\n            <p class=\"mb-0\">\n              29°\n            </p>\n          </div>\n          <div class=\"weakly-weather-item only-gt992\">\n            <p class=\"mb-1\">\n              Ven\n            </p>\n            <i class=\"mdi mdi-weather-snowy-rainy\"></i>\n            <p class=\"mb-0\">\n              31°\n            </p>\n          </div>\n          <div class=\"weakly-weather-item only-gt992 only-gt1024\">\n            <p class=\"mb-1\">\n              Sam\n            </p>\n            <i class=\"mdi mdi-weather-snowy\"></i>\n            <p class=\"mb-0\">\n              32°\n            </p>\n          </div>\n        </div>\n      </div>\n    </div>\n    <!--weather card ends-->\n  </div>\n</div>"
-
-/***/ }),
-
-/***/ "./src/app/views/devices/sensors/weather/weather.component.ts":
-/*!********************************************************************!*\
-  !*** ./src/app/views/devices/sensors/weather/weather.component.ts ***!
-  \********************************************************************/
-/*! exports provided: WeatherComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "WeatherComponent", function() { return WeatherComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var WeatherComponent = /** @class */ (function () {
-    function WeatherComponent() {
-    }
-    WeatherComponent.prototype.ngOnInit = function () {
-    };
-    WeatherComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-weather',
-            template: __webpack_require__(/*! ./weather.component.html */ "./src/app/views/devices/sensors/weather/weather.component.html"),
-            styles: [__webpack_require__(/*! ./weather.component.css */ "./src/app/views/devices/sensors/weather/weather.component.css")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], WeatherComponent);
-    return WeatherComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/views/history/history.component.css":
-/*!*****************************************************!*\
-  !*** ./src/app/views/history/history.component.css ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/views/history/history.component.html":
-/*!******************************************************!*\
-  !*** ./src/app/views/history/history.component.html ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"content-wrapper\">\n  <div class=\"page-header\">\n    <h3 class=\"page-title\">\n      <span class=\"page-title-icon bg-gradient-primary text-white mr-2\">\n        <i class=\"mdi mdi-timetable\"></i>                 \n      </span>\n      <span class=\"text-grayMat\">Historique</span>\n    </h3>\n    <nav aria-label=\"breadcrumb\">\n      <ul class=\"breadcrumb\">\n        <li class=\"breadcrumb-item active\" aria-current=\"page\">\n          <span class=\"mr-1\">Résumé</span>\n          <i class=\"mdi mdi-eye icon-sm text-primary align-middle\"></i>                  \n        </li>\n      </ul>\n    </nav>\n  </div>\n\n    <div class=\"row\">\n        <div class=\"col-xl-2 col-lg-2 col-md-2 col-sm-3 col-5\">\n                <div class=\"form-group\">\n                    <div class=\"input-group\">\n                      <div class=\"input-group-prepend\">\n                        <button class=\"btn btn-md btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">Filtre</button>\n                        <div class=\"dropdown-menu\">\n                          <a class=\"dropdown-item fadeInDown\" href=\"#\">Liste des entrées</a>\n                          <a class=\"dropdown-item fadeIn1\" href=\"#\">Liste des sorties</a>\n                          <a class=\"dropdown-item fadeIn2\" href=\"#\">Liste des inconnus</a>\n                        </div>\n                      </div>\n                    </div>\n                  </div>                     \n        </div>\n        <div class=\"col-xl-3 col-lg-4 col-md-4 col-sm-4 col-7\">\n                <div class=\"form-group\">                                                \n                    <div class=\"input-group clearfix\">\n                        <input class=\"form-control calendar\" style=\"background-color: white\" id=\"date\" name=\"date\" placeholder=\"Selectionnez une date...\" type=\"text\">\n                        <div class=\"input-group-addon input-group-append\">\n                            <span class=\"input-group-text bg-primary text-white\"><i class=\"mdi mdi-timetable\"></i></span>\n                        </div>\n                    </div>\n                </div>                \n        </div>\n        <div class=\"col-xl-4 offset-xl-3 col-lg-4 offset-lg-2 col-md-5 offset-md-1 col-12\">\n                <div class=\"form-group\">\n                <div class=\"input-group\">\n                  <input type=\"text\" class=\"form-control search-input\" placeholder=\"Rechercher des évènements\" style=\"border-radius: 30px 0 0 30px; border-style: none\">\n                  <div class=\"input-group-append\">\n                    <span class=\"input-group-text bg-white search-input-append\" style=\"border-radius: 0 30px 30px 0; border: 3px solid white\"><i class=\"mdi mdi-magnify text-primary\" style=\"\"></i></span>\n                  </div>                        \n                </div>\n              </div>                 \n        </div>\n    </div>         \n\n<!-- Timeline -->   \n        <section id=\"cd-timeline\" class=\"cd-container fadeIn\" style=\"animation-duration: 0.5s\">\n        <div class=\"cd-timeline-block\">\n            <div class=\"cd-timeline-img cd-entry\">\n            </div> <!-- cd-timeline-img -->\n\n            <div class=\"cd-timeline-content\">\n                <h2>Maman arrive à la maison</h2>\n                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>                        \n                <span class=\"cd-date\"><i class=\"mdi mdi-clock\"></i> 08:14, Aujourd'hui</span>\n            </div> <!-- cd-timeline-content -->\n        </div> <!-- cd-timeline-block -->\n\n        <div class=\"cd-timeline-block\">\n            <div class=\"cd-timeline-img cd-entry\">                        \n            </div> <!-- cd-timeline-img -->\n\n            <div class=\"cd-timeline-content\">\n                <h2>Papa arrive à la maison</h2>\n                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde?</p>                        \n                <span class=\"cd-date\"><i class=\"mdi mdi-clock\"></i> 08:18, Aujourd'hui</span>\n            </div> <!-- cd-timeline-content -->\n        </div> <!-- cd-timeline-block -->\n\n        <div class=\"cd-timeline-block fadeIn\">\n            <div class=\"cd-timeline-img cd-exit\">                        \n            </div> <!-- cd-timeline-img -->\n\n            <div class=\"cd-timeline-content\">\n                <h2>Maman sort de la maison</h2>\n                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, obcaecati, quisquam id molestias eaque asperiores voluptatibus cupiditate error assumenda delectus odit similique earum voluptatem doloremque dolorem ipsam quae rerum quis.</p>                        \n                <span class=\"cd-date\"><i class=\"mdi mdi-clock\"></i> 08:24, Aujourd'hui</span>\n            </div> <!-- cd-timeline-content -->\n        </div> <!-- cd-timeline-block -->\n\n        <div class=\"cd-timeline-block\">\n            <div class=\"cd-timeline-img cd-exit\">                        \n            </div> <!-- cd-timeline-img -->\n\n            <div class=\"cd-timeline-content\">\n                <h2>Toto sort de la maison</h2>\n                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>\n                <span class=\"cd-date\"><i class=\"mdi mdi-clock\"></i> 09:14, Aujourd'hui</span>\n            </div> <!-- cd-timeline-content -->\n        </div> <!-- cd-timeline-block -->\n\n        <div class=\"cd-timeline-block\">\n            <div class=\"cd-timeline-img cd-unknown\">                        \n            </div> <!-- cd-timeline-img -->\n\n            <div class=\"cd-timeline-content\">\n                <h2>Un inconnu est devant la porte</h2>\n                <p>This is the content of the last section</p>\n                \n                    <img src=\"assets/images/unknown.jpg\" class=\"img-responsive\"style=\"\">\n                \n                \n                <span class=\"cd-date\"><i class=\"mdi mdi-clock\"></i> 09:26, Hier</span>\n            </div> <!-- cd-timeline-content -->\n        </div> <!-- cd-timeline-block -->\n        <div class=\"cd-timeline-block\">\n            <div class=\"cd-timeline-img cd-entry\">                        \n            </div> <!-- cd-timeline-img -->\n\n            <div class=\"cd-timeline-content\">\n                <h2>Papa arrive à la maison</h2>\n                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde?</p>                        \n                <span class=\"cd-date\"><i class=\"mdi mdi-clock\"></i> 08:18, Aujourd'hui</span>\n            </div> <!-- cd-timeline-content -->\n        </div> <!-- cd-timeline-block -->                    \n</section> <!-- cd-timeline -->\n\n<!-- Timeline -->   \n    \n  </div>"
-
-/***/ }),
-
-/***/ "./src/app/views/history/history.component.ts":
-/*!****************************************************!*\
-  !*** ./src/app/views/history/history.component.ts ***!
-  \****************************************************/
-/*! exports provided: HistoryComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HistoryComponent", function() { return HistoryComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var HistoryComponent = /** @class */ (function () {
-    function HistoryComponent() {
-    }
-    HistoryComponent.prototype.ngOnInit = function () {
-    };
-    HistoryComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-history',
-            template: __webpack_require__(/*! ./history.component.html */ "./src/app/views/history/history.component.html"),
-            styles: [__webpack_require__(/*! ./history.component.css */ "./src/app/views/history/history.component.css")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], HistoryComponent);
-    return HistoryComponent;
+    ], RegisterComponent);
+    return RegisterComponent;
 }());
 
 
@@ -6651,7 +6705,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/nyandrianina/Bureau/stuff/smartminds/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /home/nyhasina/Work/smart-home/src/main.ts */"./src/main.ts");
 
 
 /***/ })

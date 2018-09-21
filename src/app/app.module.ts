@@ -37,7 +37,7 @@ import { reducers } from './app.reducer';
     HttpClientModule,
     AuthModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forFeature([]),
+    EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument()
   ],
   providers: [],

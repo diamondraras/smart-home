@@ -1,7 +1,7 @@
 <ng-container [ngSwitch]="type">
   <div *ngSwitchCase="'light'">
     <div class="d-flex justify-content-around flex-nowrap mt-5">
-      <button type="button" (click)="changeLightState()" [ngClass]="{'active': state == 'on'}" class="btn-sensor btn-sensor-light">
+      <button type="button" (click)="toggleDevice()" [ngClass]="{'active': state == 'on'}" class="btn-sensor btn-sensor-light">
         <i class="mdi mdi-lightbulb"></i>
       </button>
     </div>
@@ -14,7 +14,7 @@
 
   <div *ngSwitchCase="'door'">
     <div class="d-flex justify-content-around flex-nowrap mt-5">
-      <button type="button" (click)="changeDoorState()" [ngClass]="{'active': state == 'open'}" class="btn-door">
+      <button type="button" (click)="toggleDevice()" [ngClass]="{'active': state == 'open'}" class="btn-door">
         <i class="mdi mdi-lock-open-outline" *ngIf="state == 'open'; else doorLockClass">
         </i>
         <ng-template #doorLockClass>
@@ -36,7 +36,7 @@
 
   <div *ngSwitchCase="'alarm'">
     <div class="template-demo d-flex justify-content-around flex-nowrap mt-5">
-      <button type="button" (click)="changeAlarmState()" [ngClass]="{'active': state == 'on'}" class="btn-alarm btn-alarm-active">
+      <button type="button" (click)="toggleDevice()" [ngClass]="{'active': state == 'on'}" class="btn-alarm btn-alarm-active">
         <i class="mdi mdi-bell" *ngIf="state == 'on'; else alarmOffClass"></i>
         <ng-template #alarmOffClass>
           <i class="mdi mdi-bell-off"></i>

@@ -13,59 +13,33 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./actuator.component.css']
 })
 export class ActuatorComponent implements Device, OnInit {
-  roomId: number;
   @Input() id;
   @Input() type;
   @Input() state;
+  roomId: number;
+  newState: string;
 
   constructor(private store: Store<fromDashboard.State>, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.roomId = this.route.snapshot.params['id'];
   }
-
-  updateStore() {
-    this.store.dispatch(new DashboardActions.UpdateDeviceState({
+  toggleDevice() {
+    switch (this.type) {
+      case 'door':
+        this.newState = this.state === 'open' ? 'closed' : 'open';
+        break;
+      default:
+        this.newState = this.state === 'off' ? 'on' : 'off';
+        break;
+    }
+    this.store.dispatch(new DashboardActions.ToggleDevice({
       roomId: this.roomId,
       device: {
         id: this.id,
         type: this.type,
-        state: this.state
+        state: this.newState
       }
     }));
   }
-
-  changeLightState() {
-    switch (this.state) {
-      case 'on':
-        this.state = 'off';
-        break;
-      case 'off':
-        this.state = 'on';
-    }
-    this.updateStore();
-  }
-
-  changeDoorState() {
-    switch (this.state) {
-      case 'open':
-        this.state = 'closed';
-        break;
-      case 'closed':
-        this.state = 'open';
-    }
-    this.updateStore();
-  }
-
-  changeAlarmState() {
-    switch (this.state) {
-      case 'off':
-        this.state = 'on';
-        break;
-      case 'on':
-        this.state = 'off';
-    }
-    this.updateStore();
-  }
-
 }
