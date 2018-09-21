@@ -22,13 +22,8 @@ import { AuthService } from './auth/auth.service';
 
 import { fakeBackendProvider } from './_helpers/fake-backend';
 
-export function jwtOptionsFactory(authService) {
-  return {
-    tokenGetter: () => {
-      return authService.getAsyncToken();
-    },
-    whitelistedDomains: ['localhost:3000/api']
-  };
+export function tokenGetter() {
+  return localStorage.getItem('token');
 }
 
 @NgModule({
@@ -51,10 +46,9 @@ export function jwtOptionsFactory(authService) {
     StoreDevtoolsModule.instrument(),
     HttpClientModule,
     JwtModule.forRoot({
-      jwtOptionsProvider: {
-        provide: JWT_OPTIONS,
-        useFactory: jwtOptionsFactory,
-        deps: [AuthService],
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ['localhost:3000/api']
       }
     })
   ],

@@ -23,6 +23,7 @@
         "@ngrx/effects": "^2.0.5",
         "@ngrx/store": "^6.1.0",
         "@ngrx/store-devtools": "^6.1.0",
+        "@ngx-pwa/local-storage": "^6.1.0",
         "bcrypt": "^3.0.0",
         "bcrypt-promise": "^2.0.0",
         "body-parser": "^1.18.3",
