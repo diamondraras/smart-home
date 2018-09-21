@@ -57,4 +57,8 @@ export class AuthService {
     }
     return false;
   }
+
+  getHAToken() {
+    return '1234';
+  }
 }

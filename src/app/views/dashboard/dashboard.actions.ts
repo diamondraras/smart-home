@@ -11,6 +11,10 @@ export const TOGGLE_DEVICE_FAILED = '[DASHBOARD] Toggle Device Failed';
 export const UPDATE_DEVICE_STATE = '[DASHBOARD] Update Device State';
 export const UPDATE_MAIN_DOOR_STATE = '[DASHBOARD] Update Main Door State';
 export const UPDATE_ALARM_STATE = '[DASHBOARD] Update Alarm State';
+export const LOAD_WEATHER           = '[WEATHER] Load weather';
+export const LOAD_WEATHER_SUCCESS   = '[WEATHER] Load weather success';
+export const LOAD_WEATHER_FAILURE   = '[WEATHER] Load weather failure';
+
 
 export class AddRoom implements Action {
   readonly type = ADD_ROOM;
@@ -51,6 +55,21 @@ export class UpdateMainDoor implements Action {
     constructor(public payload: Device) {}
 }
 
+export class LoadWeather implements Action {
+    readonly type = LOAD_WEATHER;
+    constructor(public payload: string) {}
+}
+
+export class LoadWeatherSuccess implements Action {
+    readonly type = LOAD_WEATHER_SUCCESS;
+    constructor(public payload: any) {}
+}
+
+export class LoadWeatherFailure implements Action {
+    readonly type = LOAD_WEATHER_FAILURE;
+    constructor(public payload: any) {}
+}
+
 export type Actions =
   | AddRoom
   | ToggleDevice
@@ -59,4 +78,7 @@ export type Actions =
   | ToggleDeviceFailed
   | UpdateDeviceState
   | UpdateAlarm
-  | UpdateMainDoor;
+  | UpdateMainDoor
+  | LoadWeather
+  | LoadWeatherSuccess
+  | LoadWeatherFailure;

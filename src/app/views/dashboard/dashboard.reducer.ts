@@ -6,11 +6,13 @@ import * as dashboard from './dashboard.actions';
 
 import { Room } from '../../shared/models/room.model';
 import { Device } from '../../shared/models/device.model';
+import { Weather } from './devices/sensors/weather/weather.model';
 
 export interface DashboardState {
   rooms: Room[];
   mainDoor: Device;
   alarm: Device;
+  weather: Weather;
 }
 
 export interface State extends fromRoot.State {
@@ -55,7 +57,13 @@ const initialState: DashboardState = {
     }
   ],
   mainDoor: { id: 0, type: 'door', state: 'open' },
-  alarm: { id: 0, type: 'alarm', state: 'off' }
+  alarm: { id: 0, type: 'alarm', state: 'off' },
+  weather : {
+    entity_id: null,
+    temperature: 0,
+    humidity:  0,
+    condition: null
+  }
 };
 
 export function dashboardReducer(
@@ -103,6 +111,16 @@ export function dashboardReducer(
           state: action.payload.state
         }
       };
+    case dashboard.LOAD_WEATHER_SUCCESS:
+      return {
+        ...state,
+        weather: {
+          entity_id: null,
+          temperature: action.payload.temperature,
+          humidity:  action.payload.humidity,
+          condition: action.payload.condition
+        }
+      }
     default:
       return state;
   }
