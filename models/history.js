@@ -5,14 +5,14 @@ const Schema = mongoose.Schema;
 const HistorySchema = new Schema({
     entry: [
         {
-            name: [String],
+            names: [String],
             faces: [String],
             date: Date
         }
     ],
     exit: [
         {
-            image: [String],
+            images: [String],
             date: Date
         }
     ]
