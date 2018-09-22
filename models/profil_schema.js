@@ -3,10 +3,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProfilSchema = new Schema({
-    checked: {
-        type: Boolean,
-        default: false
-    },
     photoUrl: {
         type: String,
         default: null
@@ -27,31 +23,7 @@ const ProfilSchema = new Schema({
         type: Number,
         default: null
     },
-    country: {
-        type: String,
-        default: null
-    },
-    address: {
-        type: String,
-        default: null
-    },
-    state: {
-        type: String,
-        default: null
-    },
-    streetName: {
-        type: String,
-        default: null
-    },
-    zipCode: {
-        type: String,
-        default: null
-    },
     pseudo: {
-        type: String,
-        default: null
-    },
-    company: {
         type: String,
         default: null
     }
