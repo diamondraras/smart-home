@@ -85,12 +85,12 @@ export class DashboardEffects {
                                 return new DashboardActions.LoadWeatherSuccess({
                                     entity_id: entity_id,
                                     temperature: res.state
-                                })
+                                });
                             }),
                             catchError((err) => {
                                 return of(new DashboardActions.LoadWeatherFailure(err));
                             })
-                        )
+                        );
             })
-        )
+        );
 }
