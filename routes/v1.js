@@ -9,6 +9,8 @@ const HomeController = require("../controllers/HomeController");
 const ActuatorController = require("./../controllers/ActuatorController");
 const AccountController = require("./../controllers/AccountController");
 
+const HistoryController = require("../controllers/HistoryController");
+
 const passport = require("passport");
 
 const path = require("path");
@@ -212,5 +214,12 @@ router.post(
   "/account/sync",
   AccountController.sync
 );
+
+//********** Dev *******************/
+router.post(
+  "/dev/history/generate",
+  HistoryController.generateDate
+);
+
 
 module.exports = router;
