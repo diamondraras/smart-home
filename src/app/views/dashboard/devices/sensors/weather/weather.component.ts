@@ -28,8 +28,9 @@ export class WeatherComponent implements OnInit {
     this.listen$.subscribe((msg) => {
       const res = JSON.parse(msg.data);
       if (res.event) {
-        if (res.event.data.entity_id === 'switch.builtin_led') {
-          console.log('led changed');
+        if (res.event.data.entity_id === 'sensor.owm_temperature') {
+          console.log('temperature changed ', res.event.data.new_state.state);
+          this.store.dispatch(new DashboardActions.UpdateTemperature(res.event.data.new_state.state));
         }
       }
     });

@@ -14,6 +14,8 @@ export const UPDATE_ALARM_STATE = '[DASHBOARD] Update Alarm State';
 export const LOAD_WEATHER           = '[WEATHER] Load weather';
 export const LOAD_WEATHER_SUCCESS   = '[WEATHER] Load weather success';
 export const LOAD_WEATHER_FAILURE   = '[WEATHER] Load weather failure';
+export const UPDATE_TEMPERATURE   = '[WEATHER] Update temperature';
+export const UPDATE_CONDITION   = '[WEATHER] Update condition';
 
 
 export class AddRoom implements Action {
@@ -70,6 +72,16 @@ export class LoadWeatherFailure implements Action {
     constructor(public payload: any) {}
 }
 
+export class UpdateTemperature implements Action {
+    readonly type = UPDATE_TEMPERATURE;
+    constructor(public payload: any) {}
+}
+
+export class UpdateCondition implements Action {
+    readonly type = UPDATE_CONDITION;
+    constructor(public payload: any) {}
+}
+
 export type Actions =
   | AddRoom
   | ToggleDevice
@@ -81,4 +93,6 @@ export type Actions =
   | UpdateMainDoor
   | LoadWeather
   | LoadWeatherSuccess
-  | LoadWeatherFailure;
+  | LoadWeatherFailure
+  | UpdateTemperature
+  | UpdateCondition;
