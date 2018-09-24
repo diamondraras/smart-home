@@ -24,6 +24,7 @@ import { RoomComponent } from './rooms/room/room.component';
 import { ActuatorComponent } from './devices/actuators/actuator/actuator.component';
 import { DashboardEffects } from './dashboard.effects';
 import { MainActuatorComponent } from './devices/sensors/main-actuator/main-actuator.component';
+import { WebsocketService } from '../../_helpers/websocket.service';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { MainActuatorComponent } from './devices/sensors/main-actuator/main-actu
     MainActuatorComponent
   ],
   providers: [
-    DeviceService
+    DeviceService,
+    WebsocketService
   ]
 })
 export class DashboardModule { }

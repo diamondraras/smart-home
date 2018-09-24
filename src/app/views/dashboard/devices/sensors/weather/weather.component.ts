@@ -4,6 +4,9 @@ import * as fromDashboard from './../../../dashboard.reducer';
 import * as DashboardActions from './../../../dashboard.actions';
 import { Weather } from './weather.model';
 import { Observable } from 'rxjs';
+import {$WebSocket} from 'angular2-websocket/angular2-websocket'
+import { WebsocketService } from '../../../../../_helpers/websocket.service';
+
 @Component({
   selector: 'app-weather',
   templateUrl: './weather.component.html',
@@ -12,9 +15,31 @@ import { Observable } from 'rxjs';
 export class WeatherComponent implements OnInit {
 
   weather$: Observable<Weather>;
-  constructor(private store: Store<fromDashboard.State>) { }
+  listen$: Observable<any>;
+  constructor(
+    private store: Store<fromDashboard.State>,
+    private ws: WebsocketService
+    ) {
+      this.ws.connect();
+     }
 
   ngOnInit() {
+    this.listen$ = this.ws.listen();
+    this.listen$.subscribe((msg) => {
+      const res = JSON.parse(msg.data);
+      if (res.event) {
+        if (res.event.data.entity_id === 'switch.builtin_led') {
+          console.log('led changed');
+        }
+      }
+    });
+    const data = {
+      id: 1,
+      type: 'subscribe_events',
+      event_type: 'state_changed'
+    };
+    this.ws.sub(data);
+
     this.weather$ = this.store.select(fromDashboard.getWeather);
 
     let entity_ids = [];
