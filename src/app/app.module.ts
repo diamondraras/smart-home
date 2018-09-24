@@ -55,13 +55,13 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:3000/api']
+        whitelistedDomains: ['localhost:3000', 'http://localhost:3000'],
+        authScheme: ''
       }
     }),
     EffectsModule.forRoot([AuthEffects])
   ],
   providers: [
-    fakeBackendProvider,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AddHeaderInterceptor,
