@@ -3,14 +3,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProfilSchema = new Schema({
-    checked: {
-        type: Boolean,
-        default: false
-    },
-    playpoint: {
-        type: Number,
-        default: 0
-    },
     photoUrl: {
         type: String,
         default: null
@@ -31,57 +23,9 @@ const ProfilSchema = new Schema({
         type: Number,
         default: null
     },
-    country: {
-        type: String,
-        default: null
-    },
-    address: {
-        type: String,
-        default: null
-    },
-    state: {
-        type: String,
-        default: null
-    },
-    streetName: {
-        type: String,
-        default: null
-    },
-    zipCode: {
-        type: String,
-        default: null
-    },
-    phoneNumber: {
-        type: String,
-        default: null
-    },
     pseudo: {
         type: String,
         default: null
-    },
-    accountType: {
-        type: String,
-        default: null
-    },
-    company: {
-        type: String,
-        default: null
-    },
-    acceptCookie: {
-        type: Boolean,
-        default: false
-    },
-    acceptRGPD: {
-        type: Boolean,
-        default: false
-    },
-    acceptGeneralAgreement: {
-        type: Boolean,
-        default: false
-    },
-    language: {
-        type: String,
-        default: "Anglais"
     }
 });
 
