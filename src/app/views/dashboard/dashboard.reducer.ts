@@ -161,3 +161,8 @@ export const getMainDoor = createSelector(
   getDashboardState,
   (state: DashboardState) => state.mainDoor
 );
+
+export const getWeather = createSelector(
+  getDashboardState,
+  (state: DashboardState) => state.weather
+);

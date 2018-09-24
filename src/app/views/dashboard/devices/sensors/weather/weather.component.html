@@ -12,10 +12,10 @@
         </div>
         <div class="weather-data d-flex">
           <div class="mr-auto">
-            <h4 class="display-3">21
+            <h4 class="display-3">{{ (weather$ | async).temperature }}
               <span class="symbol">&deg;</span>C</h4>
             <p>
-              Partiellement nuagueux
+              {{ (weather$ | async).condition }}
             </p>
           </div>
         </div>
