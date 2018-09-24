@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, forkJoin } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { map, catchError, switchMap, concatAll } from 'rxjs/operators';
 
 import * as DashboardActions from './dashboard.actions';
 import { Weather } from './devices/sensors/weather/weather.model';
@@ -77,20 +77,19 @@ export class DashboardEffects {
         .ofType(DashboardActions.LOAD_WEATHER)
         .pipe(
             map((action: DashboardActions.LoadWeather) => action.payload),
-            switchMap(payload => {
+            switchMap((payload: any[]) => {
                 const entity_id = payload;
-                return this.http.get('http://localhost:8123/api/states/' + entity_id)
-                        .pipe(
-                            map((res: SensorResponse) => {
-                                return new DashboardActions.LoadWeatherSuccess({
-                                    entity_id: entity_id,
-                                    temperature: res.state
-                                })
-                            }),
-                            catchError((err) => {
-                                return of(new DashboardActions.LoadWeatherFailure(err));
-                            })
-                        )
-            })
-        )
+                const temp$ = this.http.get('http://localhost:8123/api/states/' + entity_id['temperature']);
+                const hum$ = this.http.get('http://localhost:8123/api/states/' + entity_id['humidity']);
+                const cond$ = this.http.get('http://localhost:8123/api/states/' + entity_id['condition']);
+                 return forkJoin([temp$, hum$, cond$])
+                }),
+            map((res: any[]) => {
+                return new DashboardActions.LoadWeatherSuccess({
+                      temperature: res[0].state,
+                      humidity: res[1].state,
+                      condition: res[2].state
+                  })
+                })
+            )
 }

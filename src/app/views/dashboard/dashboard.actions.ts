@@ -57,7 +57,7 @@ export class UpdateMainDoor implements Action {
 
 export class LoadWeather implements Action {
     readonly type = LOAD_WEATHER;
-    constructor(public payload: string) {}
+    constructor(public payload: any[]) {}
 }
 
 export class LoadWeatherSuccess implements Action {
