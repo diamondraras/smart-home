@@ -1,16 +1,16 @@
 export interface User {
-    phone: string;
+    _id: string;
+    phone?: string;
     email: string;
     password: string;
     createdAt: Date;
     updatedAt: Date;
-    admin: boolean;
+    admin?: boolean;
     profil: {
-        photoUrl: string,
-        name: string,
-        firstName: string,
-        sex: string,
-        age: number,
-        pseudo: string
+        _id: string,
+        photoUrl?: string,
+        name?: string,
+        firstName?: string,
+        pseudo?: string
     };
 }
