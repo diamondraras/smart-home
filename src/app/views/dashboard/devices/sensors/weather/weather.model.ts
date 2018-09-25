@@ -5,4 +5,11 @@ export class Weather {
     condition: string | null;
     date: string | null;
     day: string | null;
+    forecast: Forecast[];
+}
+
+export class Forecast {
+    day: string | null;
+    temp_max: number | 0;
+    condition: string | null;
 }

@@ -23,67 +23,15 @@
       <div class="card-body p-0">
         <div class="d-flex weakly-weather justify-content-between flex-nowrap">
           <!--  d-flex justify-content-between flex-nowrap-->
-          <div class="weakly-weather-item">
+          <div *ngFor="let weather of (weather$ | async)?.forecast" class="weakly-weather-item">
             <p class="mb-0">
-              Dim
+                {{ weather.day }}
             </p>
-            <i class="mdi mdi-weather-cloudy"></i>
             <p class="mb-0">
-              30°
+              {{ weather.condition }}
             </p>
-          </div>
-          <div class="weakly-weather-item">
-            <p class="mb-1">
-              Lun
-            </p>
-            <i class="mdi mdi-weather-hail"></i>
             <p class="mb-0">
-              31°
-            </p>
-          </div>
-          <div class="weakly-weather-item">
-            <p class="mb-1">
-              Mar
-            </p>
-            <i class="mdi mdi-weather-partlycloudy"></i>
-            <p class="mb-0">
-              28°
-            </p>
-          </div>
-          <div class="weakly-weather-item">
-            <p class="mb-1">
-              Mer
-            </p>
-            <i class="mdi mdi-weather-pouring"></i>
-            <p class="mb-0">
-              30°
-            </p>
-          </div>
-          <div class="weakly-weather-item only-gt992">
-            <p class="mb-1">
-              Jeu
-            </p>
-            <i class="mdi mdi-weather-pouring"></i>
-            <p class="mb-0">
-              29°
-            </p>
-          </div>
-          <div class="weakly-weather-item only-gt992">
-            <p class="mb-1">
-              Ven
-            </p>
-            <i class="mdi mdi-weather-snowy-rainy"></i>
-            <p class="mb-0">
-              31°
-            </p>
-          </div>
-          <div class="weakly-weather-item only-gt992 only-gt1024">
-            <p class="mb-1">
-              Sam
-            </p>
-            <i class="mdi mdi-weather-snowy"></i>
-            <p class="mb-0">
-              32°
+              {{ weather.temp_max }} °
             </p>
           </div>
         </div>
