@@ -24,6 +24,7 @@ import { RoomComponent } from './rooms/room/room.component';
 import { ActuatorComponent } from './devices/actuators/actuator/actuator.component';
 import { DashboardEffects } from './dashboard.effects';
 import { MainActuatorComponent } from './devices/sensors/main-actuator/main-actuator.component';
+import { RecognizedFacesComponent } from './settings/recognized-faces/recognized-faces.component';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { MainActuatorComponent } from './devices/sensors/main-actuator/main-actu
     RoomsComponent,
     RoomComponent,
     ActuatorComponent,
-    MainActuatorComponent
+    MainActuatorComponent,
+    RecognizedFacesComponent
   ],
   providers: [
     DeviceService

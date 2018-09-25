@@ -46,6 +46,26 @@
         </li>
       </ul>
     </li>
+    <li class="nav-item" [routerLinkActive]="'active'">
+      <a class="nav-link" data-toggle="collapse" href="#settings" role="button"
+        aria-expanded="false" aria-controls="settings">
+        <span class="menu-title">Paramètres</span>
+        <i class="mdi mdi-account-settings-variant menu-icon"></i>  
+      </a>
+      <ul class="nav collapse" id="settings">
+        <li class="nav-item" [routerLinkActive]="'active'">
+          <a class="nav-link" 
+          [routerLink]="['./settings/recognized']" 
+          [routerLinkActive]="'active'" 
+          [routerLinkActiveOptions]="{ exact: true }" 
+          aria-expanded="false" 
+          aria-controls="ui-basic"
+          >
+            <span class="menu-title">Visages reconnus</span>
+          </a>
+        </li>
+      </ul>
+    </li>
     <li class="nav-item sidebar-actions">
       <span class="nav-link">
         <div class="border-bottom">

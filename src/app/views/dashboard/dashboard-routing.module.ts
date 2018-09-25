@@ -6,13 +6,20 @@ import { HistoryComponent } from './history/history.component';
 import { AccountComponent } from './account/account.component';
 import { RoomsComponent } from './rooms/rooms.component';
 import { RoomComponent } from './rooms/room/room.component';
+import { RecognizedFacesComponent } from './settings/recognized-faces/recognized-faces.component';
 
 const routes: Routes = [
   { path: '', component: DevicesComponent },
   { path: 'history', component: HistoryComponent },
   { path: 'account', component: AccountComponent },
   { path: 'rooms', component: RoomsComponent },
-  { path: 'room/:id', component: RoomComponent }
+  { path: 'room/:id', component: RoomComponent },
+  { path: 'settings', children: [
+    {
+      path: 'recognized',
+      component: RecognizedFacesComponent
+    }
+  ]}
 ];
 
 @NgModule({
