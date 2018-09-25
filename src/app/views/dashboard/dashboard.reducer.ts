@@ -133,6 +133,14 @@ export function dashboardReducer(
           temperature: action.payload
         }
       };
+    case dashboard.UPDATE_CONDITION:
+      return {
+        ...state,
+        weather: {
+          ...state.weather,
+          condition: action.payload
+        }
+      };
     default:
       return state;
   }

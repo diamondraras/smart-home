@@ -362,6 +362,15 @@
                 "jwt_key": "e05a50a674956770440901357396efbc590f84bf163acd69bf79e953109c4ec5051c506e91131853ade351138c7e97ad1beeaf7dae2078561b2db3928b820a78",
                 "token": "6c96a2c2ae0779fc9ad177ffcd7dee58c68ef29ecd9585593d7425064a310da54f3c3c24669913c7d363e9a46e505325e21d481a5a45a19c4c01af6916bd6bb1",
                 "user_id": "3df71f05d4f740258d5f4b68dd0d29d2"
+            },
+            {
+                "access_token_expiration": 1800.0,
+                "client_id": "http://127.0.0.1:8123/",
+                "created_at": "2018-09-25T18:39:14.522591+00:00",
+                "id": "8f74fbc9576e4be6b9ff2a041c1b726b",
+                "jwt_key": "4a1165194124e00d15c40676d3442a10f6b4b000fb94b7e7e3e4074dbc26b9477c6fc9c6afbae686911d060edd041ffcea89249e9f54cc05dee81dd358863bd4",
+                "token": "5f6e03dbe2853430c65bca58b4bd93a8eb9c8c2c42be52c2cd17f72c41e9cb646f702b8a1b3ff44eccf56ea5c5ce5f745048f477704e511367cedd3e0d91be94",
+                "user_id": "3df71f05d4f740258d5f4b68dd0d29d2"
             }
         ],
         "users": [

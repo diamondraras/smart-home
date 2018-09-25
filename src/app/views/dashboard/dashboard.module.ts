@@ -26,6 +26,7 @@ import { DashboardEffects } from './dashboard.effects';
 import { MainActuatorComponent } from './devices/sensors/main-actuator/main-actuator.component';
 import { WebsocketService } from '../../_helpers/websocket.service';
 import { RecognizedFacesComponent } from './settings/recognized-faces/recognized-faces.component';
+import { WeatherService } from './devices/sensors/weather/weather.service';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { RecognizedFacesComponent } from './settings/recognized-faces/recognized
   ],
   providers: [
     DeviceService,
-    WebsocketService
+    WebsocketService,
+    WeatherService
   ]
 })
 export class DashboardModule { }

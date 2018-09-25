@@ -86,7 +86,7 @@ export class DashboardEffects {
                  return forkJoin([temp$, hum$, cond$, date$]);
                 }),
             map((res: any[]) => {
-              const d = new Date(res[3].state); //Create a Date object so we can transform it into days of the week after
+              const d = new Date(res[3].state); // Create a Date object so we can transform it into days of the week after
               const dayOfWeek = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
               const currentDay = dayOfWeek[d.getDay()];
                 return new DashboardActions.LoadWeatherSuccess({

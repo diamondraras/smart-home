@@ -6,6 +6,7 @@ import { Weather } from './weather.model';
 import { Observable } from 'rxjs';
 import {$WebSocket} from 'angular2-websocket/angular2-websocket'
 import { WebsocketService } from '../../../../../_helpers/websocket.service';
+import { WeatherService } from './weather.service';
 
 @Component({
   selector: 'app-weather',
@@ -15,31 +16,15 @@ import { WebsocketService } from '../../../../../_helpers/websocket.service';
 export class WeatherComponent implements OnInit {
 
   weather$: Observable<Weather>;
-  listen$: Observable<any>;
   constructor(
     private store: Store<fromDashboard.State>,
-    private ws: WebsocketService
+    private weatherService: WeatherService
     ) {
-      this.ws.connect();
      }
 
   ngOnInit() {
-    this.listen$ = this.ws.listen();
-    this.listen$.subscribe((msg) => {
-      const res = JSON.parse(msg.data);
-      if (res.event) {
-        if (res.event.data.entity_id === 'sensor.owm_temperature') {
-          console.log('temperature changed ', res.event.data.new_state.state);
-          this.store.dispatch(new DashboardActions.UpdateTemperature(res.event.data.new_state.state));
-        }
-      }
-    });
-    const data = {
-      id: 1,
-      type: 'subscribe_events',
-      event_type: 'state_changed'
-    };
-    this.ws.sub(data);
+
+    this.weatherService.subscribe();
 
     this.weather$ = this.store.select(fromDashboard.getWeather);
 
