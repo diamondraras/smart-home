@@ -99,13 +99,10 @@ export class DashboardEffects {
                 const temp$ = this.http.get('http://localhost:8123/api/states/' + entity_id['temperature']);
                 const hum$ = this.http.get('http://localhost:8123/api/states/' + entity_id['humidity']);
                 const cond$ = this.http.get('http://localhost:8123/api/states/' + entity_id['condition']);
-<<<<<<< HEAD
-                 return forkJoin([temp$, hum$, cond$]);
-=======
+
                 const date$ = this.http.get('http://localhost:8123/api/states/' + entity_id['date']);
                 const forecast = this.weatherService.loadForecast();
                  return forkJoin([temp$, hum$, cond$, date$, ...forecast]);
->>>>>>> 20ee846f542ffdaddcbce0f155957fcb41275acf
                 }),
             map((res: any[]) => {
               const d = new Date(res[3].state).getDay(); // Create a Date object so we can transform it into days of the week after
@@ -119,9 +116,6 @@ export class DashboardEffects {
                 return new DashboardActions.LoadWeatherSuccess({
                       temperature: res[0].state,
                       humidity: res[1].state,
-<<<<<<< HEAD
-                      condition: res[2].state
-=======
                       condition: res[2].state,
                       date: res[3].state,
                       day: currentDay,
@@ -132,7 +126,6 @@ export class DashboardEffects {
                         { day: dayOfWeek[d4], temp_max: res[7].state, condition: res[12].state },
                         { day: dayOfWeek[d5], temp_max: res[8].state, condition: res[13].state },
                       ]
->>>>>>> 20ee846f542ffdaddcbce0f155957fcb41275acf
                   });
                 })
             );
