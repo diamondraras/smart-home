@@ -76,6 +76,39 @@ sensor:
       - humidity
       - clouds
       - rain
+  - platform: yweather
+    forecast: 1
+    name: yw_day1
+    monitored_conditions:
+      - weather
+      - temp_max
+  - platform: yweather
+    forecast: 2
+    name: yw_day2
+    monitored_conditions:
+      - weather
+      - temp_max
+  - platform: yweather
+    forecast: 3
+    name: yw_day3
+    monitored_conditions:
+      - weather
+      - temp_max
+  - platform: yweather
+    forecast: 4
+    name: yw_day4
+    monitored_conditions:
+      - weather
+      - temp_max
+  - platform: yweather
+    forecast: 5
+    name: yw_day5
+    monitored_conditions:
+      - weather
+      - temp_max
+  - platform: time_date
+    display_options:
+      - 'date'
 #   - platform: rest
 #     resource: http://192.168.10.21/gpio/state
 

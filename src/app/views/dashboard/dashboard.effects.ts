@@ -6,11 +6,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError, switchMap, concatAll } from 'rxjs/operators';
 
 import * as DashboardActions from './dashboard.actions';
-import { Weather } from './devices/sensors/weather/weather.model';
+import { Weather, Forecast } from './devices/sensors/weather/weather.model';
 import { SensorResponse } from './devices/sensors/sensors.model';
 
 import { Device } from '../../shared/models/device.model';
 import { Room } from '../../shared/models/room.model';
+import { WeatherService } from './devices/sensors/weather/weather.service';
 
 @Injectable()
 export class DashboardEffects {
@@ -19,6 +20,8 @@ export class DashboardEffects {
   bodyRequest = {
     'entity_id': 'switch.builtin_led'
   };
+
+  constructor(private actions$: Actions, private http: HttpClient, private weatherService: WeatherService) {}
 
   @Effect()
   startApp$ = this.actions$.ofType(DashboardActions.START_APP).pipe(
@@ -86,8 +89,6 @@ export class DashboardEffects {
       })
     );
 
-
-  constructor(private actions$: Actions, private http: HttpClient) {}
     @Effect()
     loadWeather$ = this.actions$
         .ofType(DashboardActions.LOAD_WEATHER)
@@ -98,13 +99,40 @@ export class DashboardEffects {
                 const temp$ = this.http.get('http://localhost:8123/api/states/' + entity_id['temperature']);
                 const hum$ = this.http.get('http://localhost:8123/api/states/' + entity_id['humidity']);
                 const cond$ = this.http.get('http://localhost:8123/api/states/' + entity_id['condition']);
+<<<<<<< HEAD
                  return forkJoin([temp$, hum$, cond$]);
+=======
+                const date$ = this.http.get('http://localhost:8123/api/states/' + entity_id['date']);
+                const forecast = this.weatherService.loadForecast();
+                 return forkJoin([temp$, hum$, cond$, date$, ...forecast]);
+>>>>>>> 20ee846f542ffdaddcbce0f155957fcb41275acf
                 }),
             map((res: any[]) => {
+              const d = new Date(res[3].state).getDay(); // Create a Date object so we can transform it into days of the week after
+              const d1 = this.weatherService.nextDay(d);
+              const d2 = this.weatherService.nextDay(d + 1);
+              const d3 = this.weatherService.nextDay(d + 2);
+              const d4 = this.weatherService.nextDay(d + 3);
+              const d5 = this.weatherService.nextDay(d + 4);
+              const dayOfWeek = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+              const currentDay = dayOfWeek[d];
                 return new DashboardActions.LoadWeatherSuccess({
                       temperature: res[0].state,
                       humidity: res[1].state,
+<<<<<<< HEAD
                       condition: res[2].state
+=======
+                      condition: res[2].state,
+                      date: res[3].state,
+                      day: currentDay,
+                      forecast: [
+                        { day: dayOfWeek[d1], temp_max: res[4].state, condition: res[9].state },
+                        { day: dayOfWeek[d2], temp_max: res[5].state, condition: res[10].state },
+                        { day: dayOfWeek[d3], temp_max: res[6].state, condition: res[11].state },
+                        { day: dayOfWeek[d4], temp_max: res[7].state, condition: res[12].state },
+                        { day: dayOfWeek[d5], temp_max: res[8].state, condition: res[13].state },
+                      ]
+>>>>>>> 20ee846f542ffdaddcbce0f155957fcb41275acf
                   });
                 })
             );
