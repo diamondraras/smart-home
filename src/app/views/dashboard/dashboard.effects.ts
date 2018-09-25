@@ -10,19 +10,35 @@ import { Weather } from './devices/sensors/weather/weather.model';
 import { SensorResponse } from './devices/sensors/sensors.model';
 
 import { Device } from '../../shared/models/device.model';
+import { Room } from '../../shared/models/room.model';
 
 @Injectable()
 export class DashboardEffects {
+  backendUrl = 'http://localhost:3000/api/dev/states';
   url = 'http://localhost:8123/api/services/switch/toggle';
   bodyRequest = {
     'entity_id': 'switch.builtin_led'
   };
 
   @Effect()
+  startApp$ = this.actions$.ofType(DashboardActions.START_APP).pipe(
+    switchMap(() => {
+      return this.http.get<Room[]>(this.backendUrl).pipe(
+        map(rooms => {
+          return new DashboardActions.SetRooms(rooms);
+        }),
+        catchError(error => {
+          return of(new DashboardActions.SetRoomsFailed());
+        })
+      );
+    })
+  );
+
+  @Effect()
   toggleDevice$ = this.actions$.ofType(DashboardActions.TOGGLE_DEVICE).pipe(
     map((action: DashboardActions.ToggleDevice) => action.payload),
     switchMap(payload => {
-      return this.http.post(this.url, this.bodyRequest).pipe(
+      return this.http.post(this.url, { 'entity_id': payload.device.name }).pipe(
         map(res => {
           return new DashboardActions.UpdateDeviceState({
             roomId: payload.roomId,
@@ -82,14 +98,14 @@ export class DashboardEffects {
                 const temp$ = this.http.get('http://localhost:8123/api/states/' + entity_id['temperature']);
                 const hum$ = this.http.get('http://localhost:8123/api/states/' + entity_id['humidity']);
                 const cond$ = this.http.get('http://localhost:8123/api/states/' + entity_id['condition']);
-                 return forkJoin([temp$, hum$, cond$])
+                 return forkJoin([temp$, hum$, cond$]);
                 }),
             map((res: any[]) => {
                 return new DashboardActions.LoadWeatherSuccess({
                       temperature: res[0].state,
                       humidity: res[1].state,
                       condition: res[2].state
-                  })
+                  });
                 })
-            )
+            );
 }

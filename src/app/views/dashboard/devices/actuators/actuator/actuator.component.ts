@@ -16,6 +16,7 @@ export class ActuatorComponent implements Device, OnInit {
   @Input() id;
   @Input() type;
   @Input() state;
+  @Input() name;
   roomId: number;
   newState: string;
 
@@ -38,7 +39,8 @@ export class ActuatorComponent implements Device, OnInit {
       device: {
         id: this.id,
         type: this.type,
-        state: this.newState
+        state: this.newState,
+        name: this.name
       }
     }));
   }

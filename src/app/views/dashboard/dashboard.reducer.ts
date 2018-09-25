@@ -20,44 +20,9 @@ export interface State extends fromRoot.State {
 }
 
 const initialState: DashboardState = {
-  rooms: [
-    {
-      id: 1,
-      name: 'Grenier',
-      devices: [
-        { id: 1, type: 'light', state: 'off' },
-        { id: 2, type: 'door', state: 'open' }
-      ]
-    },
-    {
-      id: 2,
-      name: 'Living Room',
-      devices: [
-        { id: 1, type: 'light', state: 'off' },
-        { id: 2, type: 'light', state: 'off' },
-        { id: 3, type: 'door', state: 'open' }
-      ]
-    },
-    {
-      id: 3,
-      name: 'Toilette',
-      devices: [
-        { id: 1, type: 'light', state: 'off' },
-        { id: 2, type: 'door', state: 'open' }
-      ]
-    },
-    {
-      id: 4,
-      name: 'Hall',
-      devices: [
-        { id: 1, type: 'light', state: 'off' },
-        { id: 2, type: 'door', state: 'open' },
-        { id: 3, type: 'alarm', state: 'off' }
-      ]
-    }
-  ],
-  mainDoor: { id: 0, type: 'door', state: 'open' },
-  alarm: { id: 0, type: 'alarm', state: 'off' },
+  rooms: null,
+  mainDoor: { id: 0, name: null, type: 'door', state: 'open' },
+  alarm: { id: 0, name: null, type: 'alarm', state: 'off' },
   weather : {
     entity_id: null,
     temperature: 0,
@@ -71,6 +36,11 @@ export function dashboardReducer(
   action: dashboard.Actions
 ) {
   switch (action.type) {
+    case dashboard.SET_ROOMS:
+      return {
+        ...state,
+        rooms: action.payload
+      };
     case dashboard.ADD_ROOM:
       return {
         ...state,

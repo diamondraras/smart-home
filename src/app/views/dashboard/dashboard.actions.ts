@@ -3,6 +3,9 @@ import { Action } from '@ngrx/store';
 import { Room } from '../../shared/models/room.model';
 import { Device } from '../../shared/models/device.model';
 
+export const START_APP = '[DASHBOARD] Start App';
+export const SET_ROOMS = '[DASHBOARD] Set Rooms';
+export const SET_ROOMS_FAILED = '[DASHBOARD] Set Rooms Failed';
 export const ADD_ROOM = '[DASHBOARD] Add Room';
 export const TOGGLE_DEVICE = '[DASHBOARD] Toggle Device';
 export const TOGGLE_MAIN_DOOR = '[DASHBOARD] Toggle Main Door';
@@ -17,6 +20,19 @@ export const LOAD_WEATHER_FAILURE   = '[WEATHER] Load weather failure';
 export const UPDATE_TEMPERATURE   = '[WEATHER] Update temperature';
 export const UPDATE_CONDITION   = '[WEATHER] Update condition';
 
+
+export class StartApp implements Action {
+    readonly type = START_APP;
+}
+
+export class SetRooms implements Action {
+    readonly type = SET_ROOMS;
+    constructor(public payload: Room[]) {}
+}
+
+export class SetRoomsFailed implements Action {
+    readonly type = SET_ROOMS_FAILED;
+}
 
 export class AddRoom implements Action {
   readonly type = ADD_ROOM;
@@ -83,6 +99,9 @@ export class UpdateCondition implements Action {
 }
 
 export type Actions =
+| StartApp
+| SetRooms
+| SetRoomsFailed
   | AddRoom
   | ToggleDevice
   | ToggleMainDoor
