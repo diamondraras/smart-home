@@ -47,6 +47,7 @@ export class WeatherComponent implements OnInit {
     entity_ids['temperature'] = 'sensor.owm_temperature';
     entity_ids['humidity'] = 'sensor.owm_humidity';
     entity_ids['condition'] = 'sensor.owm_condition';
+    entity_ids['date'] = 'sensor.date';
     this.store.dispatch(new DashboardActions.LoadWeather(entity_ids));
   }
 

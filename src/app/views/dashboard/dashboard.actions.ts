@@ -82,6 +82,7 @@ export class UpdateCondition implements Action {
     constructor(public payload: any) {}
 }
 
+
 export type Actions =
   | AddRoom
   | ToggleDevice

@@ -76,6 +76,9 @@ sensor:
       - humidity
       - clouds
       - rain
+  - platform: time_date
+    display_options:
+      - 'date'
 #   - platform: rest
 #     resource: http://192.168.10.21/gpio/state
 

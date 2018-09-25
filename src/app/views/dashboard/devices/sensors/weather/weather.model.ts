@@ -3,4 +3,6 @@ export class Weather {
     temperature: number | 0;
     humidity: number | 0;
     condition: string | null;
+    date: string | null;
+    day: string | null;
 }

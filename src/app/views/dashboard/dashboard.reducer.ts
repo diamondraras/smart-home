@@ -62,7 +62,9 @@ const initialState: DashboardState = {
     entity_id: null,
     temperature: 0,
     humidity:  0,
-    condition: null
+    condition: null,
+    date: null,
+    day: null
   }
 };
 
@@ -118,9 +120,11 @@ export function dashboardReducer(
           entity_id: null,
           temperature: action.payload.temperature,
           humidity:  action.payload.humidity,
-          condition: action.payload.condition
+          condition: action.payload.condition,
+          date: action.payload.date,
+          day: action.payload.day
         }
-      }
+      };
     case dashboard.UPDATE_TEMPERATURE:
       return {
         ...state,
@@ -128,7 +132,7 @@ export function dashboardReducer(
           ...state.weather,
           temperature: action.payload
         }
-      }
+      };
     default:
       return state;
   }
