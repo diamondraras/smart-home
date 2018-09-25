@@ -22,10 +22,8 @@ import { RegisterComponent } from './views/register/register.component';
 import { AuthModule } from './auth/auth.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from './app.reducer';
-import { AuthService } from './auth/auth.service';
 import { AuthEffects } from './auth/auth.effects';
 
-import { fakeBackendProvider } from './_helpers/fake-backend';
 import { AddHeaderInterceptor } from './_helpers/token-injector';
 
 export function tokenGetter() {
@@ -51,17 +49,16 @@ export function tokenGetter() {
     AuthModule,
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument(),
-    HttpClientModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:3000/api']
+        whitelistedDomains: ['localhost:3000'],
+        authScheme: ''
       }
     }),
     EffectsModule.forRoot([AuthEffects])
   ],
   providers: [
-    fakeBackendProvider,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AddHeaderInterceptor,

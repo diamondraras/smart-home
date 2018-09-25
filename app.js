@@ -32,7 +32,7 @@ app.use(function(req, res, next) {
     // Methods to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     // Headers to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, content-type, Authorization, Content-Type');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, content-type, Authorization, Content-Type, x-ha-access');
     res.setHeader('Access-Control-Allow-Credentials', true);
     // Pass to next middleware
     next();
