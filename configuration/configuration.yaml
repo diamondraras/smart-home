@@ -82,9 +82,21 @@ sensor:
 # Switch
 switch:
   - platform: rest
+    resource: http://192.168.10.21/gpio/0
+    is_on_template: '{{ value_json.state }}'
+    name: lamp_attic
+    headers:
+      Content-Type: application/x-www-form-urlencoded
+  - platform: rest
     resource: http://192.168.10.21/gpio/4
     is_on_template: '{{ value_json.state }}'
-    name: builtin_led
+    name: door_living
+    headers:
+      Content-Type: application/x-www-form-urlencoded
+  - platform: rest
+    resource: http://192.168.10.21/gpio/6
+    is_on_template: '{{ value_json.state }}'
+    name: lamp_chamber
     headers:
       Content-Type: application/x-www-form-urlencoded
 

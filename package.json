@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "concurrently \"source api/bin/activate && hass --config ./configuration/ \"  \"ng build \" \" nodemon ./bin/www \" ",
         "start": "ng build && nodemon ./bin/www",
+        "node": "nodemon ./bin/www",
         "test": "nodemon --exec 'mocha --recursive'"
     },
     "dependencies": {

@@ -15,14 +15,6 @@ const ProfilSchema = new Schema({
         type: String,
         default: null
     },
-    sex: {
-        type: String,
-        default: null
-    },
-    age: {
-        type: Number,
-        default: null
-    },
     pseudo: {
         type: String,
         default: null

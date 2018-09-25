@@ -1,0 +1,14 @@
+grenier:
+  name: Grenier
+  entities:
+    - switch.lamp_attic
+
+salon:
+  name: Salon
+  entities:
+    - switch.door_living
+    
+chambre:
+  name: Chambre Ursulla
+  entities:
+    - switch.lamp_chamber
