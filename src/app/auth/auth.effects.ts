@@ -25,9 +25,9 @@ export class AuthEffects {
         switchMap(payload => {
             return this.authService.login(payload.email, payload.password)
                 .pipe(
-                    map((user) => {
-                        console.log(user);
-                        return new fromAuth.LoginSuccess({token: user.token});
+                    map((res) => {
+                        localStorage.setItem('currentUser', JSON.stringify(res.user));
+                        return new fromAuth.LoginSuccess({token: res.token});
                     }),
                     catchError((err) => {
                         return of(new fromAuth.LoginFailure({ error: err}));

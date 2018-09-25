@@ -23,7 +23,7 @@ const initialState: DashboardState = {
   rooms: [
     {
       id: 1,
-      name: 'Attic',
+      name: 'Grenier',
       devices: [
         { id: 1, type: 'light', state: 'off' },
         { id: 2, type: 'door', state: 'open' }
@@ -40,7 +40,7 @@ const initialState: DashboardState = {
     },
     {
       id: 3,
-      name: 'Toilet Room',
+      name: 'Toilette',
       devices: [
         { id: 1, type: 'light', state: 'off' },
         { id: 2, type: 'door', state: 'open' }
