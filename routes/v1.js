@@ -11,6 +11,8 @@ const AccountController = require("./../controllers/AccountController");
 
 const HistoryController = require("../controllers/HistoryController");
 
+const StateController = require("../controllers/StateController");
+
 const passport = require("passport");
 
 const path = require("path");
@@ -221,5 +223,10 @@ router.post(
   HistoryController.generateDate
 );
 
+
+router.get(
+  "/dev/states",
+  StateController.getStates
+);
 
 module.exports = router;
