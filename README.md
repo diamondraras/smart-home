@@ -22,6 +22,7 @@ sudo apt-get install libssl-dev libxml2-dev libxslt1-dev libjpeg-dev libffi-dev 
 ### To isolate your environment from the rest of the system, set up a venv. Within the home-api directory, create and activate your virtual environment.
 
 ```shell
+cd api
 python3 -m venv .
 source bin/activate
 ```
