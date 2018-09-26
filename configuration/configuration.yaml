@@ -109,37 +109,58 @@ sensor:
   - platform: time_date
     display_options:
       - 'date'
-#   - platform: rest
-#     resource: http://192.168.10.21/gpio/state
+  - platform: rest
+    resource: http://192.168.10.28/gpio/8
+    name: door_living
+    value_template: '{{ value_json.state }}'
+
+alarm_control_panel:
+  - platform: manual
+    name: Home Alarm
+    code: 1234
+    pending_time: 5
+    delay_time: 5
+    trigger_time: 5
+    disarmed:
+      trigger_time: 0
+    armed_home:
+      pending_time: 0
+      delay_time: 0
 
 # Switch
 switch:
   - platform: rest
-    resource: http://192.168.10.21/gpio/0
+    resource: http://192.168.10.28/gpio/0
     is_on_template: '{{ value_json.state }}'
     name: lamp_attic
     headers:
       Content-Type: application/x-www-form-urlencoded
   - platform: rest
-    resource: http://192.168.10.21/gpio/4
+    resource: http://192.168.10.28/gpio/4
     is_on_template: '{{ value_json.state }}'
     name: door_living
     headers:
       Content-Type: application/x-www-form-urlencoded
   - platform: rest
-    resource: http://192.168.10.21/gpio/6
+    resource: http://192.168.10.28/gpio/6
     is_on_template: '{{ value_json.state }}'
     name: lamp_chamber
     headers:
       Content-Type: application/x-www-form-urlencoded
   - platform: rest
-    resource: http://192.168.10.21/gpio/6
+    resource: http://192.168.10.28/gpio/6
     is_on_template: '{{ value_json.state }}'
     name: door_mainDoor
     headers:
       Content-Type: application/x-www-form-urlencoded  
 
-
+notify:
+  - name: alarm_notify
+    platform: rest
+    resource: http://192.168.10.28/gpio/6
+    method: POST_JSON
+    data:
+      message: '{ "message" : "triggered"}'
 
 # Text to speech
 tts:
