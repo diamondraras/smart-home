@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { tap, map } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import * as fromDashboard from '../dashboard.reducer';
 
 import { Entry } from '../../../shared/models/entry.model';
 import { Passing } from '../../../shared/models/passing.model';
-import { Store } from '@ngrx/store';
-import { tap, map } from 'rxjs/operators';
-import { removeSummaryDuplicates } from '@angular/compiler';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-history',
@@ -17,14 +16,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class HistoryComponent implements OnInit {
   filter = 'entry';
-  newEntries;
   entries$: Observable<Entry[]>;
   passing$: Observable<Passing[]>;
 
-  constructor(
-    private store: Store<fromDashboard.State>,
-    private domSanitizer: DomSanitizer
-  ) {}
+  constructor(private store: Store<fromDashboard.State>, private domSanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.entries$ = this.store.select(fromDashboard.getEntries);
