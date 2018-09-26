@@ -15,10 +15,7 @@
             </ul>
         </nav>
     </div>
-<<<<<<< HEAD
-=======
 
->>>>>>> add689e116e5a25765f6cd5a520600b41ba34ab9
     <div class="row">
         <div class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-5">
             <div class="form-group">
@@ -38,13 +35,10 @@
             <div class="form-group">
                 <div class="input-group clearfix">
                     <input class="form-control calendar" style="background-color: white" id="date" name="date"
-<<<<<<< HEAD
+
                         placeholder="Selectionnez une date..." type="date" #date>
                     <div class="input-group-addon input-group-append" (click)="sort(date.value)">
-=======
-                        placeholder="Selectionnez une date..." type="date">
-                    <div class="input-group-addon input-group-append">
->>>>>>> add689e116e5a25765f6cd5a520600b41ba34ab9
+
                         <span class="input-group-text bg-primary text-white"><i class="mdi mdi-timetable"></i></span>
                     </div>
                 </div>
@@ -62,11 +56,7 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
-=======
 
-    <!-- Timeline -->
->>>>>>> add689e116e5a25765f6cd5a520600b41ba34ab9
     <section [ngSwitch]="filter" id="cd-timeline" class="cd-container fadeIn" style="animation-duration: 0.5s">
         <ng-container *ngSwitchCase="'entry'">
             <div class="cd-timeline-block" *ngFor="let entry of (entries$ | async)">
