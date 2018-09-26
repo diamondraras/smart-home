@@ -7,12 +7,16 @@ import * as dashboard from './dashboard.actions';
 import { Room } from '../../shared/models/room.model';
 import { Device } from '../../shared/models/device.model';
 import { Weather } from './devices/sensors/weather/weather.model';
+import { Entry } from '../../shared/models/entry.model';
+import { Passing } from '../../shared/models/passing.model';
 
 export interface DashboardState {
   rooms: Room[];
   mainDoor: Device;
   alarm: Device;
   weather: Weather;
+  entries: Entry[];
+  passing: Passing[];
 }
 
 export interface State extends fromRoot.State {
@@ -20,44 +24,9 @@ export interface State extends fromRoot.State {
 }
 
 const initialState: DashboardState = {
-  rooms: [
-    {
-      id: 1,
-      name: 'Grenier',
-      devices: [
-        { id: 1, type: 'light', state: 'off' },
-        { id: 2, type: 'door', state: 'open' }
-      ]
-    },
-    {
-      id: 2,
-      name: 'Living Room',
-      devices: [
-        { id: 1, type: 'light', state: 'off' },
-        { id: 2, type: 'light', state: 'off' },
-        { id: 3, type: 'door', state: 'open' }
-      ]
-    },
-    {
-      id: 3,
-      name: 'Toilette',
-      devices: [
-        { id: 1, type: 'light', state: 'off' },
-        { id: 2, type: 'door', state: 'open' }
-      ]
-    },
-    {
-      id: 4,
-      name: 'Hall',
-      devices: [
-        { id: 1, type: 'light', state: 'off' },
-        { id: 2, type: 'door', state: 'open' },
-        { id: 3, type: 'alarm', state: 'off' }
-      ]
-    }
-  ],
-  mainDoor: { id: 0, type: 'door', state: 'open' },
-  alarm: { id: 0, type: 'alarm', state: 'off' },
+  rooms: null,
+  mainDoor: null,
+  alarm: { id: 0, name: null, type: 'alarm', state: 'off' },
   weather : {
     entity_id: null,
     temperature: 0,
@@ -72,7 +41,9 @@ const initialState: DashboardState = {
       { day: null, condition: null, temp_max: 0 },
       { day: null, condition: null, temp_max: 0 }
     ]
-  }
+  },
+  entries: null,
+  passing: null
 };
 
 export function dashboardReducer(
@@ -80,6 +51,26 @@ export function dashboardReducer(
   action: dashboard.Actions
 ) {
   switch (action.type) {
+    case dashboard.SET_ROOMS:
+      return {
+        ...state,
+        rooms: action.payload
+      };
+    case dashboard.SET_MAIN_DOOR:
+      return {
+        ...state,
+        mainDoor: action.payload
+      };
+    case dashboard.SET_ENTRIES:
+      return {
+        ...state,
+        entries: action.payload
+      };
+    case dashboard.SET_PASSING:
+      return {
+        ...state,
+        passing: action.payload
+      };
     case dashboard.ADD_ROOM:
       return {
         ...state,
@@ -194,3 +185,6 @@ export const getWeather = createSelector(
   getDashboardState,
   (state: DashboardState) => state.weather
 );
+
+export const getEntries = createSelector(getDashboardState, (state: DashboardState) => state.entries);
+export const getPassing = createSelector(getDashboardState, (state: DashboardState) => state.passing);

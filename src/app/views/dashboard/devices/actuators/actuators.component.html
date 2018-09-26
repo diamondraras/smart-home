@@ -30,7 +30,7 @@
   <div class="card-body">
     <h4 class="card-title">{{ type }}</h4>
     <div class="d-sm-flex justify-content-around flex-wrap">
-      <app-actuator *ngFor="let device of devices" [id]="device.id" [type]="device.type" [state]="device.state"></app-actuator>
+      <app-actuator *ngFor="let device of devices" [id]="device.id" [type]="device.type" [state]="device.state" [name]="device.name"></app-actuator>
     </div>
   </div>
 </div>

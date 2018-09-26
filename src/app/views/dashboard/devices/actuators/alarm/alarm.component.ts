@@ -12,6 +12,7 @@ export class AlarmComponent implements OnInit {
   @Input() id;
   @Input() type;
   @Input() state;
+  @Input() name;
   newState: string;
 
   constructor(private store: Store<fromDashboard.State>) { }
@@ -24,7 +25,8 @@ export class AlarmComponent implements OnInit {
     this.store.dispatch(new DashboardActions.ToggleAlarm({
       id: this.id,
       type: this.type,
-      state: this.newState
+      state: this.newState,
+      name: this.name
     }));
   }
 

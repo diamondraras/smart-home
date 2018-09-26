@@ -15,6 +15,7 @@ export class DoorComponent implements Device, OnInit {
   @Input() id;
   @Input() type;
   @Input() state;
+  @Input() name;
   newState: string;
 
   constructor(private store: Store<fromDashboard.State>) { }
@@ -27,7 +28,8 @@ export class DoorComponent implements Device, OnInit {
     this.store.dispatch(new DashboardActions.ToggleMainDoor({
       id: this.id,
       type: this.type,
-      state: this.newState
+      state: this.newState,
+      name: this.name
     }));
   }
 }
