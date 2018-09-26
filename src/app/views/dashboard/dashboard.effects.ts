@@ -94,6 +94,8 @@ export class DashboardEffects {
               const d3 = this.weatherService.nextDay(d + 2);
               const d4 = this.weatherService.nextDay(d + 3);
               const d5 = this.weatherService.nextDay(d + 4);
+              const temp_begin = 4; // response for temperature begins a array[4]
+              const cond_begin = 9; // response for condition begins a array[9]
               const dayOfWeek = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
               const currentDay = dayOfWeek[d];
                 return new DashboardActions.LoadWeatherSuccess({
@@ -103,11 +105,11 @@ export class DashboardEffects {
                       date: res[3].state,
                       day: currentDay,
                       forecast: [
-                        { day: dayOfWeek[d1], temp_max: res[4].state, condition: res[9].state },
-                        { day: dayOfWeek[d2], temp_max: res[5].state, condition: res[10].state },
-                        { day: dayOfWeek[d3], temp_max: res[6].state, condition: res[11].state },
-                        { day: dayOfWeek[d4], temp_max: res[7].state, condition: res[12].state },
-                        { day: dayOfWeek[d5], temp_max: res[8].state, condition: res[13].state },
+                        { day: dayOfWeek[d1], temp_max: res[temp_begin].state, condition: res[cond_begin].state },
+                        { day: dayOfWeek[d2], temp_max: res[temp_begin + 1].state, condition: res[cond_begin + 1].state },
+                        { day: dayOfWeek[d3], temp_max: res[temp_begin + 2].state, condition: res[cond_begin + 2].state },
+                        { day: dayOfWeek[d4], temp_max: res[temp_begin + 3].state, condition: res[cond_begin + 3].state },
+                        { day: dayOfWeek[d5], temp_max: res[temp_begin + 4].state, condition: res[cond_begin + 4].state },
                       ]
                   });
                 })
