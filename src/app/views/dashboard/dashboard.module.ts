@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
@@ -27,6 +28,8 @@ import { MainActuatorComponent } from './devices/sensors/main-actuator/main-actu
 import { WebsocketService } from '../../_helpers/websocket.service';
 import { RecognizedFacesComponent } from './settings/recognized-faces/recognized-faces.component';
 import { WeatherService } from './devices/sensors/weather/weather.service';
+import { EntryComponent } from './history/entry/entry.component';
+import { PassingComponent } from './history/passing/passing.component';
 
 
 @NgModule({
@@ -51,7 +54,9 @@ import { WeatherService } from './devices/sensors/weather/weather.service';
     RoomComponent,
     ActuatorComponent,
     MainActuatorComponent,
-    RecognizedFacesComponent
+    RecognizedFacesComponent,
+    EntryComponent,
+    PassingComponent
   ],
   providers: [
     DeviceService,

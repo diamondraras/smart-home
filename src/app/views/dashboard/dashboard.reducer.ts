@@ -7,12 +7,16 @@ import * as dashboard from './dashboard.actions';
 import { Room } from '../../shared/models/room.model';
 import { Device } from '../../shared/models/device.model';
 import { Weather } from './devices/sensors/weather/weather.model';
+import { Entry } from '../../shared/models/entry.model';
+import { Passing } from '../../shared/models/passing.model';
 
 export interface DashboardState {
   rooms: Room[];
   mainDoor: Device;
   alarm: Device;
   weather: Weather;
+  entries: Entry[];
+  passing: Passing[];
 }
 
 export interface State extends fromRoot.State {
@@ -21,7 +25,7 @@ export interface State extends fromRoot.State {
 
 const initialState: DashboardState = {
   rooms: null,
-  mainDoor: { id: 0, name: null, type: 'door', state: 'open' },
+  mainDoor: null,
   alarm: { id: 0, name: null, type: 'alarm', state: 'off' },
   weather : {
     entity_id: null,
@@ -37,7 +41,9 @@ const initialState: DashboardState = {
       { day: null, condition: null, temp_max: 0 },
       { day: null, condition: null, temp_max: 0 }
     ]
-  }
+  },
+  entries: null,
+  passing: null
 };
 
 export function dashboardReducer(
@@ -49,6 +55,21 @@ export function dashboardReducer(
       return {
         ...state,
         rooms: action.payload
+      };
+    case dashboard.SET_MAIN_DOOR:
+      return {
+        ...state,
+        mainDoor: action.payload
+      };
+    case dashboard.SET_ENTRIES:
+      return {
+        ...state,
+        entries: action.payload
+      };
+    case dashboard.SET_PASSING:
+      return {
+        ...state,
+        passing: action.payload
       };
     case dashboard.ADD_ROOM:
       return {
@@ -164,3 +185,6 @@ export const getWeather = createSelector(
   getDashboardState,
   (state: DashboardState) => state.weather
 );
+
+export const getEntries = createSelector(getDashboardState, (state: DashboardState) => state.entries);
+export const getPassing = createSelector(getDashboardState, (state: DashboardState) => state.passing);
