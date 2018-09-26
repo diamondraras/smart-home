@@ -3,7 +3,7 @@ import { Observable, of, forkJoin } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, catchError, switchMap, concatAll } from 'rxjs/operators';
+import { map, catchError, switchMap, concatAll, tap } from 'rxjs/operators';
 
 import * as DashboardActions from './dashboard.actions';
 import { Weather, Forecast } from './devices/sensors/weather/weather.model';
@@ -12,11 +12,13 @@ import { SensorResponse } from './devices/sensors/sensors.model';
 import { Device } from '../../shared/models/device.model';
 import { Room } from '../../shared/models/room.model';
 import { WeatherService } from './devices/sensors/weather/weather.service';
+import { Entry } from '../../shared/models/entry.model';
+import { Passing } from '../../shared/models/passing.model';
 
 @Injectable()
 export class DashboardEffects {
-  backendUrl = 'http://localhost:3000/api/dev/states';
-  url = 'http://localhost:8123/api/services/switch/toggle';
+  backendUrl = 'http://localhost:3000/api';
+  apiUrl = 'http://localhost:8123/api/services/switch/toggle';
   bodyRequest = {
     'entity_id': 'switch.builtin_led'
   };
@@ -24,9 +26,9 @@ export class DashboardEffects {
   constructor(private actions$: Actions, private http: HttpClient, private weatherService: WeatherService) {}
 
   @Effect()
-  startApp$ = this.actions$.ofType(DashboardActions.START_APP).pipe(
+  setRooms$ = this.actions$.ofType(DashboardActions.START_APP).pipe(
     switchMap(() => {
-      return this.http.get<Room[]>(this.backendUrl).pipe(
+      return this.http.get<Room[]>(`${this.backendUrl}/dev/states`).pipe(
         map(rooms => {
           return new DashboardActions.SetRooms(rooms);
         }),
@@ -38,10 +40,57 @@ export class DashboardEffects {
   );
 
   @Effect()
+  setMainDoor = this.actions$.ofType(DashboardActions.START_APP).pipe(
+    switchMap(() => {
+      return this.http.get<Device>(`${this.backendUrl}/dev/states/mainDoor`).pipe(
+        map((mainDoor) => {
+          return new DashboardActions.SetMainDoor(mainDoor);
+        }),
+        catchError(error => {
+          return of(new DashboardActions.SetMainDoorFailed());
+        })
+      );
+    })
+  );
+
+  @Effect()
+  setEntries = this.actions$.ofType(DashboardActions.START_APP).pipe(
+    switchMap(() => {
+      return this.http.get<Entry[]>(`${this.backendUrl}/entry`)
+      .pipe(
+        map(entries => entries.sort((a, b) => a.date > b.date ? 1 : -1)),
+        map(entries => {
+          return new DashboardActions.SetEntries(entries);
+        }),
+        catchError(error => {
+          return of(new DashboardActions.SetEntriesFailed());
+        })
+      );
+    })
+  );
+
+  @Effect()
+  setPassing = this.actions$.ofType(DashboardActions.START_APP).pipe(
+    switchMap(() => {
+      return this.http.get<Passing[]>(`${this.backendUrl}/passing`)
+      .pipe(
+        map(passing => passing.sort((a, b) => a.date > b.date ? 1 : -1)),
+        map(passing => {
+          return new DashboardActions.SetPassing(passing);
+        }),
+        catchError(error => {
+          return of(new DashboardActions.SetPassingFailed());
+        })
+      );
+    })
+  );
+
+
+  @Effect()
   toggleDevice$ = this.actions$.ofType(DashboardActions.TOGGLE_DEVICE).pipe(
     map((action: DashboardActions.ToggleDevice) => action.payload),
     switchMap(payload => {
-      return this.http.post(this.url, { 'entity_id': payload.device.name }).pipe(
+      return this.http.post(this.apiUrl, { 'entity_id': payload.device.name }).pipe(
         map(res => {
           return new DashboardActions.UpdateDeviceState({
             roomId: payload.roomId,
@@ -61,7 +110,7 @@ export class DashboardEffects {
     .pipe(
       map((action: DashboardActions.ToggleAlarm) => action.payload),
       switchMap((payload: Device) => {
-        return this.http.post(this.url, this.bodyRequest).pipe(
+        return this.http.post(this.apiUrl, this.bodyRequest).pipe(
           map(res => {
             return new DashboardActions.UpdateAlarm(payload);
           }),
@@ -78,7 +127,7 @@ export class DashboardEffects {
     .pipe(
       map((action: DashboardActions.ToggleMainDoor) => action.payload),
       switchMap((payload: Device) => {
-        return this.http.post(this.url, this.bodyRequest).pipe(
+        return this.http.post(this.apiUrl, { entity_id: payload.name }).pipe(
           map(res => {
             return new DashboardActions.UpdateMainDoor(payload);
           }),

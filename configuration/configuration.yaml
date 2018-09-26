@@ -132,6 +132,12 @@ switch:
     name: lamp_chamber
     headers:
       Content-Type: application/x-www-form-urlencoded
+  - platform: rest
+    resource: http://192.168.10.21/gpio/6
+    is_on_template: '{{ value_json.state }}'
+    name: door_mainDoor
+    headers:
+      Content-Type: application/x-www-form-urlencoded  
 
 
 

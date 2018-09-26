@@ -39,14 +39,41 @@ const getStates = async function (req, res) {
                     return ReS(res, [ ...chambers ]);
                 })
                 .catch(error => {
-                    return ReE(res, { error });
+                    return ReE(res, { message: error });
                 });
 
         })
         .catch(error => {
-            return ReE(res, { error });
+            return ReE(res, { message: error });
         });
 
 
 }
 module.exports.getStates = getStates;
+
+const getMainDoorState = async function (req, res) {
+    options = {
+        url: 'http://localhost:8123/api/states',
+        headers: {
+            'x-ha-access': '1234'
+        }
+    };
+
+    request(options)
+    .then((response) => {
+        const devices = JSON.parse(response);
+        const mainDoor = devices
+        .find(device => device.entity_id == "switch.door_maindoor");
+        const state = {
+            id: 0,
+            type: 'door',
+            state: mainDoor.state == 'off' ? 'open' : 'closed',
+            name: mainDoor.entity_id
+        };
+        return ReS(res, { ...state });
+    })
+    .catch((error) => {
+        return ReE(res, { message: error }); 
+    });
+}
+module.exports.getMainDoorState = getMainDoorState;

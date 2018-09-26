@@ -9,9 +9,11 @@ const HomeController = require("../controllers/HomeController");
 const ActuatorController = require("./../controllers/ActuatorController");
 const AccountController = require("./../controllers/AccountController");
 
-const HistoryController = require("../controllers/HistoryController");
+const DataController = require("../controllers/DataController");
 
 const StateController = require("../controllers/StateController");
+
+const EntryController = require("../controllers/EntryController");
 
 const passport = require("passport");
 
@@ -217,16 +219,31 @@ router.post(
   AccountController.sync
 );
 
-//********** Dev *******************/
-router.post(
-  "/dev/history/generate",
-  HistoryController.generateDate
+//********** Entry *******************/
+router.get(
+  "/entry",
+  EntryController.getEntry
 );
 
+router.get(
+  "/passing",
+  EntryController.getPassing
+);
+
+//********** Dev *******************/
+router.post(
+  "/dev/data/generate",
+  DataController.generateEntry,
+  DataController.generatePassing
+);
 
 router.get(
   "/dev/states",
   StateController.getStates
 );
 
+router.get(
+  "/dev/states/mainDoor",
+  StateController.getMainDoorState
+);
 module.exports = router;
