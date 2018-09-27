@@ -8,7 +8,7 @@ export class WebsocketService {
     ws: $WebSocket;
 
     constructor() {
-        this.ws = new $WebSocket('ws://127.0.0.1:8123/api/websocket');
+        this.ws = new $WebSocket('ws://192.168.10.29:8123/api/websocket');
         this.ws.connect();
     }
 

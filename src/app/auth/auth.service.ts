@@ -18,7 +18,7 @@ interface LoginData {
 @Injectable()
 export class AuthService {
   redirectUrl: string ;
-  BASE_URL = 'http://localhost:3000/api';
+  BASE_URL = 'http://192.168.10.29:3000/api';
 
   constructor(
     private store: Store<fromRoot.State>,

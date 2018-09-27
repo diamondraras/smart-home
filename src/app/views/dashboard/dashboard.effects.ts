@@ -17,9 +17,9 @@ import { Passing } from '../../shared/models/passing.model';
 
 @Injectable()
 export class DashboardEffects {
-  backendUrl = 'http://localhost:3000/api';
-  apiUrl = 'http://localhost:8123/api/services/switch/toggle';
-  serviceUrl = 'http://localhost:8123/api/services';
+  backendUrl = 'http://192.168.10.29:3000/api';
+  apiUrl = 'http://192.168.10.29:8123/api/services/switch/toggle';
+  serviceUrl = 'http://192.168.10.29:8123/api/services';
   bodyRequest = {
     'entity_id': 'switch.builtin_led'
   };
@@ -193,11 +193,11 @@ export class DashboardEffects {
             map((action: DashboardActions.LoadWeather) => action.payload),
             switchMap((payload: any[]) => {
                 const entity_id = payload;
-                const temp$ = this.http.get('http://localhost:8123/api/states/' + entity_id['temperature']);
-                const hum$ = this.http.get('http://localhost:8123/api/states/' + entity_id['humidity']);
-                const cond$ = this.http.get('http://localhost:8123/api/states/' + entity_id['condition']);
+                const temp$ = this.http.get('http://192.168.10.29:8123/api/states/' + entity_id['temperature']);
+                const hum$ = this.http.get('http://192.168.10.29:8123/api/states/' + entity_id['humidity']);
+                const cond$ = this.http.get('http://192.168.10.29:8123/api/states/' + entity_id['condition']);
 
-                const date$ = this.http.get('http://localhost:8123/api/states/' + entity_id['date']);
+                const date$ = this.http.get('http://192.168.10.29:8123/api/states/' + entity_id['date']);
                 const forecast = this.weatherService.loadForecast();
                  return forkJoin([temp$, hum$, cond$, date$, ...forecast]);
                 }),

@@ -17,7 +17,7 @@ export class DevicesComponent implements OnInit{
 
   constructor(private http: HttpClient) {}
   ngOnInit() {
-    this.http.get('http://localhost:3000/api/users').subscribe((res) => {
+    this.http.get('http://192.168.10.29:3000/api/users').subscribe((res) => {
       console.log(res);
     })
   }
