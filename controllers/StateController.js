@@ -27,7 +27,7 @@ const getStates = async function (req, res) {
                 .then((body) => {
                     const states = Array.from(JSON.parse(body));
                     let chambers = states
-                        .filter(state => state.entity_id.includes("group.") && !state.entity_id.includes("group.all_switches"))
+                        .filter(state => state.entity_id.includes("group.") && !state.entity_id.includes("group.all_switches") && !state.entity_id.includes("group.all_automation"))
                         .map(state => {
                             const currentDevicesList = state.attributes.entity_id;
                             return {
