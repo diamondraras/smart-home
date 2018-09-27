@@ -11,7 +11,7 @@ import { HttpClient } from "@angular/common/http";
 export class WeatherService{
 
     listen$: Observable<any>;
-    baseUrl = 'http://localhost:8123';
+    baseUrl = 'http://192.168.10.29:8123';
 
     constructor(
         private ws: WebsocketService,
