@@ -5,7 +5,7 @@
 uploads/*
 
 api/config/*
-
+api/bin
 api/tests/testing_config/deps
 api/tests/testing_config/home-assistant.log
 
