@@ -8,6 +8,8 @@ api/config/*
 api/bin/*
 api/tests/testing_config/deps
 api/tests/testing_config/home-assistant.log
+configuration/.storage/auth
+configuration/home-assistant_v2.db
 
 # Hide sublime text stuff
 *.sublime-project
