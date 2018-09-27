@@ -19,6 +19,7 @@ import { Passing } from '../../shared/models/passing.model';
 export class DashboardEffects {
   backendUrl = 'http://localhost:3000/api';
   apiUrl = 'http://localhost:8123/api/services/switch/toggle';
+  serviceUrl = 'http://localhost:8123/api/services';
   bodyRequest = {
     'entity_id': 'switch.builtin_led'
   };
@@ -110,7 +111,12 @@ export class DashboardEffects {
     .pipe(
       map((action: DashboardActions.ToggleAlarm) => action.payload),
       switchMap((payload: Device) => {
-        return this.http.post(this.apiUrl, this.bodyRequest).pipe(
+        const data = {
+          code : 1234,
+          entity_id : 'alarm_control_panel.home_alarm'
+        }
+        const url = this.serviceUrl + '/alarm_control_panel/alarm_arm_away';
+        return this.http.post(url, data).pipe(
           map(res => {
             return new DashboardActions.UpdateAlarm(payload);
           }),
@@ -120,6 +126,48 @@ export class DashboardEffects {
         );
       })
     );
+  @Effect()
+  armAlarm$ = this.actions$
+    .ofType(DashboardActions.ARM_ALARM)
+    .pipe(
+      map((action: DashboardActions.ArmAlarm) => action.payload),
+      switchMap((payload: Device) => {
+        const data = {
+          code : 1234,
+          entity_id : 'alarm_control_panel.home_alarm'
+        };
+        const url = this.serviceUrl + '/alarm_control_panel/alarm_arm_away';
+        return this.http.post(url, data).pipe(
+          map(res => {
+            return new DashboardActions.UpdateAlarm(payload);
+          }),
+          catchError(() => {
+            return of(new DashboardActions.ToggleDeviceFailed());
+          })
+        );
+      })
+    );
+    @Effect()
+    disarmAlarm$ = this.actions$
+      .ofType(DashboardActions.DISARM_ALARM)
+      .pipe(
+        map((action: DashboardActions.ArmAlarm) => action.payload),
+        switchMap((payload: Device) => {
+          const data = {
+            code : 1234,
+            entity_id : 'alarm_control_panel.home_alarm'
+          };
+          const url = this.serviceUrl + '/alarm_control_panel/alarm_disarm';
+          return this.http.post(url, data).pipe(
+            map(res => {
+              return new DashboardActions.UpdateAlarm(payload);
+            }),
+            catchError(() => {
+              return of(new DashboardActions.ToggleDeviceFailed());
+            })
+          );
+        })
+      );
 
   @Effect()
   toggleMainDoor$ = this.actions$

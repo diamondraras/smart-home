@@ -20,3 +20,25 @@
     - service: notify.alarm_notify
       data:
         message: '{ "message" : "triggered"}'
+
+- alias: 'Send notification when alarm armed'
+  trigger:
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      from: 'pending'
+      to: 'armed_away'
+  action:
+    - service: notify.alarm_armed
+      data:
+        message: '{ "message" : "armed"}'
+
+- alias: 'Send notification when alarm disarmed'
+  trigger:
+    - platform: state
+      entity_id: alarm_control_panel.home_alarm
+      from: 'armed_away'
+      to: 'disarmed'
+  action:
+    - service: notify.alarm_disarmed
+      data:
+        message: '{ "message" : "disarmed"}'

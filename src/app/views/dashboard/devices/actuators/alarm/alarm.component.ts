@@ -22,12 +22,22 @@ export class AlarmComponent implements OnInit {
 
   toggleDevice() {
     this.newState = this.state === 'off' ? 'on' : 'off';
-    this.store.dispatch(new DashboardActions.ToggleAlarm({
-      id: this.id,
-      type: this.type,
-      state: this.newState,
-      name: this.name
-    }));
+
+    if (this.newState === 'on') {
+      this.store.dispatch(new DashboardActions.ToggleAlarm({
+        id: this.id,
+        type: this.type,
+        state: this.newState,
+        name: this.name
+      }));
+    } else {
+      this.store.dispatch(new DashboardActions.DisarmAlarm({
+        id: this.id,
+        type: this.type,
+        state: this.newState,
+        name: this.name
+      }));
+    }
   }
 
 }

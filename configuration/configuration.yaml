@@ -157,10 +157,16 @@ switch:
 notify:
   - name: alarm_notify
     platform: rest
-    resource: http://192.168.10.28/gpio/6
-    method: POST_JSON
-    data:
-      message: '{ "message" : "triggered"}'
+    resource: http://192.168.10.28/alarm/trigger
+    method: GET
+  - name: alarm_armed
+    platform: rest
+    resource: http://192.168.10.28/alarm/arm
+    method: GET
+  - name: alarm_disarmed
+    platform: rest
+    resource: http://192.168.10.28/alarm/disarm
+    method: GET
 
 # Text to speech
 tts:

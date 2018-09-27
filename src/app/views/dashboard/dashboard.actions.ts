@@ -18,6 +18,8 @@ export const ADD_ROOM = '[DASHBOARD] Add Room';
 export const TOGGLE_DEVICE = '[DASHBOARD] Toggle Device';
 export const TOGGLE_MAIN_DOOR = '[DASHBOARD] Toggle Main Door';
 export const TOGGLE_ALARM = '[DASHBOARD] Toggle Alarm';
+export const ARM_ALARM = '[DASHBOARD] Arm Alarm';
+export const DISARM_ALARM = '[DASHBOARD] Disarm Alarm';
 export const TOGGLE_DEVICE_FAILED = '[DASHBOARD] Toggle Device Failed';
 export const UPDATE_DEVICE_STATE = '[DASHBOARD] Update Device State';
 export const UPDATE_MAIN_DOOR_STATE = '[DASHBOARD] Update Main Door State';
@@ -85,6 +87,14 @@ export class ToggleAlarm implements Action {
   readonly type = TOGGLE_ALARM;
   constructor(public payload: Device) {}
 }
+export class ArmAlarm implements Action {
+  readonly type = ARM_ALARM;
+  constructor(public payload: Device) {}
+}
+export class DisarmAlarm implements Action {
+  readonly type = DISARM_ALARM;
+  constructor(public payload: Device) {}
+}
 
 export class ToggleDeviceFailed implements Action {
   readonly type = TOGGLE_DEVICE_FAILED;
@@ -144,6 +154,8 @@ export type Actions =
   | ToggleDevice
   | ToggleMainDoor
   | ToggleAlarm
+  | ArmAlarm
+  | DisarmAlarm
   | ToggleDeviceFailed
   | UpdateDeviceState
   | UpdateAlarm
